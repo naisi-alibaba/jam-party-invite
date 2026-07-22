@@ -7,114 +7,117 @@
 <title>果酱派对 · 邀请函</title>
 <style>
   *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
-  :root{
-    --bg:#1c1410; --ink:#f4e6c8; --ink-dim:#c6ad82; --gold:#e0b877; --amber:#a9711d;
-    --paper-ink:#5a4636;
-  }
+  :root{--bg:#1c1410;--ink:#f4e6c8;--ink-dim:#c6ad82;--gold:#e0b877;--amber:#a9711d;--paper-ink:#5a4636;}
   html,body{background:var(--bg);color:var(--ink);
-    font-family:"Songti SC","STSong","PingFang SC","Microsoft YaHei",serif;
-    -webkit-font-smoothing:antialiased;overflow-x:hidden;}
+    font-family:"Songti SC","STSong","PingFang SC","Microsoft YaHei",serif;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
   .kai{font-family:"KaiTi","STKaiti",serif;}
-
-  /* grain + vignette atmosphere */
   body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:9;opacity:.05;
     background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");}
   body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:8;
-    background:radial-gradient(120% 90% at 50% -10%, rgba(224,184,119,.10), transparent 55%),
-               radial-gradient(100% 60% at 50% 120%, rgba(169,113,29,.12), transparent 60%);}
-
+    background:radial-gradient(120% 90% at 50% -10%, rgba(224,184,119,.10), transparent 55%),radial-gradient(100% 60% at 50% 120%, rgba(169,113,29,.12), transparent 60%);}
   .reveal{opacity:0;transform:translateY(26px);transition:opacity 1s cubic-bezier(.2,.7,.2,1),transform 1s cubic-bezier(.2,.7,.2,1);}
   .reveal.in{opacity:1;transform:none;}
   section{padding:0 28px;position:relative;z-index:1;}
   .hairline{width:44px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:0 auto;}
 
-  /* HERO */
   .hero{min-height:100vh;min-height:100svh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;}
   .seal{width:92px;height:92px;border-radius:50%;margin-bottom:30px;display:flex;align-items:center;justify-content:center;
-    background:radial-gradient(circle at 38% 34%,#f6d38a,#a9711d 78%);
-    box-shadow:0 10px 30px rgba(169,113,29,.45),inset 0 2px 6px rgba(255,255,255,.4),inset 0 -8px 14px rgba(0,0,0,.25);
-    font-size:40px;animation:seal-in 1.1s cubic-bezier(.2,.8,.2,1) both;}
+    background:radial-gradient(circle at 38% 34%,#f6d38a,#a9711d 78%);box-shadow:0 10px 30px rgba(169,113,29,.45),inset 0 2px 6px rgba(255,255,255,.4),inset 0 -8px 14px rgba(0,0,0,.25);font-size:40px;animation:seal-in 1.1s cubic-bezier(.2,.8,.2,1) both;}
   @keyframes seal-in{0%{opacity:0;transform:scale(.6) rotate(-14deg);}100%{opacity:1;transform:none;}}
   .hero .eyebrow{font-size:12px;letter-spacing:8px;color:var(--ink-dim);margin-bottom:20px;}
-  .hero h1{font-size:60px;letter-spacing:10px;line-height:1.15;
-    background:linear-gradient(180deg,#fbeccb,#e0b877 60%,#b7842f);-webkit-background-clip:text;background-clip:text;color:transparent;
-    text-shadow:0 2px 20px rgba(224,184,119,.15);}
+  .hero h1{font-size:60px;letter-spacing:10px;line-height:1.15;background:linear-gradient(180deg,#fbeccb,#e0b877 60%,#b7842f);-webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:0 2px 20px rgba(224,184,119,.15);}
   .hero .en{font-size:11px;letter-spacing:8px;color:var(--amber);margin-top:16px;}
   .hero .hook{margin-top:32px;font-size:17px;line-height:2.1;color:var(--ink-dim);max-width:290px;}
   .scroll-cue{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);font-size:11px;letter-spacing:3px;color:var(--ink-dim);opacity:.65;animation:bob 1.8s ease-in-out infinite;}
   .scroll-cue span{display:block;font-size:16px;margin-top:5px;}
   @keyframes bob{0%,100%{transform:translate(-50%,0)}50%{transform:translate(-50%,7px)}}
 
-  /* STORY */
-  .story{padding-top:96px;padding-bottom:66px;text-align:center;}
+  .story{padding-top:96px;padding-bottom:60px;text-align:center;}
   .story p{font-size:18px;line-height:2.15;max-width:320px;margin:0 auto 20px;}
   .story .accent{color:var(--gold);}
 
-  /* GATED INFO (暗号) */
-  .vault{padding-top:24px;padding-bottom:76px;max-width:360px;margin:0 auto;text-align:center;}
-  .vault .cap{font-size:12px;letter-spacing:6px;color:var(--ink-dim);margin-bottom:18px;}
-  .env{position:relative;border:1px solid rgba(224,184,119,.32);border-radius:16px;padding:30px 24px;
-    background:linear-gradient(180deg,rgba(224,184,119,.05),rgba(0,0,0,.14));overflow:hidden;transition:.5s;}
-  .env .lock{font-size:30px;margin-bottom:8px;}
-  .env .lockword{font-size:15px;color:var(--ink-dim);line-height:1.9;margin-bottom:18px;}
-  .env input{width:100%;text-align:center;font-size:18px;letter-spacing:4px;color:var(--ink);
-    background:rgba(0,0,0,.25);border:1px solid rgba(224,184,119,.3);border-radius:10px;padding:13px 10px;outline:none;
-    font-family:"KaiTi",serif;}
-  .env input::placeholder{color:#8a7860;letter-spacing:2px;}
-  .env .go{margin-top:14px;width:100%;border:0;border-radius:10px;padding:14px;font-size:16px;letter-spacing:3px;font-weight:700;
-    background:linear-gradient(180deg,#e6ab48,#b1731a);color:#241606;cursor:pointer;font-family:"Songti SC",serif;}
-  .env .go:active{transform:scale(.98);}
-  .env .err{margin-top:12px;font-size:13px;color:#e08a8a;min-height:18px;letter-spacing:1px;}
-  .reveal-info{max-height:0;overflow:hidden;opacity:0;transition:max-height .7s ease,opacity .6s ease;text-align:left;}
-  .reveal-info.open{max-height:520px;opacity:1;margin-top:6px;}
-  .info .line{display:flex;gap:12px;padding:12px 2px;font-size:15.5px;line-height:1.7;}
+  /* time/place */
+  .infowrap{padding-top:20px;padding-bottom:70px;max-width:360px;margin:0 auto;}
+  .infowrap .cap{font-size:12px;letter-spacing:6px;color:var(--ink-dim);margin-bottom:16px;text-align:center;}
+  .info{border:1px solid rgba(224,184,119,.28);border-radius:16px;padding:8px 22px 18px;background:linear-gradient(180deg,rgba(224,184,119,.04),rgba(0,0,0,.12));}
+  .info .line{display:flex;gap:12px;padding:13px 2px;font-size:15.5px;line-height:1.7;}
   .info .line .k{color:var(--ink-dim);white-space:nowrap;}
   .info .line .v{color:var(--ink);}
   .info .line+.line{border-top:1px dashed rgba(224,184,119,.2);}
-  .mapbtn{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:16px;text-decoration:none;
-    border:1px solid rgba(224,184,119,.4);border-radius:12px;padding:13px;color:var(--gold);font-size:15px;letter-spacing:2px;
-    background:rgba(224,184,119,.06);}
+  .mapbtn{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:12px;text-decoration:none;border:1px solid rgba(224,184,119,.4);border-radius:12px;padding:13px;color:var(--gold);font-size:15px;letter-spacing:2px;background:rgba(224,184,119,.06);}
   .mapbtn:active{transform:scale(.98);}
-  .env.opened{border-color:rgba(224,184,119,.5);}
-  .env.opened .gate{display:none;}
 
-  /* ASK + CARDS */
-  .ask{padding-top:56px;padding-bottom:18px;text-align:center;}
+  .ask{padding-top:56px;padding-bottom:10px;text-align:center;}
   .ask .big{font-size:32px;letter-spacing:4px;margin-bottom:20px;}
   .ask .lead{font-size:15.5px;line-height:2.05;color:var(--ink-dim);max-width:320px;margin:0 auto;}
   .ask .lead b{color:var(--gold);font-weight:400;}
-  .cards{padding-top:28px;padding-bottom:26px;display:flex;flex-direction:column;gap:20px;max-width:400px;margin:0 auto;}
-  .card{position:relative;border-radius:18px;padding:22px 22px 20px;overflow:hidden;cursor:pointer;
-    background:linear-gradient(180deg,rgba(255,255,255,.07),rgba(0,0,0,.08)),var(--paper);
-    box-shadow:0 14px 30px rgba(0,0,0,.42),inset 0 0 0 2px rgba(255,255,255,.12);
-    transition:transform .28s cubic-bezier(.2,.8,.2,1),box-shadow .28s ease,opacity .35s ease;}
+
+  /* ===== builder ===== */
+  .builder{padding-top:26px;padding-bottom:16px;max-width:400px;margin:0 auto;}
+  .step-name{text-align:center;}
+  .step-name .q{font-size:20px;letter-spacing:2px;margin-bottom:16px;color:var(--ink);}
+  .step-name input{width:100%;text-align:center;font-size:20px;letter-spacing:3px;color:var(--ink);
+    background:rgba(0,0,0,.25);border:1px solid rgba(224,184,119,.32);border-radius:12px;padding:15px 12px;outline:none;font-family:"KaiTi",serif;}
+  .step-name input::placeholder{color:#8a7860;letter-spacing:1px;font-size:16px;}
+  .step-name .next{margin-top:14px;width:100%;border:0;border-radius:12px;padding:15px;font-size:16px;letter-spacing:4px;font-weight:700;
+    background:linear-gradient(180deg,#e6ab48,#b1731a);color:#241606;cursor:pointer;font-family:"Songti SC",serif;opacity:.5;pointer-events:none;transition:opacity .3s;}
+  .step-name .next.on{opacity:1;pointer-events:auto;}
+
+  .step-pick{display:none;}
+  .step-pick.show{display:block;}
+  .step-pick .q{text-align:center;font-size:18px;letter-spacing:1px;margin-bottom:6px;}
+  .step-pick .q b{color:var(--gold);font-family:"KaiTi",serif;font-size:22px;}
+  .step-pick .q2{text-align:center;font-size:13px;color:var(--ink-dim);margin-bottom:20px;letter-spacing:1px;}
+  .cards{display:flex;flex-direction:column;gap:18px;}
+  .card{position:relative;border-radius:18px;padding:20px 20px 18px;overflow:hidden;cursor:pointer;
+    background:linear-gradient(180deg,rgba(255,255,255,.07),rgba(0,0,0,.08)),var(--paper);box-shadow:0 12px 26px rgba(0,0,0,.4),inset 0 0 0 2px rgba(255,255,255,.12);transition:transform .22s;}
   .card::before{content:"";position:absolute;inset:9px;border-radius:12px;border:1.5px solid var(--accent);box-shadow:inset 0 0 0 4px var(--paper);pointer-events:none;}
-  .card:active{transform:scale(.98);}
-  .card .head{position:relative;z-index:2;display:flex;align-items:center;gap:16px;}
-  .medallion{width:64px;height:64px;border-radius:50%;flex:none;display:flex;align-items:center;justify-content:center;font-size:32px;
-    background:radial-gradient(circle at 38% 32%,#fff7e8 0%,var(--seal) 80%);box-shadow:0 4px 10px rgba(0,0,0,.3),inset 0 0 0 3px rgba(255,255,255,.4),inset 0 -4px 8px rgba(0,0,0,.18);}
-  .card .name{font-family:"KaiTi","STKaiti",serif;font-weight:700;font-size:33px;letter-spacing:6px;color:#3a2417;}
-  .card .concept{font-family:"KaiTi",serif;font-style:italic;font-size:15.5px;color:var(--accent);margin-top:4px;}
-  .card .desc{position:relative;z-index:2;margin-top:14px;font-size:14.5px;line-height:1.78;color:var(--paper-ink);}
-  .card .pick{position:relative;z-index:2;margin-top:14px;text-align:center;font-size:12.5px;letter-spacing:4px;color:var(--accent);border-top:1px solid rgba(0,0,0,.12);padding-top:11px;transition:.2s;}
-  .card.sel{transform:translateY(-3px);box-shadow:0 18px 38px rgba(0,0,0,.5),0 0 0 3px var(--seal);}
-  .card.sel .pick{color:#fff;background:var(--seal);border-radius:8px;border-top:0;padding:9px;margin-top:12px;letter-spacing:6px;}
-  .cards.haspick .card:not(.sel){opacity:.4;}
+  .card:active{transform:scale(.97);}
+  .card .head{position:relative;z-index:2;display:flex;align-items:center;gap:15px;}
+  .medallion{width:60px;height:60px;border-radius:50%;flex:none;display:flex;align-items:center;justify-content:center;font-size:30px;background:radial-gradient(circle at 38% 32%,#fff7e8 0%,var(--seal) 80%);box-shadow:0 4px 10px rgba(0,0,0,.3),inset 0 0 0 3px rgba(255,255,255,.4);}
+  .card .name{font-family:"KaiTi",serif;font-weight:700;font-size:31px;letter-spacing:6px;color:#3a2417;}
+  .card .concept{font-family:"KaiTi",serif;font-style:italic;font-size:15px;color:var(--accent);margin-top:3px;}
+  .card .desc{position:relative;z-index:2;margin-top:12px;font-size:14px;line-height:1.75;color:var(--paper-ink);}
+  .card .pick{position:relative;z-index:2;margin-top:12px;text-align:center;font-size:12.5px;letter-spacing:4px;color:var(--accent);border-top:1px solid rgba(0,0,0,.12);padding-top:10px;}
   .c1{--paper:#f4e7cf;--accent:#a9711d;--seal:#c8892a;}
   .c2{--paper:#efe3e8;--accent:#7a3f63;--seal:#8a4a70;}
   .c3{--paper:#e3ecdf;--accent:#3c6b60;--seal:#4a7d70;}
   .c4{--paper:#f3e0d8;--accent:#9e2b2b;--seal:#b03636;}
   .c5{--paper:#f6e2cf;--accent:#bc531f;--seal:#c75b2a;}
 
-  .cta{padding-top:16px;padding-bottom:60px;text-align:center;max-height:0;overflow:hidden;opacity:0;transition:max-height .7s ease,opacity .6s ease;}
-  .cta.show{max-height:760px;opacity:1;}
-  .cta .youare{font-size:16px;color:var(--ink-dim);}
-  .cta .youare b{color:var(--gold);font-size:30px;font-family:"KaiTi",serif;letter-spacing:2px;display:block;margin-top:8px;}
-  .cta .tip{font-size:15px;color:var(--ink-dim);line-height:2;max-width:300px;margin:18px auto 8px;}
+  /* ===== tray: generated personalized cards ===== */
+  .tray{max-width:400px;margin:0 auto;padding:0 28px;display:flex;flex-direction:column;gap:20px;}
+  .idcard{position:relative;border-radius:20px;padding:26px 22px 20px;overflow:hidden;text-align:center;
+    background:linear-gradient(180deg,rgba(255,255,255,.1),rgba(0,0,0,.06)),var(--paper);
+    box-shadow:0 18px 40px rgba(0,0,0,.5),inset 0 0 0 2px rgba(255,255,255,.16);
+    animation:pop .6s cubic-bezier(.2,.9,.2,1) both;}
+  @keyframes pop{0%{opacity:0;transform:translateY(24px) scale(.94);}100%{opacity:1;transform:none;}}
+  .idcard::before{content:"";position:absolute;inset:11px;border-radius:13px;border:1.5px solid var(--accent);box-shadow:inset 0 0 0 5px var(--paper);pointer-events:none;}
+  .idcard .corner{position:absolute;width:20px;height:20px;border:2px solid var(--accent);z-index:2;}
+  .idcard .corner.tl{top:16px;left:16px;border-right:0;border-bottom:0;}
+  .idcard .corner.tr{top:16px;right:16px;border-left:0;border-bottom:0;}
+  .idcard .corner.bl{bottom:16px;left:16px;border-right:0;border-top:0;}
+  .idcard .corner.br{bottom:16px;right:16px;border-left:0;border-top:0;}
+  .idcard .med{position:relative;z-index:2;width:74px;height:74px;border-radius:50%;margin:2px auto 12px;display:flex;align-items:center;justify-content:center;font-size:38px;background:radial-gradient(circle at 38% 32%,#fff7e8,var(--seal) 80%);box-shadow:0 5px 12px rgba(0,0,0,.32),inset 0 0 0 3px rgba(255,255,255,.45);}
+  .idcard .idn{position:relative;z-index:2;font-family:"KaiTi",serif;font-weight:700;font-size:34px;letter-spacing:8px;color:#3a2417;text-indent:8px;}
+  .idcard .idc{position:relative;z-index:2;font-family:"KaiTi",serif;font-style:italic;font-size:15px;color:var(--accent);margin:5px 0 14px;}
+  .idcard .plate{position:relative;z-index:2;display:inline-block;font-family:"KaiTi",serif;font-size:26px;letter-spacing:4px;color:#2f1d10;padding:6px 20px;margin-bottom:12px;border-top:1px solid var(--accent);border-bottom:1px solid var(--accent);}
+  .idcard .idd{position:relative;z-index:2;font-size:13.5px;line-height:1.7;color:var(--paper-ink);padding:0 8px;}
+  .idcard .idf{position:relative;z-index:2;margin-top:14px;font-size:10px;letter-spacing:4px;color:var(--accent);opacity:.7;}
+  .idcard .del{position:absolute;top:12px;right:14px;z-index:3;font-size:18px;color:var(--accent);opacity:.5;cursor:pointer;line-height:1;}
+
+  .addmore{max-width:400px;margin:22px auto 0;padding:0 28px;text-align:center;}
+  .addmore button{border:1px dashed rgba(224,184,119,.5);background:rgba(224,184,119,.05);color:var(--gold);
+    font-size:15px;letter-spacing:3px;padding:13px 30px;border-radius:40px;cursor:pointer;font-family:"Songti SC",serif;}
+  .addmore button:active{transform:scale(.97);}
+
+  .cta{max-width:400px;margin:0 auto;padding:44px 28px 10px;text-align:center;max-height:0;overflow:hidden;opacity:0;transition:max-height .7s ease,opacity .6s ease;}
+  .cta.show{max-height:400px;opacity:1;}
+  .cta .tip{font-size:15.5px;color:var(--ink);line-height:2;}
   .cta .tip .hl{color:var(--gold);}
-  .final{margin-top:34px;font-family:"KaiTi",serif;font-size:16px;line-height:2.05;color:var(--ink-dim);}
+  .final{margin-top:30px;font-family:"KaiTi",serif;font-size:16px;line-height:2.05;color:var(--ink-dim);}
   .final .strong{color:var(--gold);}
-  .foot{padding:34px 26px 46px;text-align:center;font-size:10.5px;letter-spacing:4px;color:#6b5a44;position:relative;z-index:1;}
+  .foot{padding:38px 26px 46px;text-align:center;font-size:10.5px;letter-spacing:4px;color:#6b5a44;position:relative;z-index:1;}
 </style>
 </head>
 <body>
@@ -134,22 +137,12 @@
     <p class="reveal">没有广发请柬，只找齐了<br>构成我们故事的人——<br><span class="accent">你，是其中一个。</span></p>
   </section>
 
-  <!-- GATED: 暗号解锁时间地点 -->
-  <section class="vault reveal">
+  <section class="infowrap reveal">
     <div class="cap">时 间 与 地 点</div>
-    <div class="env" id="env">
-      <div class="gate">
-        <div class="lock">🔒</div>
-        <div class="lockword">这一夜的时间和地点，<br>只留给收到暗号的人。<br><span style="color:var(--gold)">输入暗号，为你开门。</span></div>
-        <input id="pw" type="text" inputmode="text" placeholder="在此输入暗号" autocomplete="off">
-        <button class="go" id="go">开 门</button>
-        <div class="err" id="err"></div>
-      </div>
-      <div class="reveal-info info" id="info">
-        <div class="line"><span class="k">🕗 时间</span><span class="v">【待填：日期 · 时间】</span></div>
-        <div class="line"><span class="k">📍 地点</span><span class="v">【待填：场地名称 · 详细地址】</span></div>
-        <a class="mapbtn" id="mapbtn" href="#">📍 打开地图 · 导航过去</a>
-      </div>
+    <div class="info">
+      <div class="line"><span class="k">🕗 时间</span><span class="v">【待填：日期 · 时间】</span></div>
+      <div class="line"><span class="k">📍 地点</span><span class="v">【待填：场地名称 · 详细地址】</span></div>
+      <a class="mapbtn" id="mapbtn" href="https://uri.amap.com/marker?position=121.4737,31.2304&name=%E6%9E%9C%E9%85%B1%E6%B4%BE%E5%AF%B9&src=invite&coordinate=gaode&callnative=1">📍 打开地图 · 导航过去</a>
     </div>
   </section>
 
@@ -159,61 +152,126 @@
     <div class="lead reveal">下面五个词，形容的不是我们，是<b>你</b>。<br>没有高低、不分远近，只是五种不同的靠近方式。<br>选一个最贴的——在你眼里，<b>你之于我俩，是哪一种？</b></div>
   </section>
 
-  <section>
-    <div class="cards" id="cards">
-      <div class="card c1" data-id="灯塔"><div class="head"><div class="medallion">🗼</div><div><div class="name">灯塔</div><div class="concept">那段路，多亏有你</div></div></div><div class="desc">在某段要紧的路上——入行、求学、某个坎——你实实在在帮过我们、点过我们一下。</div><div class="pick">选 这 一 种</div></div>
-      <div class="card c2" data-id="同谋"><div class="head"><div class="medallion">🃏</div><div><div class="name">同谋</div><div class="concept">我们一起干过些没人知道的事</div></div></div><div class="desc">那些荒唐、鲜活、笑到岔气的另一面，只有你见过。你是那个"共犯"。</div><div class="pick">选 这 一 种</div></div>
-      <div class="card c3" data-id="远山"><div class="head"><div class="medallion">⛰️</div><div><div class="name">远山</div><div class="concept">离得再远，我也一直在</div></div></div><div class="desc">隔着距离和时间，可一开口就回到当年。你来，本身就是最重的一句话。</div><div class="pick">选 这 一 种</div></div>
-      <div class="card c4" data-id="江湖"><div class="head"><div class="medallion">⚔️</div><div><div class="name">江湖</div><div class="concept">自己认下的彼此</div></div></div><div class="desc">没有同窗血缘，是成年后各自挑中、留下的人。全靠选择，所以最难得。</div><div class="pick">选 这 一 种</div></div>
-      <div class="card c5" data-id="炉火"><div class="head"><div class="medallion">🔥</div><div><div class="name">炉火</div><div class="concept">有我在，就是主场</div></div></div><div class="desc">你一到，场子就热了。天生会把人聚拢、把气氛焐热的那个。</div><div class="pick">选 这 一 种</div></div>
+  <!-- generated personalized cards -->
+  <div class="tray" id="tray"></div>
+
+  <!-- builder -->
+  <section class="builder">
+    <div class="step-name" id="stepName">
+      <div class="q kai" id="nameQ">先告诉我们，怎么称呼你？</div>
+      <input id="nameInput" type="text" inputmode="text" placeholder="写下你的名字" autocomplete="off" maxlength="12">
+      <button class="next" id="nameNext">下 一 步 · 选 身 份</button>
+    </div>
+    <div class="step-pick" id="stepPick">
+      <div class="q kai">「<b id="whoName">你</b>」，你之于我俩——</div>
+      <div class="q2">是哪一种？点一张，认下它。</div>
+      <div class="cards" id="cards"></div>
     </div>
   </section>
 
+  <div class="addmore" id="addmore" style="display:none">
+    <button id="addBtn">＋ 还有同行的人，再加一位</button>
+  </div>
+
   <section class="cta" id="cta">
-    <div class="youare">你认下的是<b id="chosen">灯塔</b></div>
-    <div class="tip">把这一屏<span class="hl">截图，发到我们的群里</span>——<br>就当你，正式入场了。</div>
-    <div class="final kai">果酱会吃完，热闹会散场。<br>但<span class="strong">你今天认下的这一种，会一直留着</span>。</div>
+    <div class="tip">把你们的身份卡<span class="hl">截图，发到我们的群里</span>——<br>就当，正式入场了。</div>
+    <div class="final kai">果酱会吃完，热闹会散场。<br>但<span class="strong">你们认下的身份，会一直留着</span>。</div>
   </section>
 
   <div class="foot">JAM PARTY · 上海 · 只此一夜</div>
 
 <script>
-  // ===== 暗号（占位，最终改成真实暗号；正式版会用前端加密，源码里看不到地址）=====
-  var SECRET = "上海";               // TODO: 换成你的真实暗号
-  var MAP_URL = "https://uri.amap.com/marker?position=121.4737,31.2304&name=%E6%9E%9C%E9%85%B1%E6%B4%BE%E5%AF%B9%E5%9C%BA%E5%9C%B0&src=invite&coordinate=gaode&callnative=1"; // TODO: 换成真实坐标
+  var MAP_URL="https://uri.amap.com/marker?position=121.4737,31.2304&name=%E6%9E%9C%E9%85%B1%E6%B4%BE%E5%AF%B9&src=invite&coordinate=gaode&callnative=1"; // TODO 真实坐标
 
+  var IDS=[
+    {id:"灯塔",cls:"c1",g:"🗼",c:"那段路，多亏有你",d:"在某段要紧的路上——入行、求学、某个坎——你实实在在帮过我们、点过我们一下。"},
+    {id:"同谋",cls:"c2",g:"🃏",c:"我们一起干过些没人知道的事",d:"那些荒唐、鲜活、笑到岔气的另一面，只有你见过。你是那个“共犯”。"},
+    {id:"远山",cls:"c3",g:"⛰️",c:"离得再远，我也一直在",d:"隔着距离和时间，可一开口就回到当年。你来，本身就是最重的一句话。"},
+    {id:"江湖",cls:"c4",g:"⚔️",c:"自己认下的彼此",d:"没有同窗血缘，是成年后各自挑中、留下的人。全靠选择，所以最难得。"},
+    {id:"炉火",cls:"c5",g:"🔥",c:"有我在，就是主场",d:"你一到，场子就热了。天生会把人聚拢、把气氛焐热的那个。"}
+  ];
+  var MAP={};IDS.forEach(function(x){MAP[x.id]=x;});
+
+  // reveals
   var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting)e.target.classList.add('in');});},{threshold:.14});
   document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});
   document.querySelectorAll('.hero .reveal').forEach(function(el,i){el.style.transitionDelay=(0.5+i*0.16)+'s';});
+  document.getElementById('mapbtn').setAttribute('href',MAP_URL);
 
-  // 暗号门
-  var env=document.getElementById('env'),pw=document.getElementById('pw'),err=document.getElementById('err'),info=document.getElementById('info');
-  function tryOpen(){
-    var v=(pw.value||'').trim();
-    if(v===SECRET){
-      err.textContent='';
-      env.classList.add('opened');
-      info.classList.add('open');
-      document.getElementById('mapbtn').setAttribute('href',MAP_URL);
+  // build picker cards
+  var cardsEl=document.getElementById('cards');
+  IDS.forEach(function(x){
+    var d=document.createElement('div');
+    d.className='card '+x.cls;
+    d.innerHTML='<div class="head"><div class="medallion">'+x.g+'</div><div><div class="name">'+x.id+'</div><div class="concept">'+x.c+'</div></div></div><div class="desc">'+x.d+'</div><div class="pick">选 这 一 种</div>';
+    d.addEventListener('click',function(){choose(x.id);});
+    cardsEl.appendChild(d);
+  });
+
+  var stepName=document.getElementById('stepName'),stepPick=document.getElementById('stepPick');
+  var nameInput=document.getElementById('nameInput'),nameNext=document.getElementById('nameNext');
+  var nameQ=document.getElementById('nameQ'),whoName=document.getElementById('whoName');
+  var tray=document.getElementById('tray'),addmore=document.getElementById('addmore'),cta=document.getElementById('cta');
+  var curName="";var count=0;
+
+  nameInput.addEventListener('input',function(){
+    if(nameInput.value.trim()){nameNext.classList.add('on');}else{nameNext.classList.remove('on');}
+  });
+  nameInput.addEventListener('keydown',function(e){if(e.key==='Enter'&&nameInput.value.trim())toPick();});
+  nameNext.addEventListener('click',function(){if(nameInput.value.trim())toPick();});
+
+  function toPick(){
+    curName=nameInput.value.trim();
+    whoName.textContent=curName;
+    stepName.style.display='none';
+    stepPick.classList.add('show');
+    setTimeout(function(){stepPick.scrollIntoView({behavior:'smooth',block:'start'});},60);
+  }
+
+  function choose(idName){
+    var x=MAP[idName];
+    var card=document.createElement('div');
+    card.className='idcard '+x.cls;
+    card.innerHTML=
+      '<span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span>'+
+      '<span class="del" title="删除">✕</span>'+
+      '<div class="med">'+x.g+'</div>'+
+      '<div class="idn">'+x.id+'</div>'+
+      '<div class="idc">'+x.c+'</div>'+
+      '<div class="plate">'+curName+'</div>'+
+      '<div class="idd">'+x.d+'</div>'+
+      '<div class="idf">JAM PARTY · 上海 · 只此一夜</div>';
+    card.querySelector('.del').addEventListener('click',function(){
+      card.remove();count--;afterChange();
+    });
+    tray.appendChild(card);
+    count++;
+    // reset builder
+    stepPick.classList.remove('show');
+    stepName.style.display='none';
+    nameInput.value='';nameNext.classList.remove('on');
+    afterChange();
+    setTimeout(function(){card.scrollIntoView({behavior:'smooth',block:'center'});},80);
+  }
+
+  function afterChange(){
+    if(count>0){
+      addmore.style.display='block';
+      cta.classList.add('show');
+      nameQ.textContent='再加一位？填名字继续';
     }else{
-      err.textContent='暗号不对，再想想～';
-      pw.value='';
+      addmore.style.display='none';
+      cta.classList.remove('show');
+      stepName.style.display='block';
+      nameQ.textContent='先告诉我们，怎么称呼你？';
     }
   }
-  document.getElementById('go').addEventListener('click',tryOpen);
-  pw.addEventListener('keydown',function(e){if(e.key==='Enter')tryOpen();});
 
-  // 身份卡
-  var cards=document.getElementById('cards'),cta=document.getElementById('cta'),chosen=null;
-  cards.querySelectorAll('.card').forEach(function(card){
-    card.addEventListener('click',function(){
-      cards.querySelectorAll('.card').forEach(function(c){c.classList.remove('sel');});
-      card.classList.add('sel');cards.classList.add('haspick');
-      chosen=card.getAttribute('data-id');
-      document.getElementById('chosen').textContent=chosen;
-      cta.classList.add('show');
-      setTimeout(function(){cta.scrollIntoView({behavior:'smooth',block:'center'});},320);
-    });
+  document.getElementById('addBtn').addEventListener('click',function(){
+    stepName.style.display='block';
+    stepPick.classList.remove('show');
+    nameInput.value='';nameNext.classList.remove('on');
+    setTimeout(function(){nameInput.focus();stepName.scrollIntoView({behavior:'smooth',block:'center'});},60);
   });
 </script>
 </body>
