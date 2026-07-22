@@ -102,6 +102,9 @@
   .jartip.hide{display:none;}
   @keyframes nudge{0%,100%{transform:translateY(0)}50%{transform:translateY(4px)}}
   .jarwrap{max-width:360px;margin:0 auto;}
+  .jarimg{display:block;width:100%;max-width:340px;margin:0 auto;border-radius:16px;cursor:pointer;
+    box-shadow:0 14px 30px rgba(122,39,29,.28);border:3px solid #fff;transition:transform .3s;}
+  .jarimg:active{transform:scale(.97);}
   .jam3d{width:150px;margin:0 auto;cursor:pointer;transition:transform .3s;}
   .jam3d:active{transform:scale(.96);}
   .jam3d .lid{height:26px;margin:0 26px;border-radius:8px 8px 4px 4px;background:linear-gradient(180deg,#b03636,#8a2a2a);box-shadow:inset 0 2px 3px rgba(255,255,255,.25);}
@@ -226,15 +229,7 @@
     <div class="bow reveal">🎀</div>
     <div class="jartip reveal" id="jartip">👆 点一下这罐果酱</div>
     <div class="jarwrap reveal" id="jarwrap">
-      <div class="jam3d" id="jam3d">
-        <div class="lid"></div>
-        <div class="body">
-          <div class="brand">Zi yun<br>&amp; Jin shuai</div>
-          <div class="allnat">ALL NATURAL</div>
-          <div class="jamword">Jam Party</div>
-          <div class="netwt">NET WT 88oz (225g)</div>
-        </div>
-      </div>
+      <img class="jarimg" id="jam3d" src="img/couple-jar.jpg" alt="果酱瓶 · Jam Party">
       <div class="nutri" id="nutri">
         <div class="nt-h"><span>Serving</span><span>Suggestions</span></div>
         <div class="nt-sub"><span>Ingredient</span><span>% Daily Value*</span></div>
