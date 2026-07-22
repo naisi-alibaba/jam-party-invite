@@ -28,6 +28,16 @@
 
   /* rain overlay */
   #rain{position:fixed;inset:0;z-index:2;pointer-events:none;overflow:hidden;}
+  /* music toggle */
+  #music{position:fixed;top:16px;right:16px;z-index:20;display:flex;align-items:center;height:38px;
+    background:rgba(255,250,240,.9);border:1.5px solid var(--berry);border-radius:20px;padding:0 10px;cursor:pointer;
+    box-shadow:0 4px 12px rgba(165,55,44,.2);backdrop-filter:blur(2px);max-width:38px;overflow:hidden;transition:max-width .5s ease;}
+  #music .ico{font-size:18px;line-height:1;display:inline-block;}
+  #music.playing .ico{animation:spin 4s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  #music .tag{white-space:nowrap;font-size:12px;color:var(--berry-deep);margin-left:8px;font-family:"STKaiti",serif;letter-spacing:1px;opacity:0;transition:opacity .4s ease .1s;}
+  #music.show-tag{max-width:230px;}
+  #music.show-tag .tag{opacity:1;}
   .drop{position:absolute;top:-12%;width:1.5px;height:64px;border-radius:2px;
     background:linear-gradient(to bottom, rgba(120,140,170,0), rgba(120,140,170,.38));
     animation:fall linear infinite;}
@@ -152,6 +162,13 @@
   <div id="confetti"></div>
   <div id="rain"></div>
 
+  <!-- 背景音乐：献给永远的 · 大粉乐队 -->
+  <audio id="bgm" loop preload="auto" src="music/bgm.mp3"></audio>
+  <div id="music" aria-label="背景音乐">
+    <span class="ico">🎵</span>
+    <span class="tag">♫ 献给永远的 · 大粉乐队</span>
+  </div>
+
   <section class="hero">
     <div class="jar">🫙</div>
     <div class="names reveal">Zi&nbsp;yun&nbsp;&amp;&nbsp;Jin&nbsp;shuai</div>
@@ -224,7 +241,19 @@
   ];
   var MAP={};IDS.forEach(function(x){MAP[x.id]=x;});
 
-  // confetti speckle (signature bg, static)
+  // ===== 背景音乐 =====
+  var bgm=document.getElementById('bgm'),musicBtn=document.getElementById('music'),started=false,wantOn=true;
+  function showTag(ms){musicBtn.classList.add('show-tag');setTimeout(function(){musicBtn.classList.remove('show-tag');},ms||3200);}
+  function playBgm(){bgm.volume=0.6;var p=bgm.play();if(p&&p.catch){p.then(function(){musicBtn.classList.add('playing');showTag();}).catch(function(){});}else{musicBtn.classList.add('playing');}}
+  function pauseBgm(){bgm.pause();musicBtn.classList.remove('playing');}
+  // 首次交互自动起播（微信/iOS 要求）
+  function firstTouch(){if(started)return;started=true;if(wantOn)playBgm();
+    ['touchstart','click','scroll'].forEach(function(ev){window.removeEventListener(ev,firstTouch);});}
+  ['touchstart','click','scroll'].forEach(function(ev){window.addEventListener(ev,firstTouch,{passive:true});});
+  // 按钮开关
+  musicBtn.addEventListener('click',function(e){e.stopPropagation();
+    if(bgm.paused){wantOn=true;started=true;playBgm();}else{wantOn=false;pauseBgm();}});
+
   (function(){var c=document.getElementById('confetti');var cols=['#cc5648','#a5372c','#e0a9a0','#e9b24a','#7f924f','#4a5a7a'];
     for(var i=0;i<130;i++){var s=document.createElement('i');s.style.left=(Math.random()*100)+'%';s.style.top=(Math.random()*100)+'%';
       s.style.background=cols[(Math.random()*cols.length)|0];s.style.opacity=(0.25+Math.random()*0.45);
