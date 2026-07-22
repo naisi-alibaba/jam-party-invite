@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="format-detection" content="telephone=no">
+<title>果酱派对 · 邀请函</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  :root{--bg:#201812;--ink:#f3e3c4;--ink-dim:#c9b48c;--paper-ink:#5a4636;}
+  html,body{background:var(--bg);color:var(--ink);
+    font-family:"PingFang SC","Microsoft YaHei",sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+  .kai{font-family:"KaiTi","STKaiti","PingFang SC",serif;}
+  .reveal{opacity:0;transform:translateY(24px);transition:opacity .9s ease,transform .9s ease;}
+  .reveal.in{opacity:1;transform:none;}
+  section{padding:0 26px;position:relative;}
+
+  .hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;
+    background:radial-gradient(120% 80% at 50% 0%, #3a2a1c 0%, var(--bg) 62%);}
+  .hero .eyebrow{font-size:13px;letter-spacing:5px;color:var(--ink-dim);margin-bottom:22px;}
+  .hero h1{font-size:52px;letter-spacing:8px;color:var(--ink);text-shadow:0 3px 14px rgba(0,0,0,.5);line-height:1.2;}
+  .hero .en{font-size:12px;letter-spacing:6px;color:#a9711d;margin-top:14px;}
+  .hero .hook{margin-top:34px;font-size:18px;line-height:2;color:var(--ink-dim);max-width:300px;}
+  .scroll-cue{position:absolute;bottom:34px;left:50%;transform:translateX(-50%);font-size:12px;letter-spacing:3px;color:var(--ink-dim);opacity:.7;animation:bob 1.8s ease-in-out infinite;}
+  .scroll-cue span{display:block;font-size:18px;margin-top:4px;}
+  @keyframes bob{0%,100%{transform:translate(-50%,0)}50%{transform:translate(-50%,7px)}}
+
+  .story{padding-top:88px;padding-bottom:70px;text-align:center;}
+  .story p{font-size:18px;line-height:2.1;color:var(--ink);max-width:320px;margin:0 auto 18px;}
+  .story .accent{color:#e0b877;}
+  .info{margin:38px auto 0;max-width:330px;text-align:left;border:1px solid rgba(201,180,140,.25);border-radius:14px;padding:20px 22px;background:rgba(255,255,255,.02);}
+  .info .line{display:flex;gap:12px;padding:9px 0;font-size:15px;line-height:1.6;}
+  .info .line .k{color:var(--ink-dim);white-space:nowrap;}
+  .info .line .v{color:var(--ink);}
+  .info .line+.line{border-top:1px dashed rgba(201,180,140,.18);}
+
+  .ask{padding-top:64px;padding-bottom:20px;text-align:center;}
+  .ask .big{font-size:34px;letter-spacing:4px;color:var(--ink);margin-bottom:22px;}
+  .ask .lead{font-size:16px;line-height:2;color:var(--ink-dim);max-width:320px;margin:0 auto;}
+  .ask .lead b{color:#e0b877;font-weight:400;}
+
+  .cards{padding-top:30px;padding-bottom:26px;display:flex;flex-direction:column;gap:20px;max-width:400px;margin:0 auto;}
+  .card{position:relative;border-radius:18px;padding:22px 22px 20px;overflow:hidden;cursor:pointer;
+    background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(0,0,0,.08)),var(--paper);
+    box-shadow:0 12px 26px rgba(0,0,0,.4),inset 0 0 0 2px rgba(255,255,255,.1);
+    transition:transform .25s ease,box-shadow .25s ease,opacity .35s ease;}
+  .card::before{content:"";position:absolute;inset:9px;border-radius:12px;border:1.5px solid var(--accent);box-shadow:inset 0 0 0 4px var(--paper);pointer-events:none;}
+  .card:active{transform:scale(.98);}
+  .card .head{position:relative;z-index:2;display:flex;align-items:center;gap:16px;}
+  .medallion{width:66px;height:66px;border-radius:50%;flex:none;display:flex;align-items:center;justify-content:center;font-size:34px;
+    background:radial-gradient(circle at 38% 32%,#fff7e8 0%,var(--seal) 80%);box-shadow:0 4px 10px rgba(0,0,0,.3),inset 0 0 0 3px rgba(255,255,255,.35);}
+  .card .name{font-family:"KaiTi","STKaiti",serif;font-weight:700;font-size:34px;letter-spacing:6px;color:#3a2417;}
+  .card .concept{font-family:"KaiTi",serif;font-style:italic;font-size:16px;color:var(--accent);margin-top:3px;letter-spacing:.5px;}
+  .card .desc{position:relative;z-index:2;margin-top:14px;font-size:15px;line-height:1.75;color:var(--paper-ink);}
+  .card .pick{position:relative;z-index:2;margin-top:14px;text-align:center;font-size:13px;letter-spacing:3px;color:var(--accent);border-top:1px solid rgba(0,0,0,.12);padding-top:11px;transition:.2s;}
+  .card.sel{transform:translateY(-2px);box-shadow:0 16px 34px rgba(0,0,0,.5),inset 0 0 0 3px var(--seal),0 0 0 3px var(--seal);}
+  .card.sel .pick{color:#fff;background:var(--seal);border-radius:8px;border-top:0;padding:8px;margin-top:12px;}
+  .cards.haspick .card:not(.sel){opacity:.42;}
+  .c1{--paper:#f4e7cf;--accent:#a9711d;--seal:#c8892a;}
+  .c2{--paper:#efe3e8;--accent:#7a3f63;--seal:#8a4a70;}
+  .c3{--paper:#e3ecdf;--accent:#3c6b60;--seal:#4a7d70;}
+  .c4{--paper:#f3e0d8;--accent:#9e2b2b;--seal:#b03636;}
+  .c5{--paper:#f6e2cf;--accent:#bc531f;--seal:#c75b2a;}
+
+  .cta{padding-top:20px;padding-bottom:110px;text-align:center;max-height:0;overflow:hidden;opacity:0;transition:max-height .6s ease,opacity .6s ease;}
+  .cta.show{max-height:720px;opacity:1;}
+  .cta .youare{font-size:16px;color:var(--ink-dim);margin-bottom:6px;}
+  .cta .youare b{color:#e0b877;font-size:26px;font-family:"KaiTi",serif;letter-spacing:2px;}
+  .cta .tip{font-size:15px;color:var(--ink-dim);line-height:1.95;max-width:300px;margin:16px auto 24px;}
+  .cta .tip .hl{color:#e0b877;}
+  .final{margin-top:36px;font-family:"KaiTi",serif;font-size:16px;line-height:2;color:var(--ink-dim);}
+  .final .strong{color:#e0b877;}
+  .foot{padding:30px 26px 44px;text-align:center;font-size:11px;letter-spacing:3px;color:#6b5a44;}
+</style>
+</head>
+<body>
+  <section class="hero">
+    <div class="eyebrow reveal">上 海 · 只 此 一 夜</div>
+    <h1 class="kai reveal">果酱派对</h1>
+    <div class="en reveal">JAM&nbsp;&nbsp;PARTY</div>
+    <div class="hook reveal">有一夜，上海会多出一个<br>只为你们打开的地方。</div>
+    <div class="scroll-cue">向下<span>⌄</span></div>
+  </section>
+
+  <section class="story">
+    <p class="reveal">推开门，不是酒席，<br>是我们亲手搭的一个小世界。</p>
+    <p class="reveal">我们在上海相遇，<br>也想在这一夜，请你进来<span class="accent">陪我们玩一场</span>。</p>
+    <p class="reveal">没有广发请柬，只找齐了<br>构成我们故事的人——<br><span class="accent">你，是其中一个。</span></p>
+    <div class="info reveal">
+      <div class="line"><span class="k">🕗 时间</span><span class="v">【待填：日期 · 时间】</span></div>
+      <div class="line"><span class="k">📍 地点</span><span class="v">【待填：地址】</span></div>
+      <div class="line"><span class="k">💌 回复</span><span class="v">请在【日期】前告诉我们你来</span></div>
+    </div>
+  </section>
+
+  <section class="ask">
+    <div class="big kai reveal">进来之前，先定一件事</div>
+    <div class="lead reveal">下面五个词，形容的不是我们，是<b>你</b>。<br>没有高低、不分远近，只是五种不同的靠近方式。<br>选一个最贴的——在你眼里，<b>你之于我俩，是哪一种？</b></div>
+  </section>
+
+  <section>
+    <div class="cards" id="cards">
+      <div class="card c1" data-id="灯塔">
+        <div class="head"><div class="medallion">🗼</div><div><div class="name">灯塔</div><div class="concept">那段路，多亏有你</div></div></div>
+        <div class="desc">在某段要紧的路上——入行、求学、某个坎——你实实在在帮过我们、点过我们一下。</div>
+        <div class="pick">选 这 一 种</div>
+      </div>
+      <div class="card c2" data-id="同谋">
+        <div class="head"><div class="medallion">🃏</div><div><div class="name">同谋</div><div class="concept">我们一起干过些没人知道的事</div></div></div>
+        <div class="desc">那些荒唐、鲜活、笑到岔气的另一面，只有你见过。你是那个"共犯"。</div>
+        <div class="pick">选 这 一 种</div>
+      </div>
+      <div class="card c3" data-id="远山">
+        <div class="head"><div class="medallion">⛰️</div><div><div class="name">远山</div><div class="concept">离得再远，我也一直在</div></div></div>
+        <div class="desc">隔着距离和时间，可一开口就回到当年。你来，本身就是最重的一句话。</div>
+        <div class="pick">选 这 一 种</div>
+      </div>
+      <div class="card c4" data-id="江湖">
+        <div class="head"><div class="medallion">⚔️</div><div><div class="name">江湖</div><div class="concept">自己认下的彼此</div></div></div>
+        <div class="desc">没有同窗血缘，是成年后各自挑中、留下的人。全靠选择，所以最难得。</div>
+        <div class="pick">选 这 一 种</div>
+      </div>
+      <div class="card c5" data-id="炉火">
+        <div class="head"><div class="medallion">🔥</div><div><div class="name">炉火</div><div class="concept">有我在，就是主场</div></div></div>
+        <div class="desc">你一到，场子就热了。天生会把人聚拢、把气氛焐热的那个。</div>
+        <div class="pick">选 这 一 种</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta" id="cta">
+    <div class="youare">你认下的是 —— <b id="chosen">灯塔</b></div>
+    <div class="tip">把这一屏<span class="hl">截图，发到我们的群里</span>——<br>就当你，正式入场了。</div>
+    <div class="final kai">
+      果酱会吃完，热闹会散场。<br>
+      但<span class="strong">你今天认下的这一种，会一直留着</span>。
+    </div>
+  </section>
+
+  <div class="foot">JAM PARTY · 上海 · 只此一夜</div>
+
+<script>
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');}});},{threshold:.15});
+  document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});
+  document.querySelectorAll('.hero .reveal').forEach(function(el,i){el.style.transitionDelay=(i*0.18)+'s';});
+  var cards=document.getElementById('cards'),cta=document.getElementById('cta'),chosen=null;
+  cards.querySelectorAll('.card').forEach(function(card){
+    card.addEventListener('click',function(){
+      cards.querySelectorAll('.card').forEach(function(c){c.classList.remove('sel');});
+      card.classList.add('sel');cards.classList.add('haspick');
+      chosen=card.getAttribute('data-id');
+      document.getElementById('chosen').textContent=chosen;
+      cta.classList.add('show');
+      setTimeout(function(){cta.scrollIntoView({behavior:'smooth',block:'center'});},320);
+    });
+  });
+</script>
+</body>
+</html>
