@@ -96,6 +96,31 @@
   .ask .lead{font-size:15.5px;line-height:2.05;color:var(--ink-soft);max-width:320px;margin:0 auto;}
   .ask .lead b{color:var(--berry);font-weight:600;}
 
+  /* jam jar egg */
+  .jarsec{padding-top:54px;padding-bottom:20px;text-align:center;}
+  .jartip{font-size:14px;letter-spacing:2px;color:var(--berry-deep);margin-bottom:12px;animation:nudge 1.8s ease-in-out infinite;}
+  .jartip.hide{display:none;}
+  @keyframes nudge{0%,100%{transform:translateY(0)}50%{transform:translateY(4px)}}
+  .jarwrap{max-width:360px;margin:0 auto;}
+  .jam3d{width:150px;margin:0 auto;cursor:pointer;transition:transform .3s;}
+  .jam3d:active{transform:scale(.96);}
+  .jam3d .lid{height:26px;margin:0 26px;border-radius:8px 8px 4px 4px;background:linear-gradient(180deg,#b03636,#8a2a2a);box-shadow:inset 0 2px 3px rgba(255,255,255,.25);}
+  .jam3d .body{margin-top:3px;border-radius:12px 12px 18px 18px;padding:16px 12px 18px;
+    background:linear-gradient(180deg,#fff8ec 0%,#fdeecf 60%,#8a2f24 60%,#7a271d 100%);
+    box-shadow:0 14px 30px rgba(122,39,29,.35),inset 0 0 0 2px rgba(255,255,255,.5);}
+  .jam3d .brand{font-family:"STKaiti",serif;font-weight:700;color:var(--berry);font-size:17px;line-height:1.15;letter-spacing:1px;text-shadow:1px 1px 0 #fff;}
+  .jam3d .allnat{font-size:8px;letter-spacing:2px;color:#8a6a54;margin-top:3px;}
+  .jam3d .jamword{font-family:"STKaiti",serif;font-style:italic;font-size:22px;color:#3a1f13;margin-top:6px;}
+  .jam3d .netwt{font-size:7px;letter-spacing:1px;color:#5a4636;margin-top:2px;}
+  .nutri{max-height:0;overflow:hidden;opacity:0;transition:max-height .6s ease,opacity .5s ease,margin .5s ease;
+    text-align:left;background:#fffdf7;border:2px solid #2f2a24;border-radius:6px;font-family:"Helvetica Neue",Arial,sans-serif;}
+  .nutri.open{max-height:660px;opacity:1;margin:22px auto 0;padding:14px 16px;}
+  .nutri .nt-h{display:flex;justify-content:space-between;font-size:22px;font-weight:800;color:#241f1a;letter-spacing:.5px;}
+  .nutri .nt-sub{display:flex;justify-content:space-between;font-size:12px;font-weight:700;border-bottom:6px solid #241f1a;padding-bottom:4px;margin-top:2px;color:#241f1a;}
+  .nutri .nt-row{display:flex;justify-content:space-between;font-size:14px;color:#241f1a;padding:7px 0;border-bottom:1px solid #cfc7ba;}
+  .nutri .nt-row b{font-weight:700;}
+  .nutri .nt-foot{font-size:11px;font-style:italic;color:#6b5a44;margin-top:10px;text-align:center;}
+
   /* BUILDER */
   .builder{padding-top:24px;padding-bottom:14px;max-width:400px;margin:0 auto;}
   .step-name{text-align:center;}
@@ -196,6 +221,37 @@
     </div>
   </section>
 
+  <!-- 果酱瓶彩蛋：点一下翻出成分表 -->
+  <section class="jarsec">
+    <div class="bow reveal">🎀</div>
+    <div class="jartip reveal" id="jartip">👆 点一下这罐果酱</div>
+    <div class="jarwrap reveal" id="jarwrap">
+      <div class="jam3d" id="jam3d">
+        <div class="lid"></div>
+        <div class="body">
+          <div class="brand">Zi yun<br>&amp; Jin shuai</div>
+          <div class="allnat">ALL NATURAL</div>
+          <div class="jamword">Jam Party</div>
+          <div class="netwt">NET WT 88oz (225g)</div>
+        </div>
+      </div>
+      <div class="nutri" id="nutri">
+        <div class="nt-h"><span>Serving</span><span>Suggestions</span></div>
+        <div class="nt-sub"><span>Ingredient</span><span>% Daily Value*</span></div>
+        <div class="nt-row"><span>Love 爱</span><b>100%</b></div>
+        <div class="nt-row"><span>Magic 魔法</span><b>25%</b></div>
+        <div class="nt-row"><span>Sweetness 甜</span><b>50%</b></div>
+        <div class="nt-row"><span>Music 音乐</span><b>30%</b></div>
+        <div class="nt-row"><span>Late-night Feels 深夜情绪</span><b>20%</b></div>
+        <div class="nt-row"><span>Peanut Butter 花生酱</span><b>88%</b></div>
+        <div class="nt-row"><span>Jam Session 即兴合奏</span><b>100%</b></div>
+        <div class="nt-row"><span>Glitter 闪粉</span><b>26%</b></div>
+        <div class="nt-row"><span>Candle 烛光</span><b>8%</b></div>
+        <div class="nt-foot">** not for consumption, it's slime **</div>
+      </div>
+    </div>
+  </section>
+
   <section class="ask">
     <div class="bow reveal">🎀</div>
     <div class="big kai reveal" style="margin-top:18px">进来之前，先定一件事</div>
@@ -253,6 +309,13 @@
   // 按钮开关
   musicBtn.addEventListener('click',function(e){e.stopPropagation();
     if(bgm.paused){wantOn=true;started=true;playBgm();}else{wantOn=false;pauseBgm();}});
+
+  // 果酱瓶 → 展开成分表
+  (function(){var jam=document.getElementById('jam3d'),nutri=document.getElementById('nutri'),jt=document.getElementById('jartip');
+    if(jam){jam.addEventListener('click',function(){var open=nutri.classList.toggle('open');
+      if(jt)jt.classList.add('hide');
+      if(open)setTimeout(function(){nutri.scrollIntoView({behavior:'smooth',block:'center'});},260);});}
+  })();
 
   (function(){var c=document.getElementById('confetti');var cols=['#cc5648','#a5372c','#e0a9a0','#e9b24a','#7f924f','#4a5a7a'];
     for(var i=0;i<130;i++){var s=document.createElement('i');s.style.left=(Math.random()*100)+'%';s.style.top=(Math.random()*100)+'%';
