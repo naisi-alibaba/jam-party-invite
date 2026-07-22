@@ -55,6 +55,7 @@
   .info .line+.line{border-top:1px dashed rgba(204,86,72,.35);}
   .mapbtn{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:12px;text-decoration:none;border:0;border-radius:12px;padding:14px;color:#fff;font-size:15px;letter-spacing:2px;font-weight:600;background:linear-gradient(180deg,#d96253,var(--berry-deep));box-shadow:0 8px 18px rgba(165,55,44,.3);}
   .mapbtn:active{transform:scale(.98);}
+  .calbtn{margin-top:10px;background:#fff;color:var(--berry-deep);border:2px solid var(--berry);}
 
   .jarsec{padding-top:54px;padding-bottom:20px;text-align:center;}
   .jartip{font-size:14px;letter-spacing:2px;color:var(--berry-deep);margin-bottom:12px;animation:nudge 1.8s ease-in-out infinite;}
@@ -106,6 +107,14 @@
   .keepjar .jc-plate .who{display:inline-block;font-family:"STKaiti",serif;font-size:24px;letter-spacing:3px;color:#3a1f13;padding:4px 20px;position:relative;}
   .keepjar .jc-plate .who::before,.keepjar .jc-plate .who::after{content:"🎀";font-size:13px;position:absolute;top:50%;transform:translateY(-50%);} .keepjar .jc-plate .who::before{left:-4px;} .keepjar .jc-plate .who::after{right:-4px;}
   .keepjar .del{position:absolute;top:26px;right:10px;z-index:4;font-size:15px;color:var(--accent);opacity:.5;cursor:pointer;}
+  .keepjar .savebtn{display:inline-block;margin-top:12px;font-size:13px;letter-spacing:2px;color:#fff;background:var(--seal);border:0;border-radius:20px;padding:9px 22px;cursor:pointer;font-family:"Songti SC",serif;}
+  .keepjar .savebtn:active{transform:scale(.97);}
+  /* 分享图弹层 */
+  .shareM{position:fixed;inset:0;z-index:50;display:none;flex-direction:column;align-items:center;justify-content:center;background:rgba(40,20,12,.8);padding:24px;}
+  .shareM.show{display:flex;}
+  .shareM img{max-width:82%;max-height:74vh;border-radius:12px;box-shadow:0 16px 40px rgba(0,0,0,.5);}
+  .shareM .st{color:#fff;font-family:"STKaiti",serif;margin-top:16px;font-size:15px;letter-spacing:1px;text-align:center;line-height:1.7;}
+  .shareM .sc{margin-top:16px;font-size:14px;color:#f3e0d0;border:1px solid rgba(255,255,255,.4);border-radius:20px;padding:9px 24px;}
 
   .addmore{max-width:400px;margin:18px auto 0;padding:0 28px;text-align:center;}
   .addmore button{border:2px dashed var(--berry);background:#fffaf0;color:var(--berry-deep);font-size:15px;letter-spacing:2px;padding:13px 28px;border-radius:40px;cursor:pointer;font-family:"Songti SC",serif;}
@@ -162,6 +171,7 @@
 
   <!-- arrival overlay -->
   <div class="arrival" id="arrival"><div class="arr-stage" id="arrStage"></div></div>
+  <div class="shareM" id="shareM"><img id="shareImg" alt="我的果酱瓶"><div class="st">长按图片 · 保存到相册，发给我们 / 发朋友圈</div><div class="sc" id="shareClose">关闭</div></div>
 
   <section class="hero">
     <div class="jar-hero">🫙</div>
@@ -187,6 +197,7 @@
       <div class="line"><span class="k">🕗 时间</span><span class="v">2026年8月8日（周六）18:00</span></div>
       <div class="line"><span class="k">📍 地点</span><span class="v">上海汉口路309号 · 申报馆顶楼（城之央）</span></div>
       <a class="mapbtn" id="mapbtn" href="https://uri.amap.com/search?keyword=%E7%94%B3%E6%8A%A5%E9%A6%86%EF%BC%88%E6%B1%89%E5%8F%A3%E8%B7%AF309%E5%8F%B7%EF%BC%89&city=%E4%B8%8A%E6%B5%B7&src=invite&callnative=1">📍 打开地图 · 导航过去</a>
+      <a class="mapbtn calbtn" id="calbtn" href="#">📅 加入日历 · 别忘了这天</a>
     </div>
   </section>
 
@@ -259,9 +270,8 @@
   ];
   var MAP={};IDS.forEach(function(x){MAP[x.id]=x;});
 
-  // 写实果酱瓶 SVG
-  function jarSVG(x,uid){var s=x.seal,a=x.acc,cid='clip'+uid;return ''+
-    '<svg class="jarsvg" viewBox="0 0 120 154" xmlns="http://www.w3.org/2000/svg">'+
+  // 写实果酱瓶 SVG（内部图形，可复用）
+  function jarGuts(x,uid){var s=x.seal,a=x.acc,cid='clip'+uid;return ''+
     '<defs><clipPath id="'+cid+'"><rect x="28" y="32" width="64" height="114" rx="16"/></clipPath>'+
     '<linearGradient id="g'+uid+'" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ffffff" stop-opacity=".55"/><stop offset=".5" stop-color="#ffffff" stop-opacity="0"/><stop offset="1" stop-color="#000000" stop-opacity=".06"/></linearGradient></defs>'+
     '<path d="M52 8 L40 3 38 16 54 13Z" fill="#e3a9a2"/><path d="M68 8 L80 3 82 16 66 13Z" fill="#e3a9a2"/><circle cx="60" cy="11" r="3.6" fill="#d4948c"/>'+
@@ -272,7 +282,27 @@
     '<rect x="28" y="32" width="64" height="114" fill="url(#g'+uid+')"/></g>'+
     '<rect x="37" y="54" width="46" height="44" rx="5" fill="#fffef9" stroke="'+a+'" stroke-width="1.2" stroke-dasharray="3 2"/>'+
     '<text x="60" y="72" text-anchor="middle" font-size="16">'+x.g+'</text>'+
-    '<text x="60" y="92" text-anchor="middle" font-size="17" font-family="STKaiti,KaiTi,serif" font-weight="700" fill="#3a2417" letter-spacing="2">'+x.id+'</text>'+
+    '<text x="60" y="92" text-anchor="middle" font-size="17" font-family="STKaiti,KaiTi,serif" font-weight="700" fill="#3a2417" letter-spacing="2">'+x.id+'</text>';}
+  function jarSVG(x,uid){return '<svg class="jarsvg" viewBox="0 0 120 154" xmlns="http://www.w3.org/2000/svg">'+jarGuts(x,uid)+'</svg>';}
+
+  // 个人分享海报 SVG（导出图片用）
+  function posterSVG(m){var x=MAP[m.id],uid='p'+(++UID),nm=esc(m.nm);return ''+
+    '<svg xmlns="http://www.w3.org/2000/svg" width="560" height="880" viewBox="0 0 560 880">'+
+    '<defs><pattern id="grid'+uid+'" width="34" height="34" patternUnits="userSpaceOnUse"><path d="M17 11 V23 M11 17 H23" stroke="#eab9b2" stroke-width="1.1" fill="none" opacity="0.5"/></pattern></defs>'+
+    '<rect width="560" height="880" fill="#fbf2e0"/><rect width="560" height="880" fill="url(#grid'+uid+')"/>'+
+    '<rect x="18" y="18" width="524" height="844" rx="26" fill="none" stroke="'+x.seal+'" stroke-width="2.5"/>'+
+    '<text x="280" y="96" text-anchor="middle" font-size="26" font-family="STKaiti,serif" fill="#a5372c" letter-spacing="3">Zi yun &amp; Jin shuai</text>'+
+    '<text x="280" y="150" text-anchor="middle" font-size="54" font-family="STKaiti,KaiTi,serif" font-weight="700" fill="#cc5648" letter-spacing="6">果酱派对</text>'+
+    '<text x="280" y="178" text-anchor="middle" font-size="15" fill="#7f924f" letter-spacing="6">✦  JAM  PARTY  ✦</text>'+
+    '<g transform="translate(190,220) scale(1.5)">'+jarGuts(x,uid)+'</g>'+
+    '<text x="280" y="530" text-anchor="middle" font-size="20" font-family="STKaiti,serif" fill="#a5372c">🎀</text>'+
+    '<text x="280" y="576" text-anchor="middle" font-size="44" font-family="STKaiti,KaiTi,serif" font-weight="700" fill="#3a1f13" letter-spacing="4">'+nm+'</text>'+
+    '<text x="280" y="626" text-anchor="middle" font-size="30" font-family="STKaiti,serif" font-weight="700" fill="'+x.acc+'" letter-spacing="6">'+x.id+'</text>'+
+    '<text x="280" y="664" text-anchor="middle" font-size="18" font-family="STKaiti,serif" font-style="italic" fill="'+x.acc+'">'+x.c+'</text>'+
+    '<line x1="150" y1="710" x2="410" y2="710" stroke="'+x.seal+'" stroke-width="1" opacity="0.5"/>'+
+    '<text x="280" y="758" text-anchor="middle" font-size="18" font-family="STKaiti,serif" fill="#5c3b2c">我是子昀 &amp; 金帅的「'+x.id+'」</text>'+
+    '<text x="280" y="812" text-anchor="middle" font-size="16" fill="#8a6a54" letter-spacing="1">2026.08.08 周六 18:00 · 上海申报馆顶楼</text>'+
+    '<text x="280" y="840" text-anchor="middle" font-size="12" fill="#b09070" letter-spacing="3">只 此 一 夜 · 等 你 来</text>'+
     '</svg>';}
 
   // 抱着果酱瓶的小人 SVG（手绘）
@@ -407,7 +437,8 @@
   });
 
   function keepCard(m){var x=MAP[m.id];var card=document.createElement('div');card.className='jarcard keepjar '+x.cls;
-    card.innerHTML=jarInner(x,++UID)+'<div class="jc-plate"><span class="who">'+esc(m.nm)+'</span></div>';
+    card.innerHTML=jarInner(x,++UID)+'<div class="jc-plate"><span class="who">'+esc(m.nm)+'</span></div><button class="savebtn">🎴 生成我的果酱瓶</button>';
+    card.querySelector('.savebtn').addEventListener('click',function(){makePoster(m);});
     tray.appendChild(card);return card;}
 
   function settleCrew(){
@@ -422,6 +453,32 @@
   load();
   if(settled.length){settled.forEach(function(m){keepCard(m);});cta.classList.add('show');}
   if(crew.length){renderRoster();}
+
+  // ===== ① 加入日历（.ics）=====
+  document.getElementById('calbtn').addEventListener('click',function(e){e.preventDefault();
+    var ics=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//JamParty//CN','BEGIN:VEVENT',
+      'UID:jamparty-20260808@naisi','DTSTAMP:20260723T000000Z',
+      'DTSTART;TZID=Asia/Shanghai:20260808T180000','DTEND;TZID=Asia/Shanghai:20260808T220000',
+      'SUMMARY:果酱派对 · 子昀&金帅','LOCATION:上海汉口路309号 申报馆顶楼（城之央）',
+      'DESCRIPTION:久等了朋友，那晚来陪我们玩一场。','BEGIN:VALARM','TRIGGER:-P1D','ACTION:DISPLAY','DESCRIPTION:明天就是果酱派对啦','END:VALARM',
+      'END:VEVENT','END:VCALENDAR'].join('\r\n');
+    var blob=new Blob([ics],{type:'text/calendar'});var url=URL.createObjectURL(blob);
+    var a=document.createElement('a');a.href=url;a.download='果酱派对.ics';document.body.appendChild(a);a.click();
+    setTimeout(function(){document.body.removeChild(a);URL.revokeObjectURL(url);},500);});
+
+  // ===== ② 生成个人分享图 =====
+  var shareM=document.getElementById('shareM'),shareImg=document.getElementById('shareImg');
+  document.getElementById('shareClose').addEventListener('click',function(){shareM.classList.remove('show');});
+  function makePoster(m){
+    var svg=posterSVG(m);var b64=btoa(unescape(encodeURIComponent(svg)));
+    var img=new Image();img.crossOrigin='anonymous';
+    img.onload=function(){var sc=2;var cv=document.createElement('canvas');cv.width=560*sc;cv.height=880*sc;
+      var ctx=cv.getContext('2d');ctx.scale(sc,sc);ctx.drawImage(img,0,0,560,880);
+      try{shareImg.src=cv.toDataURL('image/png');}catch(e){shareImg.src='data:image/svg+xml;base64,'+b64;}
+      shareM.classList.add('show');};
+    img.onerror=function(){shareImg.src='data:image/svg+xml;base64,'+b64;shareM.classList.add('show');};
+    img.src='data:image/svg+xml;base64,'+b64;
+  }
 </script>
 </body>
 </html>
