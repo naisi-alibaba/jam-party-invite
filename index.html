@@ -16,9 +16,6 @@
     background:radial-gradient(120% 70% at 50% 0%, rgba(233,178,74,.10), transparent 55%),radial-gradient(100% 55% at 50% 120%, rgba(204,86,72,.08), transparent 60%);}
   #confetti{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;}
   #confetti i{position:absolute;width:4px;height:4px;border-radius:1px;display:block;}
-  #rain{position:fixed;inset:0;z-index:2;pointer-events:none;overflow:hidden;}
-  .drop{position:absolute;top:-12%;width:1.5px;border-radius:2px;background:linear-gradient(to bottom, rgba(120,140,170,0), rgba(120,140,170,.38));animation:fall linear infinite;}
-  @keyframes fall{0%{transform:translateY(-20vh) rotate(8deg);}100%{transform:translateY(120vh) rotate(8deg);}}
 
   #music{position:fixed;top:16px;right:16px;z-index:30;display:flex;align-items:center;height:38px;background:rgba(255,250,240,.92);border:1.5px solid var(--berry);border-radius:20px;padding:0 10px;cursor:pointer;box-shadow:0 4px 12px rgba(165,55,44,.2);max-width:38px;overflow:hidden;transition:max-width .5s ease;}
   #music .ico{font-size:18px;line-height:1;}
@@ -123,15 +120,20 @@
   /* ===== arrival animation ===== */
   .arrival{position:fixed;inset:0;z-index:40;display:none;align-items:center;justify-content:center;background:rgba(58,31,19,.5);backdrop-filter:blur(3px);}
   .arrival.show{display:flex;}
-  .arr-stage{text-align:center;transform:scale(.05);opacity:0;}
-  .arrival.show .arr-stage{animation:arrIn 6s cubic-bezier(.33,.12,.5,1) forwards;}
-  @keyframes arrIn{0%{transform:scale(.035) translateY(80px);opacity:0;filter:blur(2px);}16%{opacity:1;filter:blur(0);}92%{transform:scale(1.03);}100%{transform:scale(1);opacity:1;}}
-  .arr-crew{display:flex;align-items:flex-end;justify-content:center;gap:8px;}
+  .arrival{position:fixed;inset:0;z-index:40;display:none;align-items:center;justify-content:center;
+    background:radial-gradient(60% 55% at 50% 46%, rgba(90,50,25,.35), rgba(58,31,19,.82) 78%);backdrop-filter:blur(3px);}
+  .arrival.show{display:flex;}
+  .arr-stage{text-align:center;transform:scale(.06);opacity:0;padding:0 20px;}
+  .arrival.show .arr-stage{animation:arrIn 3.6s cubic-bezier(.2,.7,.28,1) forwards;}
+  @keyframes arrIn{0%{transform:scale(.05) translateY(60px);opacity:0;filter:blur(2px);}22%{opacity:1;filter:blur(0);}88%{transform:scale(1.04);}100%{transform:scale(1);opacity:1;}}
+  .arr-skip{position:fixed;top:20px;right:20px;font-size:13px;letter-spacing:2px;color:#fff;opacity:.65;}
+  .arr-crew{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:center;gap:6px 4px;max-width:340px;margin:0 auto;}
   .arr-figure{display:flex;flex-direction:column;align-items:center;animation:run .44s ease-in-out infinite;}
   @keyframes run{0%,100%{transform:translateY(0) rotate(-2.5deg);}50%{transform:translateY(-9px) rotate(2.5deg);}}
   .arr-svg{width:120px;filter:drop-shadow(0 10px 16px rgba(0,0,0,.4));}
-  .arr-crew .arr-svg{width:112px;}
-  .arr-figure .fn{margin-top:6px;font-family:"STKaiti",serif;font-size:15px;color:#fff;letter-spacing:1px;text-shadow:0 2px 8px rgba(0,0,0,.55);}
+  .arr-crew .arr-figure:nth-child(n+3) .arr-svg{width:96px;}
+  .arr-crew .arr-figure:nth-child(n+5) .arr-svg{width:78px;}
+  .arr-figure .fn{margin-top:4px;font-family:"STKaiti",serif;font-size:15px;color:#fff;letter-spacing:1px;text-shadow:0 2px 8px rgba(0,0,0,.55);}
   .arr-name{margin-top:20px;font-family:"STKaiti",serif;font-size:26px;color:#fff;letter-spacing:2px;text-shadow:0 2px 10px rgba(0,0,0,.5);}
   .arr-name b{color:var(--butter);}
 
@@ -154,7 +156,6 @@
 </head>
 <body>
   <div id="confetti"></div>
-  <div id="rain"></div>
 
   <audio id="bgm" loop preload="auto" src="music/bgm.mp3"></audio>
   <div id="music" aria-label="背景音乐"><span class="ico">🎵</span><span class="tag">♫ 献给永远的 · 大粉乐队</span></div>
@@ -335,8 +336,7 @@
 
   // ===== confetti + rain =====
   (function(){var c=document.getElementById('confetti');var cols=['#cc5648','#a5372c','#e0a9a0','#e9b24a','#7f924f','#4a5a7a'];
-    for(var i=0;i<130;i++){var s=document.createElement('i');s.style.left=(Math.random()*100)+'%';s.style.top=(Math.random()*100)+'%';s.style.background=cols[(Math.random()*cols.length)|0];s.style.opacity=(0.25+Math.random()*0.45);var sz=3+Math.random()*3;s.style.width=sz+'px';s.style.height=sz+'px';s.style.transform='rotate('+(Math.random()*90)+'deg)';c.appendChild(s);}})();
-  (function(){var r=document.getElementById('rain');for(var i=0;i<24;i++){var d=document.createElement('div');d.className='drop';d.style.left=(Math.random()*100)+'%';var dur=(0.8+Math.random()*0.9);d.style.animationDuration=dur+'s';d.style.animationDelay=(-Math.random()*dur)+'s';d.style.height=(44+Math.random()*36)+'px';d.style.opacity=(0.12+Math.random()*0.2);r.appendChild(d);}})();
+    for(var i=0;i<160;i++){var s=document.createElement('i');s.style.left=(Math.random()*100)+'%';s.style.top=(Math.random()*100)+'%';s.style.background=cols[(Math.random()*cols.length)|0];s.style.opacity=(0.25+Math.random()*0.45);var sz=3+Math.random()*3;s.style.width=sz+'px';s.style.height=sz+'px';s.style.transform='rotate('+(Math.random()*90)+'deg)';c.appendChild(s);}})();
 
   // ===== reveals =====
   var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting)e.target.classList.add('in');});},{threshold:.14});
@@ -359,7 +359,12 @@
   var roster=document.getElementById('roster'),rlist=document.getElementById('rlist'),rtitle=document.getElementById('rtitle');
   var addBtn=document.getElementById('addBtn'),enterBtn=document.getElementById('enterBtn');
   var curName="",busy=false;
-  var crew=[]; // 待入场名单 [{x,nm}]
+  var crew=[];      // 待入场 [{id,nm,li}]
+  var settled=[];   // 已入场 [{id,nm,li}]
+  function esc(s){return String(s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
+  var STORE='jamparty_v1';
+  function save(){try{localStorage.setItem(STORE,JSON.stringify({crew:crew,settled:settled}));}catch(e){}}
+  function load(){try{var s=JSON.parse(localStorage.getItem(STORE)||'{}');if(s.crew)crew=s.crew;if(s.settled)settled=s.settled;}catch(e){}}
 
   nameInput.addEventListener('input',function(){nameNext.classList.toggle('on',!!nameInput.value.trim());});
   nameInput.addEventListener('keydown',function(e){if(e.key==='Enter'&&nameInput.value.trim())toPick();});
@@ -368,7 +373,7 @@
     setTimeout(function(){stepPick.scrollIntoView({behavior:'smooth',block:'start'});},60);}
 
   // 选一罐 → 加入待入场名单（不立刻放动画）
-  function choose(idName){crew.push({x:MAP[idName],nm:curName,lk:pickLook()});
+  function choose(idName){crew.push({id:idName,nm:curName,li:(Math.random()*LOOKS.length)|0});save();
     stepPick.classList.remove('show');stepName.style.display='none';nameInput.value='';nameNext.classList.remove('on');
     renderRoster();setTimeout(function(){roster.scrollIntoView({behavior:'smooth',block:'center'});},80);}
 
@@ -376,9 +381,9 @@
     roster.style.display=crew.length?'block':'none';
     rtitle.textContent=crew.length>1?('这一队，'+crew.length+' 个人，准备入场——'):'已经在门口的——';
     rlist.innerHTML='';
-    crew.forEach(function(m,i){var chip=document.createElement('div');chip.className='rchip';
-      chip.innerHTML=miniPersonSVG(m.x,m.lk)+'<div class="rn">'+m.nm+'</div><span class="rx">✕</span>';
-      chip.querySelector('.rx').addEventListener('click',function(){crew.splice(i,1);renderRoster();});
+    crew.forEach(function(m,i){var x=MAP[m.id],lk=LOOKS[m.li];var chip=document.createElement('div');chip.className='rchip';
+      chip.innerHTML=miniPersonSVG(x,lk)+'<div class="rn">'+esc(m.nm)+'</div><span class="rx">✕</span>';
+      chip.querySelector('.rx').addEventListener('click',function(){crew.splice(i,1);save();renderRoster();});
       rlist.appendChild(chip);});
     enterBtn.textContent=crew.length>1?'🎉 一起入场！':'🎉 入场！';
   }
@@ -388,25 +393,35 @@
     nameQ.textContent='再加一位，怎么称呼？';
     setTimeout(function(){nameInput.focus();stepName.scrollIntoView({behavior:'smooth',block:'center'});},60);});
 
-  // 一起入场：几个人几个小人肩并肩跑来（6s）
+  // 一起入场：几个人几个小人一起跑来
   enterBtn.addEventListener('click',function(){
     if(busy||!crew.length)return;busy=true;
-    var figs=crew.map(function(m){return '<div class="arr-figure">'+personSVG(m.x,m.lk)+'<div class="fn">'+m.nm+'</div></div>';}).join('');
-    var names=crew.map(function(m){return m.nm;}).join(' · ');
-    arrStage.innerHTML='<div class="arr-crew">'+figs+'</div><div class="arr-name">「<b>'+names+'</b>」，来了！</div>';
+    var figs=crew.map(function(m){return '<div class="arr-figure">'+personSVG(MAP[m.id],LOOKS[m.li])+'<div class="fn">'+esc(m.nm)+'</div></div>';}).join('');
+    var names=crew.map(function(m){return esc(m.nm);}).join(' · ');
+    arrStage.innerHTML='<div class="arr-skip" id="arrSkip">点击跳过 ›</div><div class="arr-crew">'+figs+'</div><div class="arr-name">「<b>'+names+'</b>」，来了！</div>';
     arrStage.className='arr-stage';
     arrival.classList.add('show');
-    setTimeout(function(){arrival.classList.remove('show');settleCrew();busy=false;},6000);
+    var done=false;function finish(){if(done)return;done=true;arrival.classList.remove('show');settleCrew();busy=false;}
+    var t=setTimeout(finish,3600);
+    arrival.onclick=function(){clearTimeout(t);finish();};
   });
 
+  function keepCard(m){var x=MAP[m.id];var card=document.createElement('div');card.className='jarcard keepjar '+x.cls;
+    card.innerHTML=jarInner(x,++UID)+'<div class="jc-plate"><span class="who">'+esc(m.nm)+'</span></div>';
+    tray.appendChild(card);return card;}
+
   function settleCrew(){
-    crew.forEach(function(m){var card=document.createElement('div');card.className='jarcard keepjar '+m.x.cls;
-      card.innerHTML=jarInner(m.x,++UID)+'<div class="jc-plate"><span class="who">'+m.nm+'</span></div>';
-      tray.appendChild(card);});
-    crew=[];renderRoster();roster.style.display='none';
+    var first=null;
+    crew.forEach(function(m){settled.push(m);var c=keepCard(m);if(!first)first=c;});
+    crew=[];save();renderRoster();roster.style.display='none';
     cta.classList.add('show');
-    setTimeout(function(){cta.scrollIntoView({behavior:'smooth',block:'center'});},120);
+    setTimeout(function(){(first||cta).scrollIntoView({behavior:'smooth',block:'center'});},120);
   }
+
+  // 恢复上次进度
+  load();
+  if(settled.length){settled.forEach(function(m){keepCard(m);});cta.classList.add('show');}
+  if(crew.length){renderRoster();}
 </script>
 </body>
 </html>
