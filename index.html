@@ -76,26 +76,19 @@
   .ask .lead{font-size:15.5px;line-height:2.05;color:var(--ink-soft);max-width:320px;margin:0 auto;}
   .ask .lead b{color:var(--berry);font-weight:600;}
 
-  /* ===== JAR (identity as jam jar) ===== */
-  .jarcard{position:relative;width:100%;max-width:330px;margin:0 auto;cursor:pointer;transition:transform .2s;}
+  /* ===== JAR (SVG realistic) ===== */
+  .jarcard{position:relative;width:100%;max-width:300px;margin:0 auto;cursor:pointer;transition:transform .2s;text-align:center;}
   .jarcard:active{transform:scale(.98);}
-  .jc-cap{width:52%;height:22px;margin:0 auto;border-radius:9px 9px 5px 5px;background:linear-gradient(180deg,var(--seal),rgba(0,0,0,.18));box-shadow:inset 0 2px 3px rgba(255,255,255,.4);display:flex;align-items:center;justify-content:center;}
-  .jc-cap span{font-size:8px;letter-spacing:2px;color:#fff;opacity:.9;}
-  .jc-glass{position:relative;margin-top:-1px;border-radius:14px 14px 20px 20px;overflow:hidden;padding:18px 16px 20px;
-    background:linear-gradient(180deg,#fff8ec 0%,#fff8ec 60%,var(--seal) 60%,var(--seal) 100%);
-    box-shadow:0 12px 26px rgba(120,70,40,.22),inset 0 0 0 2px rgba(255,255,255,.55);}
-  .jc-label{position:relative;z-index:2;background:#fffef9;border-radius:10px;padding:14px 14px 12px;box-shadow:0 4px 10px rgba(0,0,0,.12);border:1px dashed var(--accent);text-align:center;}
-  .jc-emoji{width:52px;height:52px;border-radius:50%;margin:0 auto 6px;display:flex;align-items:center;justify-content:center;font-size:27px;background:radial-gradient(circle at 38% 32%,#fff7e8,var(--seal) 82%);box-shadow:inset 0 0 0 2px rgba(255,255,255,.6);}
-  .jc-name{font-family:"STKaiti",serif;font-weight:700;font-size:29px;letter-spacing:6px;color:#3a2417;text-indent:6px;}
-  .jc-concept{font-family:"STKaiti",serif;font-style:italic;font-size:14px;color:var(--accent);margin-top:2px;}
-  .jc-desc{font-size:13px;line-height:1.7;color:#6b4a36;margin-top:9px;}
-  .jc-pick{position:relative;z-index:2;margin-top:12px;text-align:center;font-size:12px;letter-spacing:4px;color:#fff;background:var(--seal);border-radius:8px;padding:9px;}
-  .cards{display:flex;flex-direction:column;gap:22px;}
-  .c1{--paper:#fbeccb;--accent:#b8801f;--seal:#c8892a;}
-  .c2{--paper:#f6e6ec;--accent:#8a4a70;--seal:#9c5580;}
-  .c3{--paper:#e6efe2;--accent:#4a7d70;--seal:#568a7c;}
-  .c4{--paper:#f8e4dc;--accent:#b03636;--seal:#c04545;}
-  .c5{--paper:#fbe7d2;--accent:#c75b2a;--seal:#d16632;}
+  .jarsvg{display:block;width:172px;margin:0 auto;filter:drop-shadow(0 12px 20px rgba(120,70,40,.24));}
+  .jc-concept{font-family:"STKaiti",serif;font-style:italic;font-size:15px;color:var(--accent);margin-top:10px;}
+  .jc-desc{font-size:13.5px;line-height:1.7;color:#6b4a36;margin:8px auto 0;max-width:280px;}
+  .jc-pick{margin-top:14px;display:inline-block;font-size:12px;letter-spacing:4px;color:#fff;background:var(--seal);border-radius:8px;padding:9px 28px;}
+  .cards{display:flex;flex-direction:column;gap:32px;}
+  .c1{--accent:#a9711d;--seal:#c8892a;}
+  .c2{--accent:#8a4a70;--seal:#9c5580;}
+  .c3{--accent:#356b5c;--seal:#568a7c;}
+  .c4{--accent:#a5372c;--seal:#c04545;}
+  .c5{--accent:#a5431a;--seal:#d16632;}
 
   .builder{padding-top:24px;padding-bottom:14px;max-width:400px;margin:0 auto;}
   .step-name{text-align:center;}
@@ -130,16 +123,14 @@
   /* ===== arrival animation ===== */
   .arrival{position:fixed;inset:0;z-index:40;display:none;align-items:center;justify-content:center;background:rgba(58,31,19,.5);backdrop-filter:blur(3px);}
   .arrival.show{display:flex;}
-  .arr-stage{text-align:center;transform:scale(.12);opacity:0;}
-  .arrival.show .arr-stage{animation:arrIn 1.6s cubic-bezier(.18,.9,.24,1) forwards;}
-  @keyframes arrIn{0%{transform:scale(.1) translateY(30px);opacity:0;}55%{opacity:1;}78%{transform:scale(1.07) translateY(0);}100%{transform:scale(1);opacity:1;}}
-  .arr-figure{position:relative;display:inline-block;}
-  .arr-person{font-size:120px;line-height:1;filter:drop-shadow(0 8px 14px rgba(0,0,0,.35));}
-  .arr-mini{position:absolute;left:50%;bottom:30%;transform:translateX(-50%);width:48px;border-radius:6px 6px 9px 9px;overflow:hidden;box-shadow:0 6px 14px rgba(0,0,0,.45);border:2px solid #fff;}
-  .arr-mini .mc-cap{height:9px;background:var(--seal);}
-  .arr-mini .mc-body{background:linear-gradient(180deg,#fff8ec 0 55%,var(--seal) 55% 100%);padding:5px 2px 6px;text-align:center;}
-  .arr-mini .mc-emoji{font-size:14px;} .arr-mini .mc-name{font-family:"STKaiti",serif;font-weight:700;font-size:13px;color:#3a2417;letter-spacing:1px;}
-  .arr-name{margin-top:20px;font-family:"STKaiti",serif;font-size:27px;color:#fff;letter-spacing:2px;text-shadow:0 2px 10px rgba(0,0,0,.5);}
+  .arr-stage{text-align:center;transform:scale(.08);opacity:0;}
+  .arrival.show .arr-stage{animation:arrIn 2.2s cubic-bezier(.16,.7,.3,1) forwards;}
+  @keyframes arrIn{0%{transform:scale(.06) translateY(40px);opacity:0;}30%{opacity:1;}85%{transform:scale(1.05);}100%{transform:scale(1);opacity:1;}}
+  .arr-figure{display:inline-block;animation:run .42s ease-in-out infinite;}
+  .arrival.show .arr-figure{animation:run .42s ease-in-out infinite;}
+  @keyframes run{0%,100%{transform:translateY(0) rotate(-2deg);}50%{transform:translateY(-7px) rotate(2deg);}}
+  .arr-svg{width:150px;height:188px;filter:drop-shadow(0 10px 16px rgba(0,0,0,.4));}
+  .arr-name{margin-top:16px;font-family:"STKaiti",serif;font-size:27px;color:#fff;letter-spacing:2px;text-shadow:0 2px 10px rgba(0,0,0,.5);}
   .arr-name b{color:var(--butter);}
   .arr-sub{margin-top:6px;font-size:13px;color:#f3e0d0;letter-spacing:3px;opacity:.9;}
 </style>
@@ -236,15 +227,55 @@
 <script>
   var MAP_URL="https://uri.amap.com/search?keyword=%E7%94%B3%E6%8A%A5%E9%A6%86%EF%BC%88%E6%B1%89%E5%8F%A3%E8%B7%AF309%E5%8F%B7%EF%BC%89&city=%E4%B8%8A%E6%B5%B7&src=invite&callnative=1";
   var IDS=[
-    {id:"灯塔",cls:"c1",g:"🗼",c:"那段路，多亏有你",d:"在某段要紧的路上——入行、求学、某个坎——你实实在在帮过我们、点过我们一下。"},
-    {id:"同谋",cls:"c2",g:"🃏",c:"我们一起干过些没人知道的事",d:"那些荒唐、鲜活、笑到岔气的另一面，只有你见过。你是那个“共犯”。"},
-    {id:"远山",cls:"c3",g:"⛰️",c:"离得再远，我也一直在",d:"隔着距离和时间，可一开口就回到当年。你来，本身就是最重的一句话。"},
-    {id:"江湖",cls:"c4",g:"⚔️",c:"自己认下的彼此",d:"没有同窗血缘，是成年后各自挑中、留下的人。全靠选择，所以最难得。"},
-    {id:"炉火",cls:"c5",g:"🔥",c:"有我在，就是主场",d:"你一到，场子就热了。天生会把人聚拢、把气氛焐热的那个。"}
+    {id:"灯塔",cls:"c1",g:"🗼",seal:"#c8892a",acc:"#a9711d",c:"那段路，多亏有你",d:"在某段要紧的路上——入行、求学、某个坎——你实实在在帮过我们、点过我们一下。"},
+    {id:"同谋",cls:"c2",g:"🃏",seal:"#9c5580",acc:"#8a4a70",c:"我们一起干过些没人知道的事",d:"那些荒唐、鲜活、笑到岔气的另一面，只有你见过。你是那个“共犯”。"},
+    {id:"远山",cls:"c3",g:"⛰️",seal:"#568a7c",acc:"#356b5c",c:"离得再远，我也一直在",d:"隔着距离和时间，可一开口就回到当年。你来，本身就是最重的一句话。"},
+    {id:"江湖",cls:"c4",g:"⚔️",seal:"#c04545",acc:"#a5372c",c:"自己认下的彼此",d:"没有同窗血缘，是成年后各自挑中、留下的人。全靠选择，所以最难得。"},
+    {id:"炉火",cls:"c5",g:"🔥",seal:"#d16632",acc:"#a5431a",c:"有我在，就是主场",d:"你一到，场子就热了。天生会把人聚拢、把气氛焐热的那个。"}
   ];
   var MAP={};IDS.forEach(function(x){MAP[x.id]=x;});
-  function jarInner(x){return '<div class="jc-cap"><span>JAM PARTY</span></div>'+
-    '<div class="jc-glass"><div class="jc-label"><div class="jc-emoji">'+x.g+'</div><div class="jc-name">'+x.id+'</div><div class="jc-concept">'+x.c+'</div><div class="jc-desc">'+x.d+'</div></div></div>';}
+
+  // 写实果酱瓶 SVG
+  function jarSVG(x,uid){var s=x.seal,a=x.acc,cid='clip'+uid;return ''+
+    '<svg class="jarsvg" viewBox="0 0 120 154" xmlns="http://www.w3.org/2000/svg">'+
+    '<defs><clipPath id="'+cid+'"><rect x="28" y="32" width="64" height="114" rx="16"/></clipPath>'+
+    '<linearGradient id="g'+uid+'" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ffffff" stop-opacity=".55"/><stop offset=".5" stop-color="#ffffff" stop-opacity="0"/><stop offset="1" stop-color="#000000" stop-opacity=".06"/></linearGradient></defs>'+
+    '<path d="M52 8 L40 3 38 16 54 13Z" fill="#e3a9a2"/><path d="M68 8 L80 3 82 16 66 13Z" fill="#e3a9a2"/><circle cx="60" cy="11" r="3.6" fill="#d4948c"/>'+
+    '<rect x="34" y="14" width="52" height="16" rx="4" fill="'+s+'"/><rect x="34" y="14" width="52" height="6" rx="3" fill="#fff" opacity=".25"/>'+
+    '<rect x="38" y="29" width="44" height="6" fill="#fff7ea"/>'+
+    '<rect x="28" y="32" width="64" height="114" rx="16" fill="#fff7ea" stroke="#e6d3b0" stroke-width="1.5"/>'+
+    '<g clip-path="url(#'+cid+')"><path d="M28 106 q16 -11 32 0 t32 0 V146 H28Z" fill="'+s+'"/><path d="M28 106 q16 -11 32 0 t32 0 V113 H28Z" fill="#fff" opacity=".14"/>'+
+    '<rect x="28" y="32" width="64" height="114" fill="url(#g'+uid+')"/></g>'+
+    '<rect x="37" y="54" width="46" height="44" rx="5" fill="#fffef9" stroke="'+a+'" stroke-width="1.2" stroke-dasharray="3 2"/>'+
+    '<text x="60" y="72" text-anchor="middle" font-size="16">'+x.g+'</text>'+
+    '<text x="60" y="92" text-anchor="middle" font-size="17" font-family="STKaiti,KaiTi,serif" font-weight="700" fill="#3a2417" letter-spacing="2">'+x.id+'</text>'+
+    '</svg>';}
+
+  // 抱着果酱瓶的小人 SVG（手绘）
+  function heldJar(x){var s=x.seal;return ''+
+    '<rect x="20" y="4" width="40" height="12" rx="3" fill="'+s+'"/>'+
+    '<rect x="12" y="16" width="56" height="74" rx="12" fill="#fff7ea" stroke="#e6d3b0" stroke-width="2.5"/>'+
+    '<path d="M12 56 q14 -9 28 0 t28 0 V78 q0 12 -12 12 H24 q-12 0 -12 -12Z" fill="'+s+'"/>'+
+    '<rect x="24" y="30" width="32" height="20" rx="3" fill="#fffef9"/>'+
+    '<text x="40" y="45" text-anchor="middle" font-size="15" font-family="STKaiti,serif" font-weight="700" fill="#3a2417">'+x.id+'</text>';}
+  function personSVG(x){return ''+
+    '<svg class="arr-svg" viewBox="0 0 160 200" xmlns="http://www.w3.org/2000/svg">'+
+    '<ellipse cx="80" cy="192" rx="42" ry="7" fill="#000" opacity=".18"/>'+
+    '<rect x="64" y="158" width="12" height="30" rx="6" fill="#efb98f"/><rect x="84" y="158" width="12" height="30" rx="6" fill="#efb98f"/>'+
+    '<ellipse cx="68" cy="189" rx="11" ry="6" fill="#7a4a34"/><ellipse cx="92" cy="189" rx="11" ry="6" fill="#7a4a34"/>'+
+    '<path d="M48 104 Q80 92 112 104 L120 162 Q80 174 40 162 Z" fill="#cc5648"/>'+
+    '<path d="M52 110 Q30 128 54 152" stroke="#f4c9a6" stroke-width="13" fill="none" stroke-linecap="round"/>'+
+    '<path d="M108 110 Q130 128 106 152" stroke="#f4c9a6" stroke-width="13" fill="none" stroke-linecap="round"/>'+
+    '<g transform="translate(50,104) scale(0.5)">'+heldJar(x)+'</g>'+
+    '<circle cx="54" cy="150" r="8" fill="#f6d3b0"/><circle cx="106" cy="150" r="8" fill="#f6d3b0"/>'+
+    '<circle cx="80" cy="58" r="32" fill="#f6d3b0"/>'+
+    '<path d="M46 58 Q46 20 80 20 Q114 20 114 58 Q106 42 80 42 Q54 42 46 58Z" fill="#5a3b28"/>'+
+    '<circle cx="69" cy="60" r="3" fill="#3a2417"/><circle cx="91" cy="60" r="3" fill="#3a2417"/>'+
+    '<path d="M72 69 Q80 75 88 69" stroke="#a5372c" stroke-width="2.4" fill="none" stroke-linecap="round"/>'+
+    '<circle cx="62" cy="66" r="4" fill="#e79a9a" opacity=".55"/><circle cx="98" cy="66" r="4" fill="#e79a9a" opacity=".55"/>'+
+    '</svg>';}
+
+  function jarInner(x,uid){return jarSVG(x,uid)+'<div class="jc-concept">'+x.c+'</div><div class="jc-desc">'+x.d+'</div>';}
 
   // ===== music: autoplay (WeChat) + first-interaction fallback =====
   var bgm=document.getElementById('bgm'),musicBtn=document.getElementById('music'),wantOn=true,tagged=false;
@@ -278,9 +309,10 @@
   document.getElementById('mapbtn').setAttribute('href',MAP_URL);
 
   // ===== build picker jars =====
+  var UID=0;
   var cardsEl=document.getElementById('cards');
   IDS.forEach(function(x){var d=document.createElement('div');d.className='jarcard '+x.cls;
-    d.innerHTML=jarInner(x)+'<div class="jc-pick">挑 这 一 罐</div>';
+    d.innerHTML=jarInner(x,++UID)+'<div class="jc-pick">挑 这 一 罐</div>';
     d.addEventListener('click',function(){choose(x.id);});cardsEl.appendChild(d);});
 
   var stepName=document.getElementById('stepName'),stepPick=document.getElementById('stepPick');
@@ -298,18 +330,16 @@
 
   function choose(idName){
     if(busy)return;busy=true;var x=MAP[idName];var nm=curName;
-    // arrival animation
-    arrStage.innerHTML='<div class="arr-figure '+x.cls+'"><div class="arr-person">🧍</div>'+
-      '<div class="arr-mini"><div class="mc-cap"></div><div class="mc-body"><div class="mc-emoji">'+x.g+'</div><div class="mc-name">'+x.id+'</div></div></div></div>'+
+    arrStage.innerHTML='<div class="arr-figure">'+personSVG(x)+'</div>'+
       '<div class="arr-name">「<b>'+nm+'</b>」，来了！</div><div class="arr-sub">'+x.id+' · '+x.c+'</div>';
     arrStage.className='arr-stage '+x.cls;
     arrival.classList.add('show');
-    setTimeout(function(){arrival.classList.remove('show');addKeep(x,nm);busy=false;},2100);
+    setTimeout(function(){arrival.classList.remove('show');addKeep(x,nm);busy=false;},2600);
   }
 
   function addKeep(x,nm){
     var card=document.createElement('div');card.className='jarcard keepjar '+x.cls;
-    card.innerHTML='<span class="del" title="删除">✕</span>'+jarInner(x)+'<div class="jc-plate"><span class="who">'+nm+'</span></div>';
+    card.innerHTML='<span class="del" title="删除">✕</span>'+jarInner(x,++UID)+'<div class="jc-plate"><span class="who">'+nm+'</span></div>';
     card.querySelector('.del').addEventListener('click',function(){card.remove();count--;afterChange();});
     tray.appendChild(card);count++;
     stepPick.classList.remove('show');stepName.style.display='none';nameInput.value='';nameNext.classList.remove('on');
