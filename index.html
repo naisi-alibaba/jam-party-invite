@@ -136,17 +136,20 @@
   .arr-name b{color:var(--butter);}
 
   /* roster (待入场名单) */
-  .roster{max-width:400px;margin:0 auto;padding:10px 28px 0;text-align:center;}
-  .roster .rt{font-family:"STKaiti",serif;color:var(--berry-deep);font-size:16px;margin-bottom:16px;letter-spacing:1px;}
-  .roster .rlist{display:flex;flex-wrap:wrap;justify-content:center;gap:16px;margin-bottom:22px;}
+  .roster{max-width:360px;margin:8px auto 0;padding:22px 20px 24px;text-align:center;
+    background:#fffaf0;border:2px solid var(--berry);border-radius:18px;box-shadow:0 12px 28px rgba(165,55,44,.16);position:relative;}
+  .roster::before{content:"🎀";position:absolute;top:-18px;left:50%;transform:translateX(-50%);font-size:28px;}
+  .roster .rt{font-family:"STKaiti",serif;color:var(--berry-deep);font-size:17px;margin-bottom:18px;letter-spacing:1px;font-weight:600;}
+  .roster .rlist{display:flex;flex-wrap:wrap;justify-content:center;gap:14px;margin-bottom:22px;}
   .rchip{position:relative;width:72px;}
   .rchip svg{width:56px;filter:drop-shadow(0 6px 10px rgba(120,70,40,.25));}
   .rchip .rn{font-family:"STKaiti",serif;font-size:14px;color:#3a2417;margin-top:2px;}
-  .rchip .rx{position:absolute;top:-4px;right:6px;font-size:13px;color:#b03636;background:#fff;border-radius:50%;width:18px;height:18px;line-height:16px;box-shadow:0 1px 3px rgba(0,0,0,.2);cursor:pointer;}
-  .rbtns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
-  .btn-add{border:2px dashed var(--berry);background:#fffaf0;color:var(--berry-deep);font-size:15px;letter-spacing:1px;padding:13px 22px;border-radius:40px;cursor:pointer;font-family:"Songti SC",serif;}
-  .btn-enter{border:0;background:linear-gradient(180deg,#d96253,var(--berry-deep));color:#fff;font-size:16px;letter-spacing:2px;font-weight:700;padding:14px 30px;border-radius:40px;cursor:pointer;font-family:"Songti SC",serif;box-shadow:0 8px 18px rgba(165,55,44,.3);}
-  .btn-add:active,.btn-enter:active{transform:scale(.97);}
+  .rchip .rx{position:absolute;top:-4px;right:4px;font-size:12px;color:#fff;background:#b03636;border-radius:50%;width:20px;height:20px;line-height:20px;box-shadow:0 1px 3px rgba(0,0,0,.25);cursor:pointer;}
+  .rbtns{display:flex;flex-direction:column;gap:12px;}
+  .btn-enter{border:0;background:linear-gradient(180deg,#e05a48,#a5372c);color:#fff;font-size:19px;letter-spacing:3px;font-weight:800;padding:17px;border-radius:14px;cursor:pointer;font-family:"Songti SC",serif;box-shadow:0 10px 22px rgba(165,55,44,.38);width:100%;}
+  .btn-add{border:2px solid var(--berry);background:#fff;color:var(--berry-deep);font-size:16px;letter-spacing:2px;padding:14px;border-radius:14px;cursor:pointer;font-family:"Songti SC",serif;width:100%;font-weight:600;}
+  .btn-add:active,.btn-enter:active{transform:scale(.98);}
+  .roster .hint{font-size:12px;color:var(--ink-soft);margin-top:12px;letter-spacing:1px;}
 </style>
 </head>
 <body>
@@ -231,9 +234,10 @@
     <div class="rt kai" id="rtitle">已经在门口的——</div>
     <div class="rlist" id="rlist"></div>
     <div class="rbtns">
-      <button class="btn-add" id="addBtn">＋ 再加一位</button>
-      <button class="btn-enter" id="enterBtn">🎉 一起入场！</button>
+      <button class="btn-enter" id="enterBtn">🎉 入场！</button>
+      <button class="btn-add" id="addBtn">＋ 还有同行的人</button>
     </div>
+    <div class="hint" id="rhint">一个人可直接入场；同行的人先「＋」加进来，再一起入场</div>
   </div>
 
   <section class="cta" id="cta">
@@ -277,26 +281,37 @@
     '<path d="M12 56 q14 -9 28 0 t28 0 V78 q0 12 -12 12 H24 q-12 0 -12 -12Z" fill="'+s+'"/>'+
     '<rect x="24" y="30" width="32" height="20" rx="3" fill="#fffef9"/>'+
     '<text x="40" y="45" text-anchor="middle" font-size="15" font-family="STKaiti,serif" font-weight="700" fill="#3a2417">'+x.id+'</text>';}
-  function personBody(x){return ''+
+  // 多款小人外形（肤色+发型，男女兼有），使用时随机
+  var LOOKS=[
+    {skin:"#f6d3b0",skinD:"#efb98f",hair:'<path d="M46 58 Q46 20 80 20 Q114 20 114 58 Q106 42 80 42 Q54 42 46 58Z" fill="#5a3b28"/>'},
+    {skin:"#f0c49a",skinD:"#e3a877",hair:'<path d="M47 56 Q47 20 80 20 Q113 20 113 56 Q108 40 84 42 Q84 30 70 34 Q56 38 47 56Z" fill="#2f2119"/>'},
+    {skin:"#f6d3b0",skinD:"#efb98f",hair:'<path d="M46 86 Q44 24 80 21 Q116 24 114 86 Q110 54 100 54 Q104 40 80 40 Q56 40 60 54 Q50 54 46 86Z" fill="#4a2f1f"/>'},
+    {skin:"#ecb585",skinD:"#d99b63",hair:'<path d="M48 56 Q48 22 80 22 Q112 22 112 56 Q104 42 80 42 Q56 42 48 56Z" fill="#6b4327"/><circle cx="115" cy="50" r="10" fill="#6b4327"/>'},
+    {skin:"#f0c49a",skinD:"#e3a877",hair:'<path d="M48 56 Q48 22 80 22 Q112 22 112 56 Q104 42 80 42 Q56 42 48 56Z" fill="#3a2417"/><circle cx="80" cy="19" r="11" fill="#3a2417"/>'},
+    {skin:"#f6d3b0",skinD:"#efb98f",hair:'<path d="M46 58 Q46 20 80 20 Q114 20 114 58 Q106 42 80 42 Q54 42 46 58Z" fill="#a9711d"/>'}
+  ];
+  function pickLook(){return LOOKS[(Math.random()*LOOKS.length)|0];}
+
+  function personBody(x,lk){lk=lk||LOOKS[0];return ''+
     '<ellipse cx="80" cy="192" rx="42" ry="7" fill="#000" opacity=".18"/>'+
-    '<rect x="64" y="158" width="12" height="30" rx="6" fill="#efb98f"/><rect x="84" y="158" width="12" height="30" rx="6" fill="#efb98f"/>'+
+    '<rect x="64" y="158" width="12" height="30" rx="6" fill="'+lk.skinD+'"/><rect x="84" y="158" width="12" height="30" rx="6" fill="'+lk.skinD+'"/>'+
     '<ellipse cx="68" cy="189" rx="11" ry="6" fill="#7a4a34"/><ellipse cx="92" cy="189" rx="11" ry="6" fill="#7a4a34"/>'+
     '<path d="M48 104 Q80 92 112 104 L120 162 Q80 174 40 162 Z" fill="'+x.seal+'"/>'+
-    '<path d="M52 110 Q30 128 54 152" stroke="#f4c9a6" stroke-width="13" fill="none" stroke-linecap="round"/>'+
-    '<path d="M108 110 Q130 128 106 152" stroke="#f4c9a6" stroke-width="13" fill="none" stroke-linecap="round"/>'+
+    '<path d="M52 110 Q30 128 54 152" stroke="'+lk.skin+'" stroke-width="13" fill="none" stroke-linecap="round"/>'+
+    '<path d="M108 110 Q130 128 106 152" stroke="'+lk.skin+'" stroke-width="13" fill="none" stroke-linecap="round"/>'+
     '<g transform="translate(50,104) scale(0.5)">'+heldJar(x)+'</g>'+
-    '<circle cx="54" cy="150" r="8" fill="#f6d3b0"/><circle cx="106" cy="150" r="8" fill="#f6d3b0"/>'+
-    '<circle cx="80" cy="58" r="32" fill="#f6d3b0"/>'+
-    '<path d="M46 58 Q46 20 80 20 Q114 20 114 58 Q106 42 80 42 Q54 42 46 58Z" fill="#5a3b28"/>'+
+    '<circle cx="54" cy="150" r="8" fill="'+lk.skin+'"/><circle cx="106" cy="150" r="8" fill="'+lk.skin+'"/>'+
+    '<circle cx="80" cy="58" r="32" fill="'+lk.skin+'"/>'+
+    lk.hair+
     '<circle cx="69" cy="60" r="3" fill="#3a2417"/><circle cx="91" cy="60" r="3" fill="#3a2417"/>'+
     '<path d="M72 69 Q80 75 88 69" stroke="#a5372c" stroke-width="2.4" fill="none" stroke-linecap="round"/>'+
     '<circle cx="62" cy="66" r="4" fill="#e79a9a" opacity=".55"/><circle cx="98" cy="66" r="4" fill="#e79a9a" opacity=".55"/>';}
-  function personSVG(x){return '<svg class="arr-svg" viewBox="0 0 160 200" xmlns="http://www.w3.org/2000/svg">'+personBody(x)+'</svg>';}
+  function personSVG(x,lk){return '<svg class="arr-svg" viewBox="0 0 160 200" xmlns="http://www.w3.org/2000/svg">'+personBody(x,lk)+'</svg>';}
 
   function jarInner(x,uid){return jarSVG(x,uid)+'<div class="jc-concept">'+x.c+'</div><div class="jc-desc">'+x.d+'</div>';}
 
   // 名单里的小头像（迷你小人）
-  function miniPersonSVG(x){return '<svg viewBox="0 0 160 200" xmlns="http://www.w3.org/2000/svg">'+personBody(x)+'</svg>';}
+  function miniPersonSVG(x,lk){return '<svg viewBox="0 0 160 200" xmlns="http://www.w3.org/2000/svg">'+personBody(x,lk)+'</svg>';}
 
   // ===== music: autoplay (WeChat) + first-interaction fallback =====
   var bgm=document.getElementById('bgm'),musicBtn=document.getElementById('music'),wantOn=true,tagged=false;
@@ -353,7 +368,7 @@
     setTimeout(function(){stepPick.scrollIntoView({behavior:'smooth',block:'start'});},60);}
 
   // 选一罐 → 加入待入场名单（不立刻放动画）
-  function choose(idName){crew.push({x:MAP[idName],nm:curName});
+  function choose(idName){crew.push({x:MAP[idName],nm:curName,lk:pickLook()});
     stepPick.classList.remove('show');stepName.style.display='none';nameInput.value='';nameNext.classList.remove('on');
     renderRoster();setTimeout(function(){roster.scrollIntoView({behavior:'smooth',block:'center'});},80);}
 
@@ -362,7 +377,7 @@
     rtitle.textContent=crew.length>1?('这一队，'+crew.length+' 个人，准备入场——'):'已经在门口的——';
     rlist.innerHTML='';
     crew.forEach(function(m,i){var chip=document.createElement('div');chip.className='rchip';
-      chip.innerHTML=miniPersonSVG(m.x)+'<div class="rn">'+m.nm+'</div><span class="rx">✕</span>';
+      chip.innerHTML=miniPersonSVG(m.x,m.lk)+'<div class="rn">'+m.nm+'</div><span class="rx">✕</span>';
       chip.querySelector('.rx').addEventListener('click',function(){crew.splice(i,1);renderRoster();});
       rlist.appendChild(chip);});
     enterBtn.textContent=crew.length>1?'🎉 一起入场！':'🎉 入场！';
@@ -376,7 +391,7 @@
   // 一起入场：几个人几个小人肩并肩跑来（6s）
   enterBtn.addEventListener('click',function(){
     if(busy||!crew.length)return;busy=true;
-    var figs=crew.map(function(m){return '<div class="arr-figure">'+personSVG(m.x)+'<div class="fn">'+m.nm+'</div></div>';}).join('');
+    var figs=crew.map(function(m){return '<div class="arr-figure">'+personSVG(m.x,m.lk)+'<div class="fn">'+m.nm+'</div></div>';}).join('');
     var names=crew.map(function(m){return m.nm;}).join(' · ');
     arrStage.innerHTML='<div class="arr-crew">'+figs+'</div><div class="arr-name">「<b>'+names+'</b>」，来了！</div>';
     arrStage.className='arr-stage';
