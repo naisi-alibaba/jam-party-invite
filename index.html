@@ -74,19 +74,40 @@
   .ask .lead{font-size:15.5px;line-height:2.05;color:var(--ink-soft);max-width:320px;margin:0 auto;}
   .ask .lead b{color:var(--berry);font-weight:600;}
 
-  /* ===== JAR (SVG realistic) ===== */
-  .jarcard{position:relative;width:100%;max-width:300px;margin:0 auto;cursor:pointer;transition:transform .2s;text-align:center;}
-  .jarcard:active{transform:scale(.98);}
+  /* ===== 收藏瓶（keepjar 大卡，保留） ===== */
+  .jarcard{position:relative;width:100%;max-width:300px;margin:0 auto;transition:transform .2s;text-align:center;}
   .jarsvg{display:block;width:172px;margin:0 auto;filter:drop-shadow(0 12px 20px rgba(120,70,40,.24));}
   .jc-concept{font-family:"STKaiti",serif;font-style:italic;font-size:15px;color:var(--accent);margin-top:10px;}
   .jc-desc{font-size:13.5px;line-height:1.7;color:#6b4a36;margin:8px auto 0;max-width:280px;}
-  .jc-pick{margin-top:14px;display:inline-block;font-size:12px;letter-spacing:4px;color:#fff;background:var(--seal);border-radius:8px;padding:9px 28px;}
-  .cards{display:flex;flex-direction:column;gap:32px;}
   .c1{--accent:#a9711d;--seal:#c8892a;}
   .c2{--accent:#8a4a70;--seal:#9c5580;}
   .c3{--accent:#356b5c;--seal:#568a7c;}
   .c4{--accent:#a5372c;--seal:#c04545;}
   .c5{--accent:#a5431a;--seal:#d16632;}
+
+  /* ===== JAR picker: 一屏五瓶网格 ===== */
+  .cards{display:flex;flex-wrap:wrap;justify-content:center;gap:12px 6px;max-width:400px;margin:0 auto;}
+  .pjar{position:relative;width:30%;max-width:114px;cursor:pointer;transition:transform .2s;text-align:center;}
+  .pjar:active{transform:scale(.95);}
+  .pjar .jarsvg{width:100%;margin:0;filter:drop-shadow(0 8px 14px rgba(120,70,40,.22));}
+  .pjar .pj-name{font-family:"STKaiti",serif;font-weight:700;font-size:17px;color:#3a2417;letter-spacing:2px;margin-top:2px;}
+  .pjar .pj-tap{font-size:11px;color:var(--accent);letter-spacing:1px;}
+  .pick-hint{text-align:center;font-size:12px;color:var(--ink-soft);margin-top:16px;letter-spacing:1px;}
+
+  /* 瓶子详情浮层 */
+  .detail{position:fixed;inset:0;z-index:45;display:none;align-items:flex-end;justify-content:center;background:rgba(40,20,12,.55);backdrop-filter:blur(2px);}
+  .detail.show{display:flex;}
+  .dsheet{background:#fffaf0;width:100%;max-width:440px;border-radius:24px 24px 0 0;padding:26px 26px 30px;position:relative;box-shadow:0 -12px 40px rgba(0,0,0,.35);animation:sheetup .35s cubic-bezier(.2,.8,.2,1);max-height:88vh;overflow-y:auto;border-top:4px solid var(--seal);}
+  @keyframes sheetup{from{transform:translateY(100%);}to{transform:none;}}
+  .dsheet .dclose{position:absolute;top:14px;right:18px;font-size:22px;color:#b09070;cursor:pointer;line-height:1;}
+  .dsheet .dtop{display:flex;align-items:center;gap:20px;padding-right:8px;}
+  .dsheet .djar{width:78px;flex:none;}
+  .dsheet .dname{font-family:"STKaiti",serif;font-weight:700;font-size:36px;letter-spacing:6px;color:#3a1f13;}
+  .dsheet .dconcept{font-family:"STKaiti",serif;font-style:italic;font-size:16px;color:var(--seal);margin-top:4px;}
+  .dsheet .dlong{margin-top:18px;font-size:15px;line-height:1.95;color:#5c3b2c;}
+  .dsheet .dlong b{color:var(--seal);}
+  .dsheet .dpick{margin-top:22px;width:100%;border:0;border-radius:14px;padding:16px;font-size:17px;letter-spacing:3px;font-weight:800;color:#fff;background:linear-gradient(180deg,var(--seal),var(--accent));cursor:pointer;font-family:"Songti SC",serif;box-shadow:0 8px 18px rgba(165,55,44,.28);}
+  .dsheet .dpick:active{transform:scale(.98);}
 
   .builder{padding-top:24px;padding-bottom:14px;max-width:400px;margin:0 auto;}
   .step-name{text-align:center;}
@@ -123,10 +144,6 @@
   .cta{max-width:400px;margin:0 auto;padding:42px 28px 8px;text-align:center;max-height:0;overflow:hidden;opacity:0;transition:max-height .7s ease,opacity .6s ease;}
   .cta.show{max-height:420px;opacity:1;}
   .cta .tip{font-size:15.5px;color:var(--ink);line-height:2;} .cta .tip .hl{color:var(--berry);font-weight:600;}
-  .cta .tip2{font-size:13px;color:var(--ink-soft);margin-top:14px;letter-spacing:1px;}
-  .rsvpbtn{display:inline-block;margin-top:18px;background:linear-gradient(180deg,#e05a48,#a5372c);color:#fff;font-size:19px;letter-spacing:3px;font-weight:800;padding:16px 48px;border-radius:40px;text-decoration:none;box-shadow:0 10px 24px rgba(165,55,44,.4);font-family:"Songti SC",serif;}
-  .rsvpbtn:active{transform:scale(.98);}
-  .rsvpbtn.off{background:#cbb89a;box-shadow:none;pointer-events:none;}
   .final{margin-top:28px;font-family:"STKaiti",serif;font-size:16px;line-height:2.05;color:var(--ink-soft);} .final .strong{color:var(--berry);}
   .foot{padding:30px 26px 24px;text-align:center;font-size:10.5px;letter-spacing:4px;color:#b09070;position:relative;z-index:1;}
 
@@ -176,6 +193,7 @@
   <!-- arrival overlay -->
   <div class="arrival" id="arrival"><div class="arr-stage" id="arrStage"></div></div>
   <div class="shareM" id="shareM"><img id="shareImg" alt="我的果酱瓶"><div class="st">长按图片 · 保存到相册，发给我们 / 发朋友圈</div><div class="sc" id="shareClose">关闭</div></div>
+  <div class="detail" id="detail"><div class="dsheet" id="dsheet"></div></div>
 
   <section class="hero">
     <div class="jar-hero">🫙</div>
@@ -257,9 +275,7 @@
   </div>
 
   <section class="cta" id="cta">
-    <div class="tip">最后一步，<span class="hl">告诉我们你会来</span>——<br>就当，正式入场了。</div>
-    <a class="rsvpbtn" id="rsvpBtn" href="#" target="_blank" rel="noopener">✅ 确认到场</a>
-    <div class="tip2">也把你的果酱瓶截图，发到群里晒一晒 🎀</div>
+    <div class="tip">把你们的果酱瓶<span class="hl">截图，发到我们的群里</span>——<br>就当，正式入场了。</div>
     <div class="final kai">果酱会吃完，热闹会散场。<br>但<span class="strong">你们认下的这一罐，会一直留着</span>。</div>
   </section>
 
@@ -268,11 +284,21 @@
 <script>
   var MAP_URL="https://uri.amap.com/search?keyword=%E7%94%B3%E6%8A%A5%E9%A6%86%EF%BC%88%E6%B1%89%E5%8F%A3%E8%B7%AF309%E5%8F%B7%EF%BC%89&city=%E4%B8%8A%E6%B5%B7&src=invite&callnative=1";
   var IDS=[
-    {id:"灯塔",cls:"c1",g:"🗼",seal:"#c8892a",acc:"#a9711d",c:"那段路，多亏有你",d:"在某段要紧的路上——入行、求学、某个坎——你实实在在帮过我们、点过我们一下。"},
-    {id:"同谋",cls:"c2",g:"🃏",seal:"#9c5580",acc:"#8a4a70",c:"我们一起干过些没人知道的事",d:"那些荒唐、鲜活、笑到岔气的另一面，只有你见过。你是那个“共犯”。"},
-    {id:"远山",cls:"c3",g:"⛰️",seal:"#568a7c",acc:"#356b5c",c:"离得再远，我也一直在",d:"隔着距离和时间，可一开口就回到当年。你来，本身就是最重的一句话。"},
-    {id:"江湖",cls:"c4",g:"⚔️",seal:"#c04545",acc:"#a5372c",c:"自己认下的彼此",d:"没有同窗血缘，是成年后各自挑中、留下的人。全靠选择，所以最难得。"},
-    {id:"炉火",cls:"c5",g:"🔥",seal:"#d16632",acc:"#a5431a",c:"有我在，就是主场",d:"你一到，场子就热了。天生会把人聚拢、把气氛焐热的那个。"}
+    {id:"灯塔",cls:"c1",g:"🗼",seal:"#c8892a",acc:"#a9711d",c:"那段路，多亏有你",
+     d:"在某段要紧的路上——入行、求学、某个坎——你实实在在帮过我们、点过我们一下。",
+     long:"有那么一段路，是你把我们带过来的。<br>可能是刚入行时你递来的一句点拨，可能是我们卡在某个坎上时你伸的那只手，也可能只是某个深夜你说的一句“别怕，会过去的”。<br><br>你未必天天在场，但每逢真正要紧的关头，我们心里第一个想到的是你。<br><b>如果你也记得那段路——这一罐，是你的。</b>"},
+    {id:"同谋",cls:"c2",g:"🃏",seal:"#9c5580",acc:"#8a4a70",c:"我们一起干过些没人知道的事",
+     d:"那些荒唐、鲜活、笑到岔气的另一面，只有你见过。你是那个“共犯”。",
+     long:"有些事，是不足为外人道的。<br>一起翻过的墙、逃过的课、闯过的祸、熬过的通宵，还有那个到现在都没说出口的秘密。<br><br>别人看到的是我们体面的样子，只有你见过我们最荒唐、最鲜活、笑到岔气的另一面。<br><b>你是那个“共犯”——这一罐，敬我们的默契。</b>"},
+    {id:"远山",cls:"c3",g:"⛰️",seal:"#568a7c",acc:"#356b5c",c:"离得再远，我也一直在",
+     d:"隔着距离和时间，可一开口就回到当年。你来，本身就是最重的一句话。",
+     long:"我们隔着很远的距离、很长的时间。<br>不常联系，可那种“你一直在那儿”的笃定，从来没变过。见面像从没分开，一开口就回到当年。<br><br>你今天愿意来，本身就是最重的一句话：<b>再远，这样的日子，我也要在场。这一罐，是给远道而来的你。</b>"},
+    {id:"江湖",cls:"c4",g:"⚔️",seal:"#c04545",acc:"#a5372c",c:"自己认下的彼此",
+     d:"没有同窗血缘，是成年后各自挑中、留下的人。全靠选择，所以最难得。",
+     long:"我们之间没有同窗、没有血缘。<br>是各自在成年后的世界里，兜兜转转、看对了眼，自己认下的彼此。<br><br>成年人的交情最难得——它不靠命定，全靠选择。你是我们在这偌大世界里，主动挑中、并且留住的人。<br><b>这一罐，敬我们自己选的江湖。</b>"},
+    {id:"炉火",cls:"c5",g:"🔥",seal:"#d16632",acc:"#a5431a",c:"有我在，就是主场",
+     d:"你一到，场子就热了。天生会把人聚拢、把气氛焐热的那个。",
+     long:"有你在，场子就冷不了。<br>你天生会把人聚拢、把气氛焐热，能让两个不认识的人三句话就熟络起来。<br><br>你未必是话最多的那个，但你是“在场感”最强的那个——你一到，热闹才真正开始。<br><b>这一罐，给让每场相聚都暖起来的你。</b>"}
   ];
   var MAP={};IDS.forEach(function(x){MAP[x.id]=x;});
 
@@ -383,9 +409,24 @@
   // ===== build picker jars =====
   var UID=0;
   var cardsEl=document.getElementById('cards');
-  IDS.forEach(function(x){var d=document.createElement('div');d.className='jarcard '+x.cls;
-    d.innerHTML=jarInner(x,++UID)+'<div class="jc-pick">挑 这 一 罐</div>';
-    d.addEventListener('click',function(){choose(x.id);});cardsEl.appendChild(d);});
+  IDS.forEach(function(x){var d=document.createElement('div');d.className='pjar '+x.cls;
+    d.innerHTML=jarSVG(x,++UID)+'<div class="pj-name">'+x.id+'</div><div class="pj-tap">点开看看 ›</div>';
+    d.addEventListener('click',function(){openDetail(x.id);});cardsEl.appendChild(d);});
+  var hint=document.createElement('div');hint.className='pick-hint';hint.textContent='点开每一罐，看看它说的是不是你';cardsEl.parentNode.appendChild(hint);
+
+  // 瓶子详情浮层
+  var detail=document.getElementById('detail'),dsheet=document.getElementById('dsheet');
+  function openDetail(idName){var x=MAP[idName];
+    dsheet.className='dsheet '+x.cls;
+    dsheet.innerHTML='<span class="dclose">✕</span>'+
+      '<div class="dtop"><div class="djar">'+jarSVG(x,++UID)+'</div><div><div class="dname">'+x.id+'</div><div class="dconcept">'+x.c+'</div></div></div>'+
+      '<div class="dlong">'+x.long+'</div>'+
+      '<button class="dpick">认下这一罐 · 就是「'+x.id+'」</button>';
+    dsheet.querySelector('.dclose').addEventListener('click',function(){detail.classList.remove('show');});
+    dsheet.querySelector('.dpick').addEventListener('click',function(){detail.classList.remove('show');choose(x.id);});
+    detail.classList.add('show');
+  }
+  detail.addEventListener('click',function(e){if(e.target===detail)detail.classList.remove('show');});
 
   var stepName=document.getElementById('stepName'),stepPick=document.getElementById('stepPick');
   var nameInput=document.getElementById('nameInput'),nameNext=document.getElementById('nameNext');
@@ -485,22 +526,6 @@
     img.onerror=function(){shareImg.src='data:image/svg+xml;base64,'+b64;shareM.classList.add('show');};
     img.src='data:image/svg+xml;base64,'+b64;
   }
-  // ===== 确认到场：跳飞书表单（无后端打通）=====
-  // 把飞书表单公开分享链接填到这里（拿到后替换）：
-  var FORM_URL = "https://wvixbzgc0u7.feishu.cn/share/base/form/shrcnXlOBijiTmLqUEgw7MkCyTk";
-  var rsvpBtn = document.getElementById('rsvpBtn');
-  function refreshRsvp(){
-    if(!FORM_URL){ rsvpBtn.classList.add('off'); rsvpBtn.textContent='✅ 确认到场（待接入）'; rsvpBtn.setAttribute('href','#'); return; }
-    rsvpBtn.classList.remove('off'); rsvpBtn.textContent='✅ 确认到场';
-    var last = settled[settled.length-1];
-    var u = FORM_URL;
-    if(last){ // 若飞书表单支持 prefill，可带上；不支持则忽略无害
-      u += (u.indexOf('?')>-1?'&':'?') + 'prefill_姓名='+encodeURIComponent(last.nm) + '&prefill_身份='+encodeURIComponent(MAP[last.id].id);
-    }
-    rsvpBtn.setAttribute('href', u);
-  }
-  refreshRsvp();
-  var _settle=settleCrew; settleCrew=function(){_settle();refreshRsvp();};
 </script>
 </body>
 </html>
