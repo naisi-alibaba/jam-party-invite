@@ -1,0 +1,4 @@
+guests.json
+_*.html
+_*.png
+node_modules/
