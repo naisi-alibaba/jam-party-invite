@@ -147,6 +147,15 @@
   .cta .tip{font-size:15.5px;color:var(--ink);line-height:2;} .cta .tip .hl{color:var(--berry);font-weight:600;}
   .final{margin-top:28px;font-family:"STKaiti",serif;font-size:16px;line-height:2.05;color:var(--ink-soft);} .final .strong{color:var(--berry);}
   .foot{padding:30px 26px 24px;text-align:center;font-size:10.5px;letter-spacing:4px;color:#b09070;position:relative;z-index:1;}
+  /* 果酱墙 */
+  .wallsec{padding:44px 22px 10px;text-align:center;position:relative;z-index:1;}
+  .wall-title{font-size:26px;color:var(--berry-deep);letter-spacing:2px;margin-top:6px;}
+  .wall-count{font-size:14px;color:var(--ink-soft);margin:10px 0 22px;letter-spacing:1px;}
+  .wall-count b{color:var(--berry);font-size:22px;font-family:"STKaiti",serif;}
+  .wall{display:flex;flex-wrap:wrap;justify-content:center;gap:14px 10px;max-width:420px;margin:0 auto;}
+  .wcell{width:64px;animation:pop .5s cubic-bezier(.2,.9,.2,1) both;}
+  .wcell img{width:100%;filter:drop-shadow(0 5px 9px rgba(120,70,40,.22));}
+  .wcell .wn{font-family:"STKaiti",serif;font-size:12px;color:#5c3b2c;margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 
   /* ===== arrival animation ===== */
   .arrival{position:fixed;inset:0;z-index:40;display:none;align-items:center;justify-content:center;background:rgba(58,31,19,.5);backdrop-filter:blur(3px);}
@@ -280,9 +289,18 @@
     <div class="final kai">果酱会吃完，热闹会散场。<br>但<span class="strong">你们认下的这一罐，会一直留着</span>。</div>
   </section>
 
+  <section class="wallsec" id="wallsec" style="display:none">
+    <div class="bow reveal">🎀</div>
+    <div class="wall-title kai">已经在路上的朋友</div>
+    <div class="wall-count"><b id="wallCount">0</b> 个人，已经认下了自己的那一罐</div>
+    <div class="wall" id="wall"></div>
+  </section>
+
   <div class="foot">🎀 JAM PARTY · 上海 · 只此一夜 🎀</div>
 
 <script>
+  // 后端接口地址（部署好后填你的 https 基地址，例如 "https://api.你的域名.com"）
+  var API_BASE = "";
   var MAP_URL="https://uri.amap.com/search?keyword=%E7%94%B3%E6%8A%A5%E9%A6%86%EF%BC%88%E6%B1%89%E5%8F%A3%E8%B7%AF309%E5%8F%B7%EF%BC%89&city=%E4%B8%8A%E6%B5%B7&src=invite&callnative=1";
   var IDS=[
     {id:"灯塔",cls:"c1",img:"img/jars/jar-1.png",seal:"#c8892a",acc:"#a9711d",c:"那段路，多亏有你",
@@ -462,11 +480,32 @@
 
   function settleCrew(){
     var first=null;
-    crew.forEach(function(m){settled.push(m);var c=keepCard(m);if(!first)first=c;});
+    crew.forEach(function(m){settled.push(m);var c=keepCard(m);if(!first)first=c;postEnter(m);});
     crew=[];save();renderRoster();roster.style.display='none';
     cta.classList.add('show');
     setTimeout(function(){(first||cta).scrollIntoView({behavior:'smooth',block:'center'});},120);
+    setTimeout(fetchWall,600);
   }
+
+  // ===== 果酱墙：上报 + 轮询 =====
+  var wallSec=document.getElementById('wallsec'),wallEl=document.getElementById('wall'),wallCount=document.getElementById('wallCount');
+  function postEnter(m){
+    if(!API_BASE)return;
+    try{fetch(API_BASE+'/api/enter',{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({name:m.nm,identity:MAP[m.id].id})}).catch(function(){});}catch(e){}
+  }
+  function fetchWall(){
+    if(!API_BASE)return;
+    fetch(API_BASE+'/api/wall').then(function(r){return r.json();}).then(function(d){
+      if(!d||!d.ok)return;
+      wallSec.style.display='block';
+      wallCount.textContent=d.count;
+      wallEl.innerHTML=(d.guests||[]).map(function(g){var x=MAP[g.identity];if(!x)return '';
+        return '<div class="wcell"><img src="'+x.img+'" alt=""><div class="wn">'+esc(g.name)+'</div></div>';}).join('');
+    }).catch(function(){});
+  }
+  if(API_BASE){ fetchWall(); setInterval(fetchWall, 6000); }
+
 
   // 恢复上次进度
   load();
