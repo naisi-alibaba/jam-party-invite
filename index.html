@@ -27,8 +27,37 @@
     --fs-cap:11px;    /* 标签/脚注/字距小字 */
   }
   html,body{background:#fdfcfa;color:var(--ink);font-family:var(--f-body);-webkit-font-smoothing:antialiased;overflow-x:hidden;line-height:1.7;}
+  html{scroll-snap-type:y proximity;scroll-behavior:smooth;}
   .kai{font-family:var(--f-title);}
   .en{font-family:var(--f-en);}
+
+  /* ===== 分屏骨架（ins 极简 · 全屏吸附） ===== */
+  .screen{min-height:100vh;min-height:100svh;scroll-snap-align:start;
+    display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;
+    padding:88px 32px;position:relative;z-index:1;}
+  .screen .inner{width:100%;max-width:400px;}
+  /* 每屏元素分层渐入 */
+  .screen .reveal{opacity:0;transform:translateY(28px);transition:opacity .9s cubic-bezier(.2,.7,.2,1),transform .9s cubic-bezier(.2,.7,.2,1);}
+  .screen.on .reveal{opacity:1;transform:none;}
+  .screen.on .reveal:nth-child(2){transition-delay:.12s;}
+  .screen.on .reveal:nth-child(3){transition-delay:.24s;}
+  .screen.on .reveal:nth-child(4){transition-delay:.36s;}
+  .screen.on .reveal:nth-child(5){transition-delay:.48s;}
+  /* 每屏统一的小标题眉/分隔 */
+  .eyebrow{font-family:var(--f-en);font-size:15px;letter-spacing:3px;color:var(--berry);opacity:.85;margin-bottom:18px;}
+  .divider{width:40px;height:2px;background:var(--berry);opacity:.35;margin:22px auto;border-radius:2px;}
+  .downcue{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);font-size:var(--fs-cap);letter-spacing:2px;color:var(--ink-soft);opacity:.55;animation:bob 1.9s ease-in-out infinite;}
+  .downcue span{display:block;font-size:16px;margin-top:4px;}
+  /* 进度点 */
+  #dots{position:fixed;right:14px;top:50%;transform:translateY(-50%);z-index:25;display:flex;flex-direction:column;gap:9px;}
+  #dots i{display:block;width:7px;height:7px;border-radius:50%;background:var(--berry);opacity:.28;transition:.3s;}
+  #dots i.on{opacity:1;transform:scale(1.35);}
+  /* 功能屏放开高度、顶部对齐 */
+  .screen.tall{min-height:100vh;height:auto;justify-content:flex-start;scroll-snap-align:start;padding-top:72px;padding-bottom:80px;}
+  /* ins 排版层级 */
+  .s-lead{font-size:var(--fs-lead);line-height:2.1;color:var(--ink-soft);}
+  .s-big{font-family:var(--f-title);font-size:var(--fs-h1);line-height:1.7;color:var(--berry-deep);margin-top:6px;}
+  .s-big .accent{color:var(--berry);}
   body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
     background:#fdfcfa url("img/bg2.jpg") top center;background-size:100% auto;background-repeat:repeat-y;}
   body::after{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
@@ -230,6 +259,7 @@
 <body>
   <div id="confetti"></div>
   <div id="fall"></div>
+  <div id="dots"></div>
 
   <audio id="bgm" loop preload="auto" src="music/bgm.mp3"></audio>
   <div id="music" aria-label="背景音乐"><span class="ico">🎵</span><span class="tag">♫ 献给永远的 · 大粉乐队</span></div>
@@ -239,99 +269,125 @@
   <div class="shareM" id="shareM"><img id="shareImg" alt="我的果酱瓶"><div class="st">长按图片 · 保存到相册，发给我们 / 发朋友圈</div><div class="sc" id="shareClose">关闭</div></div>
   <div class="detail" id="detail"><div class="dsheet" id="dsheet"></div></div>
 
-  <section class="hero">
-    <img class="title-img reveal" src="img/title.png" alt="Welcome to our jam party">
-    <div class="hero-sub reveal">Hey，久等了——<br>诚挚地邀请你，参加我们的<b>领证派对</b>。</div>
-    <div class="scroll-cue">向下<span>⌄</span></div>
+  <!-- 屏1 · 封面 -->
+  <section class="screen" data-dot>
+    <div class="inner">
+      <img class="title-img reveal" src="img/title.png" alt="Welcome to our jam party">
+      <div class="hero-sub reveal">Hey，久等了——<br>诚挚地邀请你，参加我们的<b>领证派对</b>。</div>
+    </div>
+    <div class="downcue">向下滑<span>⌄</span></div>
   </section>
 
-  <section class="story">
-    <p class="reveal">这是一场人生中难得的相聚，</p>
-    <p class="reveal bigline"><span class="accent">希望你与我们，相聚如初。</span></p>
+  <!-- 屏2 · 邀请语 -->
+  <section class="screen" data-dot>
+    <div class="inner">
+      <div class="eyebrow reveal">An Invitation</div>
+      <p class="s-lead reveal">这是一场人生中<br>难得的相聚，</p>
+      <div class="divider reveal"></div>
+      <p class="s-big reveal">希望你与我们，<br><span class="accent">相聚如初。</span></p>
+    </div>
+    <div class="downcue">向下滑<span>⌄</span></div>
   </section>
 
-  <section class="jarsec">
-    <div class="bow reveal">🎀</div>
-    <div class="jartip reveal" id="jartip">👆 点开这罐果酱，看看配料</div>
-    <img class="jarimg reveal" id="jam3d" loading="lazy" src="img/newjar.png" alt="果酱瓶 · Jam Party">
-    <div class="nutri" id="nutri">
-      <div class="nt-h"><span>Serving</span><span>Suggestions</span></div>
-      <div class="nt-sub"><span>Ingredient</span><span>% Daily Value*</span></div>
-      <div class="nt-row"><span>Love 爱</span><b>100%</b></div>
-      <div class="nt-row"><span>Magic 魔法</span><b>25%</b></div>
-      <div class="nt-row"><span>Sweetness 甜</span><b>50%</b></div>
-      <div class="nt-row"><span>Music 音乐</span><b>30%</b></div>
-      <div class="nt-row"><span>Late-night Feels 深夜情绪</span><b>20%</b></div>
-      <div class="nt-row"><span>Peanut Butter 花生酱</span><b>88%</b></div>
-      <div class="nt-row"><span>Jam Session 即兴合奏</span><b>100%</b></div>
-      <div class="nt-row"><span>Glitter 闪粉</span><b>26%</b></div>
-      <div class="nt-row"><span>Candle 烛光</span><b>8%</b></div>
-      <div class="nt-foot">** not for consumption, it's slime **</div>
+  <!-- 屏3 · 果酱瓶彩蛋 -->
+  <section class="screen" data-dot>
+    <div class="inner">
+      <div class="eyebrow reveal">Our Jam</div>
+      <img class="jarimg reveal" id="jam3d" loading="lazy" src="img/newjar.png" alt="果酱瓶 · Jam Party">
+      <div class="jartip reveal" id="jartip">👆 点开这罐果酱，看看配料</div>
+      <div class="nutri" id="nutri">
+        <div class="nt-h"><span>Serving</span><span>Suggestions</span></div>
+        <div class="nt-sub"><span>Ingredient</span><span>% Daily Value*</span></div>
+        <div class="nt-row"><span>Love 爱</span><b>100%</b></div>
+        <div class="nt-row"><span>Magic 魔法</span><b>25%</b></div>
+        <div class="nt-row"><span>Sweetness 甜</span><b>50%</b></div>
+        <div class="nt-row"><span>Music 音乐</span><b>30%</b></div>
+        <div class="nt-row"><span>Late-night Feels 深夜情绪</span><b>20%</b></div>
+        <div class="nt-row"><span>Peanut Butter 花生酱</span><b>88%</b></div>
+        <div class="nt-row"><span>Jam Session 即兴合奏</span><b>100%</b></div>
+        <div class="nt-row"><span>Glitter 闪粉</span><b>26%</b></div>
+        <div class="nt-row"><span>Candle 烛光</span><b>8%</b></div>
+        <div class="nt-foot">** not for consumption, it's slime **</div>
+      </div>
+    </div>
+    <div class="downcue">向下滑<span>⌄</span></div>
+  </section>
+
+  <!-- 屏4 · 新人 -->
+  <section class="screen" data-dot>
+    <div class="inner">
+      <div class="eyebrow reveal">The Couple</div>
+      <div class="cp-row reveal">
+        <div class="cp"><div class="cp-role">新郎</div><div class="cp-name kai">刘金帅</div></div>
+        <div class="cp-amp">&amp;</div>
+        <div class="cp"><div class="cp-role">新娘</div><div class="cp-name kai">王紫蕴</div></div>
+      </div>
+      <div class="divider reveal"></div>
+      <p class="s-lead reveal" style="font-size:var(--fs-body)">在上海相遇，<br>把日子熬成了现在的甜。</p>
+    </div>
+    <div class="downcue">向下滑<span>⌄</span></div>
+  </section>
+
+  <!-- 屏5 · 时间地点 -->
+  <section class="screen" data-dot>
+    <div class="inner">
+      <div class="eyebrow reveal">When &amp; Where</div>
+      <div class="info reveal">
+        <div class="line"><span class="k">🕗 时间</span><span class="v">2026年8月8日（周六）18:00</span></div>
+        <div class="line"><span class="k">📍 地点</span><span class="v">上海汉口路309号 · 申报馆顶楼（城之央）</span></div>
+        <a class="mapbtn" id="mapbtn" href="https://uri.amap.com/search?keyword=%E7%94%B3%E6%8A%A5%E9%A6%86%EF%BC%88%E6%B1%89%E5%8F%A3%E8%B7%AF309%E5%8F%B7%EF%BC%89&city=%E4%B8%8A%E6%B5%B7&src=invite&callnative=1">📍 打开地图 · 导航过去</a>
+        <a class="mapbtn calbtn" id="calbtn" href="#">📅 加入日历 · 别忘了这天</a>
+      </div>
+    </div>
+    <div class="downcue">向下滑<span>⌄</span></div>
+  </section>
+
+  <!-- 屏6 · 选身份（功能区，放开正常滚动） -->
+  <section class="screen tall" data-dot>
+    <div class="inner">
+      <div class="eyebrow reveal">Who Are You</div>
+      <div class="s-big reveal" style="font-size:var(--fs-h1)">进来之前，先定一件事</div>
+      <div class="lead reveal">下面五罐果酱，形容的不是我们，是<b>你</b>。<br>没有高低、不分远近，挑一罐最贴的——<br>在你眼里，<b>你之于我俩，是哪一种？</b></div>
+
+      <div class="tray" id="tray"></div>
+
+      <div class="builder">
+        <div class="step-name" id="stepName">
+          <div class="q kai" id="nameQ">先告诉我们，怎么称呼你？</div>
+          <input id="nameInput" type="text" inputmode="text" placeholder="写下你的名字" autocomplete="off" maxlength="12">
+          <button class="next" id="nameNext">下 一 步 · 挑 一 罐</button>
+        </div>
+        <div class="step-pick" id="stepPick">
+          <div class="q kai">「<b id="whoName">你</b>」，你之于我俩——</div>
+          <div class="q2">是哪一罐？挑一罐，认下它。</div>
+          <div class="cards" id="cards"></div>
+        </div>
+      </div>
+
+      <div class="roster" id="roster" style="display:none">
+        <div class="rt kai" id="rtitle">已经在门口的——</div>
+        <div class="rlist" id="rlist"></div>
+        <div class="rbtns">
+          <button class="btn-enter" id="enterBtn">🎉 入场！</button>
+          <button class="btn-add" id="addBtn">＋ 还有同行的人</button>
+        </div>
+        <div class="hint" id="rhint">一个人可直接入场；同行的人先「＋」加进来，再一起入场</div>
+      </div>
+
+      <div class="cta" id="cta">
+        <div class="tip">把你们的果酱瓶<span class="hl">截图，发到我们的群里</span>——<br>就当，正式入场了。</div>
+        <div class="final kai">果酱会吃完，热闹会散场。<br>但<span class="strong">你们认下的这一罐，会一直留着</span>。</div>
+      </div>
+
+      <div class="wallsec" id="wallsec" style="display:none">
+        <div class="wall-title kai">已经在路上的朋友</div>
+        <div class="wall-count"><b id="wallCount">0</b> 个人，已经认下了自己的那一罐</div>
+        <div class="wall" id="wall"></div>
+      </div>
     </div>
   </section>
 
-  <section class="couple reveal">
-    <div class="cp-row">
-      <div class="cp"><div class="cp-role">新郎</div><div class="cp-name kai">刘金帅</div></div>
-      <div class="cp-amp">&amp;</div>
-      <div class="cp"><div class="cp-role">新娘</div><div class="cp-name kai">王紫蕴</div></div>
-    </div>
-  </section>
-
-  <section class="infowrap reveal">
-    <div class="cap">时 间 与 地 点</div>
-    <div class="info">
-      <div class="line"><span class="k">🕗 时间</span><span class="v">2026年8月8日（周六）18:00</span></div>
-      <div class="line"><span class="k">📍 地点</span><span class="v">上海汉口路309号 · 申报馆顶楼（城之央）</span></div>
-      <a class="mapbtn" id="mapbtn" href="https://uri.amap.com/search?keyword=%E7%94%B3%E6%8A%A5%E9%A6%86%EF%BC%88%E6%B1%89%E5%8F%A3%E8%B7%AF309%E5%8F%B7%EF%BC%89&city=%E4%B8%8A%E6%B5%B7&src=invite&callnative=1">📍 打开地图 · 导航过去</a>
-      <a class="mapbtn calbtn" id="calbtn" href="#">📅 加入日历 · 别忘了这天</a>
-    </div>
-  </section>
-
-  <section class="ask">
-    <div class="bow reveal">🎀</div>
-    <div class="big kai reveal" style="margin-top:18px">进来之前，先定一件事</div>
-    <div class="lead reveal">下面五罐果酱，形容的不是我们，是<b>你</b>。<br>没有高低、不分远近，只是五种不同的靠近方式。<br>挑一罐最贴的——在你眼里，<b>你之于我俩，是哪一种？</b></div>
-  </section>
-
-  <div class="tray" id="tray"></div>
-
-  <section class="builder">
-    <div class="step-name" id="stepName">
-      <div class="q kai" id="nameQ">先告诉我们，怎么称呼你？</div>
-      <input id="nameInput" type="text" inputmode="text" placeholder="写下你的名字" autocomplete="off" maxlength="12">
-      <button class="next" id="nameNext">下 一 步 · 挑 一 罐</button>
-    </div>
-    <div class="step-pick" id="stepPick">
-      <div class="q kai">「<b id="whoName">你</b>」，你之于我俩——</div>
-      <div class="q2">是哪一罐？挑一罐，认下它。</div>
-      <div class="cards" id="cards"></div>
-    </div>
-  </section>
-
-  <div class="roster" id="roster" style="display:none">
-    <div class="rt kai" id="rtitle">已经在门口的——</div>
-    <div class="rlist" id="rlist"></div>
-    <div class="rbtns">
-      <button class="btn-enter" id="enterBtn">🎉 入场！</button>
-      <button class="btn-add" id="addBtn">＋ 还有同行的人</button>
-    </div>
-    <div class="hint" id="rhint">一个人可直接入场；同行的人先「＋」加进来，再一起入场</div>
-  </div>
-
-  <section class="cta" id="cta">
-    <div class="tip">把你们的果酱瓶<span class="hl">截图，发到我们的群里</span>——<br>就当，正式入场了。</div>
-    <div class="final kai">果酱会吃完，热闹会散场。<br>但<span class="strong">你们认下的这一罐，会一直留着</span>。</div>
-  </section>
-
-  <section class="wallsec" id="wallsec" style="display:none">
-    <div class="bow reveal">🎀</div>
-    <div class="wall-title kai">已经在路上的朋友</div>
-    <div class="wall-count"><b id="wallCount">0</b> 个人，已经认下了自己的那一罐</div>
-    <div class="wall" id="wall"></div>
-  </section>
-
-  <div class="foot">🎀 JAM PARTY · 上海 · 只此一夜 🎀</div>
+  <div class="foot">JAM PARTY · 王紫蕴 &amp; 刘金帅 · 2026.08.08</div>
 
 <script>
   // 果酱墙后端：与页面同源部署时用相对路径。
@@ -436,10 +492,22 @@
       f.appendChild(s);}
   })();
 
-  // ===== reveals =====
-  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting)e.target.classList.add('in');});},{threshold:.14});
-  document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});
-  document.querySelectorAll('.hero .reveal').forEach(function(el,i){el.style.transitionDelay=(0.5+i*0.16)+'s';});
+  // ===== 分屏：进入渐入 + 进度点 =====
+  var screens=[].slice.call(document.querySelectorAll('.screen'));
+  var dotsBox=document.getElementById('dots');
+  screens.forEach(function(s,i){var d=document.createElement('i');d.addEventListener('click',function(){s.scrollIntoView({behavior:'smooth'});});dotsBox.appendChild(d);});
+  var dots=[].slice.call(dotsBox.children);
+  var sio=new IntersectionObserver(function(es){
+    es.forEach(function(e){
+      var idx=screens.indexOf(e.target);
+      if(e.isIntersecting){
+        e.target.classList.add('on');
+        if(e.intersectionRatio>=0.5){dots.forEach(function(d,i){d.classList.toggle('on',i===idx);});}
+      }
+    });
+  },{threshold:[0.15,0.5]});
+  screens.forEach(function(s){sio.observe(s);});
+  if(screens[0])screens[0].classList.add('on');
   document.getElementById('mapbtn').setAttribute('href',MAP_URL);
 
   // ===== build picker jars =====
