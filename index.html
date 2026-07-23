@@ -123,6 +123,10 @@
   .cta{max-width:400px;margin:0 auto;padding:42px 28px 8px;text-align:center;max-height:0;overflow:hidden;opacity:0;transition:max-height .7s ease,opacity .6s ease;}
   .cta.show{max-height:420px;opacity:1;}
   .cta .tip{font-size:15.5px;color:var(--ink);line-height:2;} .cta .tip .hl{color:var(--berry);font-weight:600;}
+  .cta .tip2{font-size:13px;color:var(--ink-soft);margin-top:14px;letter-spacing:1px;}
+  .rsvpbtn{display:inline-block;margin-top:18px;background:linear-gradient(180deg,#e05a48,#a5372c);color:#fff;font-size:19px;letter-spacing:3px;font-weight:800;padding:16px 48px;border-radius:40px;text-decoration:none;box-shadow:0 10px 24px rgba(165,55,44,.4);font-family:"Songti SC",serif;}
+  .rsvpbtn:active{transform:scale(.98);}
+  .rsvpbtn.off{background:#cbb89a;box-shadow:none;pointer-events:none;}
   .final{margin-top:28px;font-family:"STKaiti",serif;font-size:16px;line-height:2.05;color:var(--ink-soft);} .final .strong{color:var(--berry);}
   .foot{padding:30px 26px 24px;text-align:center;font-size:10.5px;letter-spacing:4px;color:#b09070;position:relative;z-index:1;}
 
@@ -253,7 +257,9 @@
   </div>
 
   <section class="cta" id="cta">
-    <div class="tip">把你们的果酱瓶<span class="hl">截图，发到我们的群里</span>——<br>就当，正式入场了。</div>
+    <div class="tip">最后一步，<span class="hl">告诉我们你会来</span>——<br>就当，正式入场了。</div>
+    <a class="rsvpbtn" id="rsvpBtn" href="#" target="_blank" rel="noopener">✅ 确认到场</a>
+    <div class="tip2">也把你的果酱瓶截图，发到群里晒一晒 🎀</div>
     <div class="final kai">果酱会吃完，热闹会散场。<br>但<span class="strong">你们认下的这一罐，会一直留着</span>。</div>
   </section>
 
@@ -479,6 +485,22 @@
     img.onerror=function(){shareImg.src='data:image/svg+xml;base64,'+b64;shareM.classList.add('show');};
     img.src='data:image/svg+xml;base64,'+b64;
   }
+  // ===== 确认到场：跳飞书表单（无后端打通）=====
+  // 把飞书表单公开分享链接填到这里（拿到后替换）：
+  var FORM_URL = "";
+  var rsvpBtn = document.getElementById('rsvpBtn');
+  function refreshRsvp(){
+    if(!FORM_URL){ rsvpBtn.classList.add('off'); rsvpBtn.textContent='✅ 确认到场（待接入）'; rsvpBtn.setAttribute('href','#'); return; }
+    rsvpBtn.classList.remove('off'); rsvpBtn.textContent='✅ 确认到场';
+    var last = settled[settled.length-1];
+    var u = FORM_URL;
+    if(last){ // 若飞书表单支持 prefill，可带上；不支持则忽略无害
+      u += (u.indexOf('?')>-1?'&':'?') + 'prefill_姓名='+encodeURIComponent(last.nm) + '&prefill_身份='+encodeURIComponent(MAP[last.id].id);
+    }
+    rsvpBtn.setAttribute('href', u);
+  }
+  refreshRsvp();
+  var _settle=settleCrew; settleCrew=function(){_settle();refreshRsvp();};
 </script>
 </body>
 </html>
