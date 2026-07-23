@@ -36,13 +36,22 @@
     display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;
     padding:88px 32px;position:relative;z-index:1;overflow:hidden;
     background:#fdfcfa url("img/bg2.jpg") center/cover no-repeat;}
+  /* 背景噪点轻降淡（保留交替底色的边界感） */
+  .screen::after{content:"";position:absolute;inset:0;z-index:0;background:rgba(253,252,250,.28);pointer-events:none;}
   /* 交替底色，制造翻页边界 */
   .screen.tint-pink{background-color:#fbeef0;background-blend-mode:multiply;}
   .screen.tint-cream{background-color:#fbf3e4;background-blend-mode:multiply;}
   .screen.tint-mint{background-color:#eef4ee;background-blend-mode:multiply;}
   .screen::before{content:"";position:absolute;top:0;left:8%;right:8%;height:1px;background:linear-gradient(90deg,transparent,rgba(204,86,72,.28),transparent);}
   .screen:first-child::before{display:none;}
-  .screen .inner{width:100%;max-width:400px;position:relative;z-index:1;}
+  .screen .inner{width:100%;max-width:380px;position:relative;z-index:1;
+    background:rgba(255,255,255,.72);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+    border:1px solid rgba(255,255,255,.6);border-radius:22px;padding:34px 26px;
+    box-shadow:0 14px 40px rgba(120,70,40,.12);}
+  /* 封面屏的标题图不需要卡片包裹感太重，弱化 */
+  .screen.cover .inner{background:rgba(255,255,255,.55);box-shadow:0 10px 30px rgba(120,70,40,.10);}
+  /* 功能屏内容长，卡片内上对齐 */
+  .screen.tall .inner{padding:30px 22px 40px;}
   /* 每屏元素分层渐入（加快） */
   .screen .reveal{opacity:0;transform:translateY(22px);transition:opacity .5s cubic-bezier(.2,.7,.2,1),transform .5s cubic-bezier(.2,.7,.2,1);}
   .screen.on .reveal{opacity:1;transform:none;}
@@ -116,8 +125,8 @@
 
   .infowrap{padding-top:16px;padding-bottom:60px;max-width:360px;margin:0 auto;}
   .infowrap .cap{font-size:var(--fs-cap);letter-spacing:6px;color:var(--berry-deep);margin-bottom:14px;text-align:center;}
-  .info{border:2px solid var(--berry);border-radius:18px;padding:6px 22px 18px;background:#fffaf0;box-shadow:0 12px 26px rgba(165,55,44,.14);position:relative;}
-  .info::before{content:"🎀";position:absolute;top:-18px;left:50%;transform:translateX(-50%);font-size:var(--fs-h1);}
+  .info{border:0;border-radius:0;padding:6px 4px 4px;background:transparent;box-shadow:none;position:relative;}
+  .info::before{content:"";position:absolute;top:-2px;left:50%;transform:translateX(-50%);font-size:0;}
   .info .line{display:flex;gap:12px;padding:14px 2px;font-size:var(--fs-lead);line-height:1.7;}
   .info .line .k{color:var(--berry-deep);white-space:nowrap;font-weight:600;} .info .line .v{color:var(--ink);}
   .info .line+.line{border-top:1px dashed rgba(204,86,72,.35);}
@@ -276,7 +285,7 @@
   <div class="detail" id="detail"><div class="dsheet" id="dsheet"></div></div>
 
   <!-- 屏1 · 封面 + 邀请（进门即知是什么事） -->
-  <section class="screen tint-cream" data-dot>
+  <section class="screen cover tint-cream" data-dot>
     <div class="inner">
       <img class="title-img reveal" src="img/title.png" alt="Welcome to our jam party">
       <div class="hero-sub reveal">诚挚地邀请你，参加我们的<b>领证派对</b>。<br>一场难得的相聚，<span class="accent">愿你我相聚如初。</span></div>
