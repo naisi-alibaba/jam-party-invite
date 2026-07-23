@@ -299,8 +299,10 @@
   <div class="foot">🎀 JAM PARTY · 上海 · 只此一夜 🎀</div>
 
 <script>
-  // 后端接口地址（部署好后填你的 https 基地址，例如 "https://api.你的域名.com"）
-  var API_BASE = "";
+  // 果酱墙后端：与页面同源部署时用相对路径。
+  // 在 GitHub Pages（无后端）上自动关闭，墙隐藏、不影响其它功能。
+  var API_ON = (location.hostname !== 'naisi-alibaba.github.io' && location.protocol.indexOf('http') === 0);
+  var API_BASE = "";  // 同源，留空即可；跨源才填 "http://你的IP"
   var MAP_URL="https://uri.amap.com/search?keyword=%E7%94%B3%E6%8A%A5%E9%A6%86%EF%BC%88%E6%B1%89%E5%8F%A3%E8%B7%AF309%E5%8F%B7%EF%BC%89&city=%E4%B8%8A%E6%B5%B7&src=invite&callnative=1";
   var IDS=[
     {id:"灯塔",cls:"c1",img:"img/jars/jar-1.png",seal:"#c8892a",acc:"#a9711d",c:"那段路，多亏有你",
@@ -490,12 +492,12 @@
   // ===== 果酱墙：上报 + 轮询 =====
   var wallSec=document.getElementById('wallsec'),wallEl=document.getElementById('wall'),wallCount=document.getElementById('wallCount');
   function postEnter(m){
-    if(!API_BASE)return;
+    if(!API_ON)return;
     try{fetch(API_BASE+'/api/enter',{method:'POST',headers:{'Content-Type':'application/json'},
       body:JSON.stringify({name:m.nm,identity:MAP[m.id].id})}).catch(function(){});}catch(e){}
   }
   function fetchWall(){
-    if(!API_BASE)return;
+    if(!API_ON)return;
     fetch(API_BASE+'/api/wall').then(function(r){return r.json();}).then(function(d){
       if(!d||!d.ok)return;
       wallSec.style.display='block';
@@ -504,7 +506,7 @@
         return '<div class="wcell"><img src="'+x.img+'" alt=""><div class="wn">'+esc(g.name)+'</div></div>';}).join('');
     }).catch(function(){});
   }
-  if(API_BASE){ fetchWall(); setInterval(fetchWall, 6000); }
+  if(API_ON){ fetchWall(); setInterval(fetchWall, 6000); }
 
 
   // 恢复上次进度
