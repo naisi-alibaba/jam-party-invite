@@ -198,7 +198,7 @@
 
   <section class="hero">
     <div class="jar-hero">🫙</div>
-    <div class="names reveal">Zi&nbsp;yun&nbsp;&amp;&nbsp;Jin&nbsp;shuai</div>
+    <div class="names reveal">王紫蕴&nbsp;&amp;&nbsp;刘金帅</div>
     <h1 class="kai reveal">果酱派对</h1>
     <div class="en reveal">✦&nbsp;&nbsp;JAM&nbsp;&nbsp;PARTY&nbsp;&nbsp;✦</div>
     <div class="hook reveal">久等了，朋友。</div>
@@ -478,7 +478,7 @@
     var ics=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//JamParty//CN','BEGIN:VEVENT',
       'UID:jamparty-20260808@naisi','DTSTAMP:20260723T000000Z',
       'DTSTART;TZID=Asia/Shanghai:20260808T180000','DTEND;TZID=Asia/Shanghai:20260808T220000',
-      'SUMMARY:果酱派对 · 子昀&金帅','LOCATION:上海汉口路309号 申报馆顶楼（城之央）',
+      'SUMMARY:果酱派对 · 王紫蕴&刘金帅','LOCATION:上海汉口路309号 申报馆顶楼（城之央）',
       'DESCRIPTION:久等了朋友，那晚来陪我们玩一场。','BEGIN:VALARM','TRIGGER:-P1D','ACTION:DISPLAY','DESCRIPTION:明天就是果酱派对啦','END:VALARM',
       'END:VEVENT','END:VCALENDAR'].join('\r\n');
     var blob=new Blob([ics],{type:'text/calendar'});var url=URL.createObjectURL(blob);
@@ -501,14 +501,14 @@
     function T(t,y,size,color,font,ls){ctx.fillStyle=color;ctx.textAlign='center';ctx.font=(font||'')+size+'px "STKaiti","KaiTi",serif';
       if(ls){var chs=t.split(''),tot=0,ws=[];for(var i=0;i<chs.length;i++){var w=ctx.measureText(chs[i]).width;ws.push(w);tot+=w+(i<chs.length-1?ls:0);}var cx=W/2-tot/2;ctx.textAlign='left';for(var j=0;j<chs.length;j++){ctx.fillText(chs[j],cx,y);cx+=ws[j]+ls;}ctx.textAlign='center';}
       else ctx.fillText(t,W/2,y);}
-    T('Zi yun & Jin shuai',96,24,'#a5372c','',2);
+    T('王紫蕴 & 刘金帅',96,24,'#a5372c','',3);
     T('果酱派对',152,52,'#cc5648','700 ',6);
     T('✦  JAM  PARTY  ✦',180,14,'#7f924f','',3);
     T(m.nm,562,42,'#3a1f13','700 ',3);
     T(x.id,614,30,x.acc,'700 ',6);
     T(x.c,652,17,x.acc,'italic 700 ',1);
     ctx.strokeStyle=x.seal;ctx.globalAlpha=.5;ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(150,690);ctx.lineTo(410,690);ctx.stroke();ctx.globalAlpha=1;
-    T('我是子昀 & 金帅的「'+x.id+'」',740,17,'#5c3b2c','',0);
+    T('我是王紫蕴 & 刘金帅的「'+x.id+'」',740,17,'#5c3b2c','',0);
     T('2026.08.08 周六 18:00 · 上海申报馆顶楼',790,15,'#8a6a54','',0);
     T('只 此 一 夜 · 等 你 来',822,12,'#b09070','',3);
     var jar=new Image();jar.crossOrigin='anonymous';
