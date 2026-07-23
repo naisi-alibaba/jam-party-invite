@@ -27,22 +27,29 @@
     --fs-cap:11px;    /* 标签/脚注/字距小字 */
   }
   html,body{background:#fdfcfa;color:var(--ink);font-family:var(--f-body);-webkit-font-smoothing:antialiased;overflow-x:hidden;line-height:1.7;}
-  html{scroll-snap-type:y proximity;scroll-behavior:smooth;}
+  html{scroll-snap-type:y mandatory;scroll-behavior:smooth;}
   .kai{font-family:var(--f-title);}
   .en{font-family:var(--f-en);}
 
-  /* ===== 分屏骨架（ins 极简 · 全屏吸附） ===== */
+  /* ===== 分屏骨架（ins 极简 · 全屏吸附 · 每屏独立背景） ===== */
   .screen{min-height:100vh;min-height:100svh;scroll-snap-align:start;
     display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;
-    padding:88px 32px;position:relative;z-index:1;}
-  .screen .inner{width:100%;max-width:400px;}
-  /* 每屏元素分层渐入 */
-  .screen .reveal{opacity:0;transform:translateY(28px);transition:opacity .9s cubic-bezier(.2,.7,.2,1),transform .9s cubic-bezier(.2,.7,.2,1);}
+    padding:88px 32px;position:relative;z-index:1;overflow:hidden;
+    background:#fdfcfa url("img/bg2.jpg") center/cover no-repeat;}
+  /* 交替底色，制造翻页边界 */
+  .screen.tint-pink{background-color:#fbeef0;background-blend-mode:multiply;}
+  .screen.tint-cream{background-color:#fbf3e4;background-blend-mode:multiply;}
+  .screen.tint-mint{background-color:#eef4ee;background-blend-mode:multiply;}
+  .screen::before{content:"";position:absolute;top:0;left:8%;right:8%;height:1px;background:linear-gradient(90deg,transparent,rgba(204,86,72,.28),transparent);}
+  .screen:first-child::before{display:none;}
+  .screen .inner{width:100%;max-width:400px;position:relative;z-index:1;}
+  /* 每屏元素分层渐入（加快） */
+  .screen .reveal{opacity:0;transform:translateY(22px);transition:opacity .5s cubic-bezier(.2,.7,.2,1),transform .5s cubic-bezier(.2,.7,.2,1);}
   .screen.on .reveal{opacity:1;transform:none;}
-  .screen.on .reveal:nth-child(2){transition-delay:.12s;}
-  .screen.on .reveal:nth-child(3){transition-delay:.24s;}
-  .screen.on .reveal:nth-child(4){transition-delay:.36s;}
-  .screen.on .reveal:nth-child(5){transition-delay:.48s;}
+  .screen.on .reveal:nth-child(2){transition-delay:.07s;}
+  .screen.on .reveal:nth-child(3){transition-delay:.14s;}
+  .screen.on .reveal:nth-child(4){transition-delay:.21s;}
+  .screen.on .reveal:nth-child(5){transition-delay:.28s;}
   /* 每屏统一的小标题眉/分隔 */
   .eyebrow{font-family:var(--f-en);font-size:15px;letter-spacing:3px;color:var(--berry);opacity:.85;margin-bottom:18px;}
   .divider{width:40px;height:2px;background:var(--berry);opacity:.35;margin:22px auto;border-radius:2px;}
@@ -58,10 +65,9 @@
   .s-lead{font-size:var(--fs-lead);line-height:2.1;color:var(--ink-soft);}
   .s-big{font-family:var(--f-title);font-size:var(--fs-h1);line-height:1.7;color:var(--berry-deep);margin-top:6px;}
   .s-big .accent{color:var(--berry);}
-  body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
-    background:#fdfcfa url("img/bg2.jpg") top center;background-size:100% auto;background-repeat:repeat-y;}
+  body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;background:#fdfcfa;}
   body::after{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
-    background:radial-gradient(120% 55% at 50% 0%, rgba(233,178,74,.06), transparent 55%),radial-gradient(100% 45% at 50% 120%, rgba(204,86,72,.05), transparent 60%);}
+    background:radial-gradient(120% 55% at 50% 0%, rgba(233,178,74,.05), transparent 55%);}
   /* 下落动效层 */
   #fall{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;}
   #fall i{position:absolute;top:-6%;display:block;color:var(--berry);opacity:.5;animation:falling linear infinite;}
@@ -269,28 +275,36 @@
   <div class="shareM" id="shareM"><img id="shareImg" alt="我的果酱瓶"><div class="st">长按图片 · 保存到相册，发给我们 / 发朋友圈</div><div class="sc" id="shareClose">关闭</div></div>
   <div class="detail" id="detail"><div class="dsheet" id="dsheet"></div></div>
 
-  <!-- 屏1 · 封面 -->
-  <section class="screen" data-dot>
+  <!-- 屏1 · 封面 + 邀请（进门即知是什么事） -->
+  <section class="screen tint-cream" data-dot>
     <div class="inner">
       <img class="title-img reveal" src="img/title.png" alt="Welcome to our jam party">
-      <div class="hero-sub reveal">Hey，久等了——<br>诚挚地邀请你，参加我们的<b>领证派对</b>。</div>
+      <div class="hero-sub reveal">诚挚地邀请你，参加我们的<b>领证派对</b>。<br>一场难得的相聚，<span class="accent">愿你我相聚如初。</span></div>
     </div>
     <div class="downcue">向下滑<span>⌄</span></div>
   </section>
 
-  <!-- 屏2 · 邀请语 -->
-  <section class="screen" data-dot>
+  <!-- 屏2 · 新人 + 时间地点（核心硬信息一屏给全） -->
+  <section class="screen tint-pink" data-dot>
     <div class="inner">
-      <div class="eyebrow reveal">An Invitation</div>
-      <p class="s-lead reveal">这是一场人生中<br>难得的相聚，</p>
-      <div class="divider reveal"></div>
-      <p class="s-big reveal">希望你与我们，<br><span class="accent">相聚如初。</span></p>
+      <div class="eyebrow reveal">The Couple</div>
+      <div class="cp-row reveal">
+        <div class="cp"><div class="cp-role">新郎</div><div class="cp-name kai">刘金帅</div></div>
+        <div class="cp-amp">&amp;</div>
+        <div class="cp"><div class="cp-role">新娘</div><div class="cp-name kai">王紫蕴</div></div>
+      </div>
+      <div class="info reveal" style="margin-top:24px">
+        <div class="line"><span class="k">🕗 时间</span><span class="v">2026年8月8日（周六）18:00</span></div>
+        <div class="line"><span class="k">📍 地点</span><span class="v">上海汉口路309号 · 申报馆顶楼（城之央）</span></div>
+        <a class="mapbtn" id="mapbtn" href="https://uri.amap.com/search?keyword=%E7%94%B3%E6%8A%A5%E9%A6%86%EF%BC%88%E6%B1%89%E5%8F%A3%E8%B7%AF309%E5%8F%B7%EF%BC%89&city=%E4%B8%8A%E6%B5%B7&src=invite&callnative=1">📍 打开地图 · 导航过去</a>
+        <a class="mapbtn calbtn" id="calbtn" href="#">📅 加入日历 · 别忘了这天</a>
+      </div>
     </div>
     <div class="downcue">向下滑<span>⌄</span></div>
   </section>
 
   <!-- 屏3 · 果酱瓶彩蛋 -->
-  <section class="screen" data-dot>
+  <section class="screen tint-mint" data-dot>
     <div class="inner">
       <div class="eyebrow reveal">Our Jam</div>
       <img class="jarimg reveal" id="jam3d" loading="lazy" src="img/newjar.png" alt="果酱瓶 · Jam Party">
@@ -313,37 +327,8 @@
     <div class="downcue">向下滑<span>⌄</span></div>
   </section>
 
-  <!-- 屏4 · 新人 -->
-  <section class="screen" data-dot>
-    <div class="inner">
-      <div class="eyebrow reveal">The Couple</div>
-      <div class="cp-row reveal">
-        <div class="cp"><div class="cp-role">新郎</div><div class="cp-name kai">刘金帅</div></div>
-        <div class="cp-amp">&amp;</div>
-        <div class="cp"><div class="cp-role">新娘</div><div class="cp-name kai">王紫蕴</div></div>
-      </div>
-      <div class="divider reveal"></div>
-      <p class="s-lead reveal" style="font-size:var(--fs-body)">在上海相遇，<br>把日子熬成了现在的甜。</p>
-    </div>
-    <div class="downcue">向下滑<span>⌄</span></div>
-  </section>
-
-  <!-- 屏5 · 时间地点 -->
-  <section class="screen" data-dot>
-    <div class="inner">
-      <div class="eyebrow reveal">When &amp; Where</div>
-      <div class="info reveal">
-        <div class="line"><span class="k">🕗 时间</span><span class="v">2026年8月8日（周六）18:00</span></div>
-        <div class="line"><span class="k">📍 地点</span><span class="v">上海汉口路309号 · 申报馆顶楼（城之央）</span></div>
-        <a class="mapbtn" id="mapbtn" href="https://uri.amap.com/search?keyword=%E7%94%B3%E6%8A%A5%E9%A6%86%EF%BC%88%E6%B1%89%E5%8F%A3%E8%B7%AF309%E5%8F%B7%EF%BC%89&city=%E4%B8%8A%E6%B5%B7&src=invite&callnative=1">📍 打开地图 · 导航过去</a>
-        <a class="mapbtn calbtn" id="calbtn" href="#">📅 加入日历 · 别忘了这天</a>
-      </div>
-    </div>
-    <div class="downcue">向下滑<span>⌄</span></div>
-  </section>
-
-  <!-- 屏6 · 选身份（功能区，放开正常滚动） -->
-  <section class="screen tall" data-dot>
+  <!-- 屏4 · 选身份（功能区，放开正常滚动） -->
+  <section class="screen tall tint-cream" data-dot>
     <div class="inner">
       <div class="eyebrow reveal">Who Are You</div>
       <div class="s-big reveal" style="font-size:var(--fs-h1)">进来之前，先定一件事</div>
