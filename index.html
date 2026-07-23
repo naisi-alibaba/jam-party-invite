@@ -102,6 +102,7 @@
   .dsheet .dclose{position:absolute;top:14px;right:18px;font-size:22px;color:#b09070;cursor:pointer;line-height:1;}
   .dsheet .dtop{display:flex;align-items:center;gap:20px;padding-right:8px;}
   .dsheet .djar{width:78px;flex:none;}
+  .dsheet .djar .jarsvg{width:100%;}
   .dsheet .dname{font-family:"STKaiti",serif;font-weight:700;font-size:36px;letter-spacing:6px;color:#3a1f13;}
   .dsheet .dconcept{font-family:"STKaiti",serif;font-style:italic;font-size:16px;color:var(--seal);margin-top:4px;}
   .dsheet .dlong{margin-top:18px;font-size:15px;line-height:1.95;color:#5c3b2c;}
@@ -284,58 +285,29 @@
 <script>
   var MAP_URL="https://uri.amap.com/search?keyword=%E7%94%B3%E6%8A%A5%E9%A6%86%EF%BC%88%E6%B1%89%E5%8F%A3%E8%B7%AF309%E5%8F%B7%EF%BC%89&city=%E4%B8%8A%E6%B5%B7&src=invite&callnative=1";
   var IDS=[
-    {id:"灯塔",cls:"c1",g:"🗼",seal:"#c8892a",acc:"#a9711d",c:"那段路，多亏有你",
+    {id:"灯塔",cls:"c1",img:"img/jars/jar-1.png",seal:"#c8892a",acc:"#a9711d",c:"那段路，多亏有你",
      d:"在某段要紧的路上——入行、求学、某个坎——你实实在在帮过我们、点过我们一下。",
      long:"有那么一段路，是你把我们带过来的。<br>可能是刚入行时你递来的一句点拨，可能是我们卡在某个坎上时你伸的那只手，也可能只是某个深夜你说的一句“别怕，会过去的”。<br><br>你未必天天在场，但每逢真正要紧的关头，我们心里第一个想到的是你。<br><b>如果你也记得那段路——这一罐，是你的。</b>"},
-    {id:"同谋",cls:"c2",g:"🃏",seal:"#9c5580",acc:"#8a4a70",c:"我们一起干过些没人知道的事",
+    {id:"同谋",cls:"c2",img:"img/jars/jar-2.png",seal:"#9c5580",acc:"#8a4a70",c:"我们一起干过些没人知道的事",
      d:"那些荒唐、鲜活、笑到岔气的另一面，只有你见过。你是那个“共犯”。",
      long:"有些事，是不足为外人道的。<br>一起翻过的墙、逃过的课、闯过的祸、熬过的通宵，还有那个到现在都没说出口的秘密。<br><br>别人看到的是我们体面的样子，只有你见过我们最荒唐、最鲜活、笑到岔气的另一面。<br><b>你是那个“共犯”——这一罐，敬我们的默契。</b>"},
-    {id:"远山",cls:"c3",g:"⛰️",seal:"#568a7c",acc:"#356b5c",c:"离得再远，我也一直在",
+    {id:"远山",cls:"c3",img:"img/jars/jar-3.png",seal:"#568a7c",acc:"#356b5c",c:"离得再远，我也一直在",
      d:"隔着距离和时间，可一开口就回到当年。你来，本身就是最重的一句话。",
      long:"我们隔着很远的距离、很长的时间。<br>不常联系，可那种“你一直在那儿”的笃定，从来没变过。见面像从没分开，一开口就回到当年。<br><br>你今天愿意来，本身就是最重的一句话：<b>再远，这样的日子，我也要在场。这一罐，是给远道而来的你。</b>"},
-    {id:"江湖",cls:"c4",g:"⚔️",seal:"#c04545",acc:"#a5372c",c:"自己认下的彼此",
+    {id:"江湖",cls:"c4",img:"img/jars/jar-4.png",seal:"#c04545",acc:"#a5372c",c:"自己认下的彼此",
      d:"没有同窗血缘，是成年后各自挑中、留下的人。全靠选择，所以最难得。",
      long:"我们之间没有同窗、没有血缘。<br>是各自在成年后的世界里，兜兜转转、看对了眼，自己认下的彼此。<br><br>成年人的交情最难得——它不靠命定，全靠选择。你是我们在这偌大世界里，主动挑中、并且留住的人。<br><b>这一罐，敬我们自己选的江湖。</b>"},
-    {id:"炉火",cls:"c5",g:"🔥",seal:"#d16632",acc:"#a5431a",c:"有我在，就是主场",
+    {id:"炉火",cls:"c5",img:"img/jars/jar-5.png",seal:"#d16632",acc:"#a5431a",c:"有我在，就是主场",
      d:"你一到，场子就热了。天生会把人聚拢、把气氛焐热的那个。",
      long:"有你在，场子就冷不了。<br>你天生会把人聚拢、把气氛焐热，能让两个不认识的人三句话就熟络起来。<br><br>你未必是话最多的那个，但你是“在场感”最强的那个——你一到，热闹才真正开始。<br><b>这一罐，给让每场相聚都暖起来的你。</b>"}
   ];
   var MAP={};IDS.forEach(function(x){MAP[x.id]=x;});
 
-  // 写实果酱瓶 SVG（内部图形，可复用）
-  function jarGuts(x,uid){var s=x.seal,a=x.acc,cid='clip'+uid;return ''+
-    '<defs><clipPath id="'+cid+'"><rect x="28" y="32" width="64" height="114" rx="16"/></clipPath>'+
-    '<linearGradient id="g'+uid+'" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ffffff" stop-opacity=".55"/><stop offset=".5" stop-color="#ffffff" stop-opacity="0"/><stop offset="1" stop-color="#000000" stop-opacity=".06"/></linearGradient></defs>'+
-    '<path d="M52 8 L40 3 38 16 54 13Z" fill="#e3a9a2"/><path d="M68 8 L80 3 82 16 66 13Z" fill="#e3a9a2"/><circle cx="60" cy="11" r="3.6" fill="#d4948c"/>'+
-    '<rect x="34" y="14" width="52" height="16" rx="4" fill="'+s+'"/><rect x="34" y="14" width="52" height="6" rx="3" fill="#fff" opacity=".25"/>'+
-    '<rect x="38" y="29" width="44" height="6" fill="#fff7ea"/>'+
-    '<rect x="28" y="32" width="64" height="114" rx="16" fill="#fff7ea" stroke="#e6d3b0" stroke-width="1.5"/>'+
-    '<g clip-path="url(#'+cid+')"><path d="M28 106 q16 -11 32 0 t32 0 V146 H28Z" fill="'+s+'"/><path d="M28 106 q16 -11 32 0 t32 0 V113 H28Z" fill="#fff" opacity=".14"/>'+
-    '<rect x="28" y="32" width="64" height="114" fill="url(#g'+uid+')"/></g>'+
-    '<rect x="37" y="54" width="46" height="44" rx="5" fill="#fffef9" stroke="'+a+'" stroke-width="1.2" stroke-dasharray="3 2"/>'+
-    '<text x="60" y="72" text-anchor="middle" font-size="16">'+x.g+'</text>'+
-    '<text x="60" y="92" text-anchor="middle" font-size="17" font-family="STKaiti,KaiTi,serif" font-weight="700" fill="#3a2417" letter-spacing="2">'+x.id+'</text>';}
-  function jarSVG(x,uid){return '<svg class="jarsvg" viewBox="0 0 120 154" xmlns="http://www.w3.org/2000/svg">'+jarGuts(x,uid)+'</svg>';}
+  // 真实果酱瓶素材（复用 .jarsvg 尺寸样式）
+  function jarImg(x){return '<img class="jarsvg" src="'+x.img+'" alt="'+x.id+'">';}
+  function jarSVG(x,uid){return jarImg(x);}
 
-  // 个人分享海报 SVG（导出图片用）
-  function posterSVG(m){var x=MAP[m.id],uid='p'+(++UID),nm=esc(m.nm);return ''+
-    '<svg xmlns="http://www.w3.org/2000/svg" width="560" height="880" viewBox="0 0 560 880">'+
-    '<defs><pattern id="grid'+uid+'" width="34" height="34" patternUnits="userSpaceOnUse"><path d="M17 11 V23 M11 17 H23" stroke="#eab9b2" stroke-width="1.1" fill="none" opacity="0.5"/></pattern></defs>'+
-    '<rect width="560" height="880" fill="#fbf2e0"/><rect width="560" height="880" fill="url(#grid'+uid+')"/>'+
-    '<rect x="18" y="18" width="524" height="844" rx="26" fill="none" stroke="'+x.seal+'" stroke-width="2.5"/>'+
-    '<text x="280" y="96" text-anchor="middle" font-size="26" font-family="STKaiti,serif" fill="#a5372c" letter-spacing="3">Zi yun &amp; Jin shuai</text>'+
-    '<text x="280" y="150" text-anchor="middle" font-size="54" font-family="STKaiti,KaiTi,serif" font-weight="700" fill="#cc5648" letter-spacing="6">果酱派对</text>'+
-    '<text x="280" y="178" text-anchor="middle" font-size="15" fill="#7f924f" letter-spacing="6">✦  JAM  PARTY  ✦</text>'+
-    '<g transform="translate(190,220) scale(1.5)">'+jarGuts(x,uid)+'</g>'+
-    '<text x="280" y="530" text-anchor="middle" font-size="20" font-family="STKaiti,serif" fill="#a5372c">🎀</text>'+
-    '<text x="280" y="576" text-anchor="middle" font-size="44" font-family="STKaiti,KaiTi,serif" font-weight="700" fill="#3a1f13" letter-spacing="4">'+nm+'</text>'+
-    '<text x="280" y="626" text-anchor="middle" font-size="30" font-family="STKaiti,serif" font-weight="700" fill="'+x.acc+'" letter-spacing="6">'+x.id+'</text>'+
-    '<text x="280" y="664" text-anchor="middle" font-size="18" font-family="STKaiti,serif" font-style="italic" fill="'+x.acc+'">'+x.c+'</text>'+
-    '<line x1="150" y1="710" x2="410" y2="710" stroke="'+x.seal+'" stroke-width="1" opacity="0.5"/>'+
-    '<text x="280" y="758" text-anchor="middle" font-size="18" font-family="STKaiti,serif" fill="#5c3b2c">我是子昀 &amp; 金帅的「'+x.id+'」</text>'+
-    '<text x="280" y="812" text-anchor="middle" font-size="16" fill="#8a6a54" letter-spacing="1">2026.08.08 周六 18:00 · 上海申报馆顶楼</text>'+
-    '<text x="280" y="840" text-anchor="middle" font-size="12" fill="#b09070" letter-spacing="3">只 此 一 夜 · 等 你 来</text>'+
-    '</svg>';}
+  // 个人分享海报：canvas 合成（背景+文字+真实瓶子图）
 
   // 抱着果酱瓶的小人 SVG（手绘）
   function heldJar(x){var s=x.seal;return ''+
@@ -513,18 +485,37 @@
     var a=document.createElement('a');a.href=url;a.download='果酱派对.ics';document.body.appendChild(a);a.click();
     setTimeout(function(){document.body.removeChild(a);URL.revokeObjectURL(url);},500);});
 
-  // ===== ② 生成个人分享图 =====
+  // ===== ② 生成个人分享图（canvas 合成）=====
   var shareM=document.getElementById('shareM'),shareImg=document.getElementById('shareImg');
   document.getElementById('shareClose').addEventListener('click',function(){shareM.classList.remove('show');});
   function makePoster(m){
-    var svg=posterSVG(m);var b64=btoa(unescape(encodeURIComponent(svg)));
-    var img=new Image();img.crossOrigin='anonymous';
-    img.onload=function(){var sc=2;var cv=document.createElement('canvas');cv.width=560*sc;cv.height=880*sc;
-      var ctx=cv.getContext('2d');ctx.scale(sc,sc);ctx.drawImage(img,0,0,560,880);
-      try{shareImg.src=cv.toDataURL('image/png');}catch(e){shareImg.src='data:image/svg+xml;base64,'+b64;}
-      shareM.classList.add('show');};
-    img.onerror=function(){shareImg.src='data:image/svg+xml;base64,'+b64;shareM.classList.add('show');};
-    img.src='data:image/svg+xml;base64,'+b64;
+    var x=MAP[m.id],W=560,H=880,sc=2;
+    var cv=document.createElement('canvas');cv.width=W*sc;cv.height=H*sc;
+    var ctx=cv.getContext('2d');ctx.scale(sc,sc);
+    // 底 + 加号网格
+    ctx.fillStyle='#fbf2e0';ctx.fillRect(0,0,W,H);
+    ctx.strokeStyle='rgba(234,185,178,0.5)';ctx.lineWidth=1.1;
+    for(var gy=17;gy<H;gy+=34){for(var gx=17;gx<W;gx+=34){ctx.beginPath();ctx.moveTo(gx,gy-6);ctx.lineTo(gx,gy+6);ctx.moveTo(gx-6,gy);ctx.lineTo(gx+6,gy);ctx.stroke();}}
+    // 边框
+    ctx.strokeStyle=x.seal;ctx.lineWidth=2.5;if(ctx.roundRect){ctx.beginPath();ctx.roundRect(18,18,W-36,H-36,26);ctx.stroke();}else{ctx.strokeRect(18,18,W-36,H-36);}
+    function T(t,y,size,color,font,ls){ctx.fillStyle=color;ctx.textAlign='center';ctx.font=(font||'')+size+'px "STKaiti","KaiTi",serif';
+      if(ls){var chs=t.split(''),tot=0,ws=[];for(var i=0;i<chs.length;i++){var w=ctx.measureText(chs[i]).width;ws.push(w);tot+=w+(i<chs.length-1?ls:0);}var cx=W/2-tot/2;ctx.textAlign='left';for(var j=0;j<chs.length;j++){ctx.fillText(chs[j],cx,y);cx+=ws[j]+ls;}ctx.textAlign='center';}
+      else ctx.fillText(t,W/2,y);}
+    T('Zi yun & Jin shuai',96,24,'#a5372c','',2);
+    T('果酱派对',152,52,'#cc5648','700 ',6);
+    T('✦  JAM  PARTY  ✦',180,14,'#7f924f','',3);
+    T(m.nm,562,42,'#3a1f13','700 ',3);
+    T(x.id,614,30,x.acc,'700 ',6);
+    T(x.c,652,17,x.acc,'italic 700 ',1);
+    ctx.strokeStyle=x.seal;ctx.globalAlpha=.5;ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(150,690);ctx.lineTo(410,690);ctx.stroke();ctx.globalAlpha=1;
+    T('我是子昀 & 金帅的「'+x.id+'」',740,17,'#5c3b2c','',0);
+    T('2026.08.08 周六 18:00 · 上海申报馆顶楼',790,15,'#8a6a54','',0);
+    T('只 此 一 夜 · 等 你 来',822,12,'#b09070','',3);
+    var jar=new Image();jar.crossOrigin='anonymous';
+    jar.onload=function(){var jw=230,jh=jw*jar.height/jar.width;ctx.drawImage(jar,W/2-jw/2,205,jw,jh);
+      try{shareImg.src=cv.toDataURL('image/png');}catch(e){shareImg.src=x.img;}shareM.classList.add('show');};
+    jar.onerror=function(){shareM.classList.add('show');};
+    jar.src=x.img;
   }
 </script>
 </body>
