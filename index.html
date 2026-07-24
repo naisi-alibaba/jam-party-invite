@@ -125,7 +125,8 @@
   .jar-hero::before{content:"🎀";position:absolute;top:-20px;font-size:var(--fs-hero);}
   @keyframes jar-in{0%{opacity:0;transform:translateY(16px) scale(.85) rotate(-6deg);}100%{opacity:1;transform:none;}}
   .hero .names{font-family:var(--f-title);font-size:var(--fs-lead);letter-spacing:3px;color:var(--berry-deep);margin:26px 0 10px;font-weight:600;}
-  .title-img{display:block;width:72%;max-width:300px;margin:0 auto 6px;filter:drop-shadow(0 8px 18px rgba(165,55,44,.24));}
+  .title-img{display:block;width:100%;max-width:340px;margin:0 auto 6px;border-radius:10px;box-shadow:0 8px 20px rgba(120,70,40,.22);border:3px solid #fff;}
+  .couple-art{display:block;width:100%;max-width:330px;margin:4px auto 6px;border-radius:12px;box-shadow:0 10px 24px rgba(120,70,40,.22);border:3px solid #fff;}
   .cover-hook{margin-top:30px;font-family:var(--f-title);font-size:var(--fs-h1);line-height:1.7;color:var(--ink);letter-spacing:1px;}
   .cover-hook .accent{color:var(--berry);}
   .hero-sub{margin-top:26px;font-size:var(--fs-lead);line-height:1.85;color:var(--ink-soft);}
@@ -319,7 +320,7 @@
   <!-- 屏1 · 封面（只留主视觉+一句钩子，硬信息后面再给） -->
   <section class="screen cover tint-cream" data-dot>
     <div class="inner">
-      <img class="title-img reveal-eyebrow" src="img/title.png" alt="刘金帅 & 王紫蕴 的果酱派对 · 2026.8.8 领证派对邀请">
+      <img class="title-img reveal-eyebrow" src="img/title-art.jpg" alt="刘金帅 & 王紫蕴 的果酱派对 · 2026.8.8 领证派对邀请">
       <div class="cover-hook reveal-hero">我们把这场婚礼，<br>腌成了五罐果酱——<br><span class="accent">进来挑一罐，那罐写的就是你。</span></div>
     </div>
     <div class="downcue">向下滑<span>⌄</span></div>
@@ -354,7 +355,8 @@
   <section class="screen tint-mint" data-dot>
     <div class="inner">
       <div class="eyebrow reveal-eyebrow">The Couple</div>
-      <div class="cp-row reveal-hero">
+      <img class="couple-art reveal-hero" src="img/couple-art.jpg" alt="刘金帅 & 王紫蕴" loading="lazy">
+      <div class="cp-row reveal-body">
         <div class="cp"><div class="cp-role">新郎</div><div class="cp-name kai">刘金帅</div></div>
         <div class="cp-amp">🫙</div>
         <div class="cp"><div class="cp-role">新娘</div><div class="cp-name kai">王紫蕴</div></div>
