@@ -35,11 +35,10 @@
   .screen{min-height:100vh;min-height:100svh;min-height:calc(var(--vh,1vh)*100);scroll-snap-align:start;
     display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;
     padding:88px 32px;position:relative;z-index:1;overflow:hidden;
-    background:#fbf5ea;}
-  /* 单色极淡纸纹颗粒（纯CSS·零请求·消大色块死板感） */
-  .screen::after{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
-    background-image:radial-gradient(rgba(140,90,60,.03) .6px,transparent .6px);background-size:3px 3px;}
-  /* 交替底色，制造翻页边界（降饱和，只做微差） */
+    background:#fbf5ea url("img/bg2.jpg") center/cover no-repeat;}
+  /* 背景之上叠一层柔白，压住噪点、保证文字可读，但保留彩色氛围 */
+  .screen::after{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;background:rgba(253,251,247,.42);}
+  /* 交替底色，制造翻页边界（叠在噪点上做微差） */
   .screen.tint-pink{background-color:#faf0ee;}
   .screen.tint-cream{background-color:#faf4e8;}
   .screen.tint-mint{background-color:#f0f4ef;}
@@ -97,7 +96,7 @@
   body::after{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
     background:radial-gradient(120% 55% at 50% 0%, rgba(233,178,74,.05), transparent 55%);}
   /* 下落动效层 */
-  #fall{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;}
+  #fall{position:fixed;inset:0;z-index:6;pointer-events:none;overflow:hidden;}
   #fall i{position:absolute;top:-6%;display:block;color:var(--berry);opacity:.5;animation:falling linear infinite;}
   @keyframes falling{0%{transform:translateY(-10vh) rotate(0);opacity:0;}10%{opacity:.55;}90%{opacity:.55;}100%{transform:translateY(112vh) rotate(220deg);opacity:0;}}
   #confetti{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;}
@@ -122,21 +121,18 @@
   .jar-hero::before{content:"🎀";position:absolute;top:-20px;font-size:var(--fs-hero);}
   @keyframes jar-in{0%{opacity:0;transform:translateY(16px) scale(.85) rotate(-6deg);}100%{opacity:1;transform:none;}}
   .hero .names{font-family:var(--f-title);font-size:var(--fs-lead);letter-spacing:3px;color:var(--berry-deep);margin:26px 0 10px;font-weight:600;}
-  .title-img{display:block;width:56%;max-width:230px;margin:0 auto 4px;filter:drop-shadow(0 6px 14px rgba(165,55,44,.22));}
-  .cover-names{font-size:var(--fs-hero);line-height:1.25;letter-spacing:2px;color:var(--berry-deep);margin-top:8px;}
-  .cover-names .amp{font-size:.7em;filter:grayscale(.1);}
-  .cover-date{margin-top:14px;font-size:var(--fs-sm);letter-spacing:1px;color:var(--ink-soft);}
-  .cover-hook{margin-top:22px;font-size:var(--fs-lead);line-height:1.85;color:var(--ink);}
-  .cover-hook .accent{color:var(--berry);font-weight:600;}
+  .title-img{display:block;width:72%;max-width:300px;margin:0 auto 6px;filter:drop-shadow(0 8px 18px rgba(165,55,44,.24));}
+  .cover-hook{margin-top:30px;font-family:var(--f-title);font-size:var(--fs-h1);line-height:1.7;color:var(--ink);letter-spacing:1px;}
+  .cover-hook .accent{color:var(--berry);}
   .hero-sub{margin-top:26px;font-size:var(--fs-lead);line-height:1.85;color:var(--ink-soft);}
   .hero-sub b{color:var(--berry);font-weight:600;}
   /* 新人 */
   .couple{padding:8px 28px 56px;}
-  .cp-row{display:flex;align-items:center;justify-content:center;gap:22px;max-width:360px;margin:0 auto;}
-  .cp{text-align:center;flex:1;}
+  .cp-row{display:flex;align-items:center;justify-content:center;gap:14px;max-width:360px;margin:0 auto;}
+  .cp{text-align:center;flex:1;min-width:0;}
   .cp-role{font-size:var(--fs-cap);letter-spacing:4px;color:var(--ink-soft);margin-bottom:6px;}
-  .cp-name{font-size:var(--fs-hero);letter-spacing:4px;color:var(--berry-deep);font-weight:700;}
-  .cp-amp{font-family:var(--f-title);font-size:var(--fs-h1);color:var(--berry);opacity:.7;}
+  .cp-name{font-size:var(--fs-hero);letter-spacing:1px;color:var(--berry-deep);font-weight:700;white-space:nowrap;}
+  .cp-amp{font-family:var(--f-title);font-size:var(--fs-h2);color:var(--berry);opacity:.7;flex:none;}
   .hero h1{font-size:var(--fs-hero);letter-spacing:8px;line-height:1.15;color:var(--berry);text-shadow:2px 2px 0 #fff,3px 3px 0 rgba(165,55,44,.28),4px 5px 8px rgba(165,55,44,.18);}
   .hero .en{font-size:var(--fs-cap);letter-spacing:6px;color:var(--leaf);margin-top:14px;}
   .hero .hook{margin-top:30px;font-size:var(--fs-lead);line-height:2;color:var(--ink-soft);}
@@ -316,13 +312,11 @@
   <div class="shareM" id="shareM"><img id="shareImg" alt="我的果酱瓶"><div class="st">长按图片 · 保存到相册，发给我们 / 发朋友圈</div><div class="sc" id="shareClose">关闭</div></div>
   <div class="detail" id="detail"><div class="dsheet" id="dsheet"></div></div>
 
-  <!-- 屏1 · 封面 + 邀请（进门即知是什么事） -->
+  <!-- 屏1 · 封面（只留主视觉+一句钩子，硬信息后面再给） -->
   <section class="screen cover tint-cream" data-dot>
     <div class="inner">
       <img class="title-img reveal-eyebrow" src="img/title.png" alt="刘金帅 & 王紫蕴 的果酱派对 · 2026.8.8 领证派对邀请">
-      <div class="cover-names kai reveal-hero">刘金帅 <span class="amp">🫙</span> 王紫蕴</div>
-      <div class="cover-date reveal-body">2026.8.8 周六傍晚 · 上海申报馆顶楼</div>
-      <div class="cover-hook reveal-body">我们把这场婚礼，腌成了五罐果酱——<br>进来挑一罐，<span class="accent">那罐写的就是你</span>。</div>
+      <div class="cover-hook reveal-hero">我们把这场婚礼，<br>腌成了五罐果酱——<br><span class="accent">进来挑一罐，那罐写的就是你。</span></div>
     </div>
     <div class="downcue">向下滑<span>⌄</span></div>
   </section>
