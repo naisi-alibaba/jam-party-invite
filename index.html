@@ -46,16 +46,18 @@
   .screen.on::before{width:80%;}
   .screen:first-child::before{display:none;}
   .screen .inner{width:100%;max-width:380px;position:relative;z-index:1;
-    background:rgba(255,255,255,.72);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
-    border:1px solid rgba(255,255,255,.6);border-radius:20px;padding:34px 26px;
-    box-shadow:0 8px 24px rgba(120,70,40,.08);}
-  /* 老安卓不支持毛玻璃时给不透明兜底，防文字压底不可读 */
-  @supports not ((backdrop-filter:blur(6px)) or (-webkit-backdrop-filter:blur(6px))){
-    .screen .inner{background:rgba(255,255,255,.95);}
-  }
-  /* 封面屏的标题图不需要卡片包裹感太重，弱化 */
-  .screen.cover .inner{background:rgba(255,255,255,.55);box-shadow:0 8px 22px rgba(120,70,40,.07);max-height:82svh;}
-  @supports not ((backdrop-filter:blur(6px)) or (-webkit-backdrop-filter:blur(6px))){ .screen.cover .inner{background:rgba(255,255,255,.9);} }
+    background:
+      radial-gradient(120% 100% at 50% 0%, #fffdf8, #fbf4e6 70%, #f6ecd6 100%);
+    border:1px solid rgba(180,120,60,.28);border-radius:14px;padding:36px 26px;
+    box-shadow:0 10px 30px rgba(120,70,40,.14), 0 2px 6px rgba(120,70,40,.08),
+      inset 0 0 0 1px rgba(255,255,255,.7), inset 0 0 0 6px rgba(255,253,247,.5);}
+  /* 标签纸的一圈虚线压印内框 */
+  .screen .inner::before{content:"";position:absolute;inset:9px;border:1px dashed rgba(180,120,60,.32);border-radius:9px;pointer-events:none;}
+  /* 极淡纸纹 */
+  .screen .inner::after{content:"";position:absolute;inset:0;border-radius:14px;pointer-events:none;opacity:.5;
+    background-image:radial-gradient(rgba(150,100,60,.04) .5px,transparent .5px);background-size:4px 4px;}
+  /* 封面屏标签纸更轻透，突出标题图 */
+  .screen.cover .inner{background:radial-gradient(120% 100% at 50% 0%, rgba(255,253,248,.94), rgba(251,244,230,.9));box-shadow:0 8px 24px rgba(120,70,40,.1),inset 0 0 0 1px rgba(255,255,255,.7);max-height:82svh;}
   /* 功能屏内容长，卡片内上对齐 */
   .screen.tall{scroll-snap-align:none;}
   .screen.tall .inner{padding:30px 22px 40px;}
@@ -97,8 +99,10 @@
     background:radial-gradient(120% 55% at 50% 0%, rgba(233,178,74,.05), transparent 55%);}
   /* 下落动效层 */
   #fall{position:fixed;inset:0;z-index:6;pointer-events:none;overflow:hidden;}
-  #fall i{position:absolute;top:-6%;display:block;color:var(--berry);opacity:.5;animation:falling linear infinite;}
-  @keyframes falling{0%{transform:translateY(-10vh) rotate(0);opacity:0;}10%{opacity:.55;}90%{opacity:.55;}100%{transform:translateY(112vh) rotate(220deg);opacity:0;}}
+  #fall i{position:absolute;top:-6%;display:block;filter:drop-shadow(0 1px 1px rgba(120,70,40,.15));animation:falling linear infinite;will-change:transform;}
+  #fall i svg{display:block;}
+  @keyframes falling{0%{transform:translateY(-12vh) rotate(0) translateX(0);opacity:0;}12%{opacity:.7;}50%{transform:translateY(50vh) rotate(140deg) translateX(14px);}90%{opacity:.7;}100%{transform:translateY(114vh) rotate(300deg) translateX(-6px);opacity:0;}}
+  html.lite #fall{display:none;}
   #confetti{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;}
   #confetti{display:none;}
 
@@ -504,15 +508,18 @@
       if(open)setTimeout(function(){nutri.scrollIntoView({behavior:'smooth',block:'center'});},260);});})();
 
   // ===== confetti + rain =====
-  // 下落动效：小十字/爱心/瓶子飘落
+  // 下落动效：手绘莓果 / 薄荷叶 / 小花（SVG，单色克制）
   (function(){var f=document.getElementById('fall');if(!f)return;
-    var glyphs=['✦','✕','❤','🎀','🫙'];
-    for(var i=0;i<20;i++){var s=document.createElement('i');
-      s.textContent=glyphs[(Math.random()*glyphs.length)|0];
+    var berry='<svg viewBox="0 0 24 24" width="100%" height="100%"><circle cx="9" cy="13" r="5" fill="#cc5648"/><circle cx="15" cy="15" r="5" fill="#b8433a"/><circle cx="13" cy="9" r="4.2" fill="#d9695c"/><path d="M12 6 q1-4 4-4" stroke="#7f924f" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg>';
+    var leaf='<svg viewBox="0 0 24 24" width="100%" height="100%"><path d="M12 2 C4 8 4 18 12 22 C20 18 20 8 12 2 Z" fill="#7f924f"/><path d="M12 4 L12 20" stroke="#5f7038" stroke-width="1.2"/></svg>';
+    var blossom='<svg viewBox="0 0 24 24" width="100%" height="100%"><g fill="#e0a9a0"><circle cx="12" cy="6" r="4"/><circle cx="18" cy="12" r="4"/><circle cx="12" cy="18" r="4"/><circle cx="6" cy="12" r="4"/></g><circle cx="12" cy="12" r="3" fill="#e9b24a"/></svg>';
+    var kinds=[berry,leaf,blossom,leaf,berry];
+    for(var i=0;i<16;i++){var s=document.createElement('i');
+      s.innerHTML=kinds[(Math.random()*kinds.length)|0];
       s.style.left=(Math.random()*100)+'%';
-      var dur=7+Math.random()*8;s.style.animationDuration=dur+'s';s.style.animationDelay=(-Math.random()*dur)+'s';
-      s.style.fontSize=(10+Math.random()*16)+'px';
-      s.style.opacity=(0.3+Math.random()*0.35);
+      var dur=9+Math.random()*9;s.style.animationDuration=dur+'s';s.style.animationDelay=(-Math.random()*dur)+'s';
+      var sz=12+Math.random()*16;s.style.width=sz+'px';s.style.height=sz+'px';
+      s.style.opacity=(0.35+Math.random()*0.35);
       f.appendChild(s);}
   })();
 
@@ -533,6 +540,35 @@
   screens.forEach(function(s){sio.observe(s);});
   if(screens[0])screens[0].classList.add('on');
   document.getElementById('mapbtn').setAttribute('href',MAP_URL);
+
+  // D·滚动驱动视差：卡片随进出视口做轻微缩放+位移（现代核开，lite/reduced 跳过）
+  (function(){
+    if(document.documentElement.classList.contains('lite'))return;
+    if(window.matchMedia&&window.matchMedia('(prefers-reduced-motion:reduce)').matches)return;
+    var inners=screens.map(function(s){return s.querySelector('.inner');});
+    var ticking=false,vh=window.innerHeight;
+    function onScroll(){if(ticking)return;ticking=true;requestAnimationFrame(function(){
+      vh=window.innerHeight;
+      screens.forEach(function(s,i){
+        var el=inners[i];if(!el)return;
+        if(s.classList.contains('tall')){el.style.transform='';el.style.opacity='';return;}
+        var r=s.getBoundingClientRect();
+        // 屏中心相对视口中心的偏移，归一化 -1(下方未到)~0(居中)~1(上方离开)
+        var p=((r.top+r.height/2)-vh/2)/vh;
+        if(p<-1.1||p>1.1)return;
+        var clamp=Math.max(-1,Math.min(1,p));
+        var scale=1-Math.abs(clamp)*0.05;      // 居中最大，进出稍小
+        var ty=clamp*-18;                        // 轻微反向位移做纵深
+        var op=1-Math.abs(clamp)*0.35;
+        el.style.transform='translateY('+ty.toFixed(1)+'px) scale('+scale.toFixed(3)+')';
+        el.style.opacity=op.toFixed(2);
+      });
+      ticking=false;
+    });}
+    window.addEventListener('scroll',onScroll,{passive:true});
+    window.addEventListener('resize',onScroll,{passive:true});
+    onScroll();
+  })();
 
   // ===== build picker jars =====
   var UID=0;
