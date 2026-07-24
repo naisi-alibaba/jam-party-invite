@@ -165,6 +165,7 @@
   .bow-mini{display:block;width:36px;height:auto;margin:14px auto;opacity:.9;}
   .bow-dots{display:flex;align-items:center;justify-content:center;gap:10px;margin:20px auto 22px;}
   .bow-dots svg{display:block;width:13px;height:auto;opacity:.85;}
+  .bow-line{display:block;width:26px;height:auto;margin:14px auto;opacity:.85;}
   .mapbtn{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:12px;text-decoration:none;border:0;border-radius:12px;padding:14px;color:#fff;font-size:var(--fs-body);letter-spacing:2px;font-weight:600;background:linear-gradient(180deg,#d96253,var(--berry-deep));box-shadow:0 8px 18px rgba(165,55,44,.3);}
   .mapbtn:active{transform:scale(.98);}
   .calbtn{margin-top:10px;background:#fff;color:var(--berry-deep);border:2px solid var(--berry);}
@@ -387,7 +388,11 @@
   <section class="screen tint-pink" data-dot>
     <div class="inner">
       <div class="eyebrow reveal-eyebrow">Our Jam</div>
-      <div class="s-lead reveal-body" style="margin-bottom:16px">为什么叫「<span class="accent">果酱派对</span>」？<br>因为爱情不是一颗突然掉落的糖果<br>而是一场漫长的<span class="accent">熬煮</span><br>一点点相遇，一点点了解，一点点磨合<br>再一点点把彼此放进未来<br>有人带来了酸甜的青春<br>有人见证了忙碌的成长<br>有人分享过异乡生活的热闹<br>也有人在某个重要时刻递来一勺温暖<br>这些不同的味道<br>最后汇成了我们这一罐独家的果酱<br>今天，请和我们一起<span class="accent">打开它</span></div>
+      <div class="s-lead reveal-body">为什么叫「<span class="accent">果酱派对</span>」？<br>因为爱情不是一颗突然掉落的糖果<br>而是一场漫长的<span class="accent">熬煮</span><br>一点点相遇，一点点了解，一点点磨合<br>再一点点把彼此放进未来</div>
+      <svg class="bow-line reveal-body" viewBox="0 0 80 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><g fill="none" stroke="#cc5648" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M40 24 C 20 8, 6 12, 10 24 C 6 36, 24 40, 40 24 Z"/><path d="M40 24 C 60 8, 74 12, 70 24 C 74 36, 56 40, 40 24 Z"/><path d="M38 27 C 34 36, 30 42, 26 46"/><path d="M42 27 C 46 36, 50 42, 54 46"/><circle cx="40" cy="24" r="3.8" fill="#cc5648" stroke="none"/></g></svg>
+      <div class="s-lead reveal-body">有人带来了酸甜的青春<br>有人见证了忙碌的成长<br>有人分享过异乡生活的热闹<br>也有人在某个重要时刻递来一勺温暖</div>
+      <svg class="bow-line reveal-body" viewBox="0 0 80 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><g fill="none" stroke="#cc5648" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M40 24 C 20 8, 6 12, 10 24 C 6 36, 24 40, 40 24 Z"/><path d="M40 24 C 60 8, 74 12, 70 24 C 74 36, 56 40, 40 24 Z"/><path d="M38 27 C 34 36, 30 42, 26 46"/><path d="M42 27 C 46 36, 50 42, 54 46"/><circle cx="40" cy="24" r="3.8" fill="#cc5648" stroke="none"/></g></svg>
+      <div class="s-lead reveal-body" style="margin-bottom:16px">这些不同的味道<br>最后汇成了我们这一罐独家的果酱<br>今天，请和我们一起<span class="accent">打开它</span></div>
       <img class="jarimg reveal-hero" id="jam3d" loading="lazy" src="img/newjar.png" alt="果酱瓶 · Jam Party">
       <div class="jartip reveal-body" id="jartip">👆 点开这罐果酱，看看配料</div>
       <div class="nutri" id="nutri">
@@ -543,7 +548,8 @@
 
   // ===== nutrition egg =====
   (function(){var jam=document.getElementById('jam3d'),nutri=document.getElementById('nutri'),jt=document.getElementById('jartip');
-    jam.addEventListener('click',function(){var open=nutri.classList.toggle('open');if(jt)jt.classList.add('hide');
+    jam.addEventListener('click',function(){var open=nutri.classList.toggle('open');
+      if(jt)jt.textContent=open?'👆 再点一下，收起配料':'👆 点开这罐果酱，看看配料';
       if(open)setTimeout(function(){nutri.scrollIntoView({behavior:'smooth',block:'center'});},260);});})();
 
   // ===== confetti + rain =====
