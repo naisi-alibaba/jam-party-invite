@@ -17,50 +17,68 @@
     --f-title:"ZCOOL KuaiLe","LXGW WenKai","PingFang SC",sans-serif;   /* 标题/重点：站酷快乐体 */
     --f-body:"LXGW WenKai","PingFang SC","Microsoft YaHei",serif;      /* 正文：霞鹜文楷 */
     --f-en:"Caveat","LXGW WenKai",cursive;                            /* 英文手写 */
-    /* 字号层级 token */
-    --fs-hero:40px;   /* 主视觉大字（如新人名字） */
-    --fs-h1:28px;     /* 区块主标题 */
-    --fs-h2:21px;     /* 次级标题/强调句 */
+    /* 字号层级 token（双声明：老核取px，现代核取clamp） */
+    --fs-hero:40px;   --fs-hero:clamp(28px,7.5vw,40px);   /* 每屏主角大字 */
+    --fs-h1:28px;     --fs-h1:clamp(23px,6.2vw,28px);     /* 区块主标题 */
+    --fs-h2:21px;     --fs-h2:clamp(18px,5vw,21px);       /* 次级/强调句 */
     --fs-lead:16px;   /* 引导语/较大正文 */
     --fs-body:15px;   /* 正文 */
     --fs-sm:13px;     /* 辅助说明 */
-    --fs-cap:11px;    /* 标签/脚注/字距小字 */
+    --fs-cap:12px;    /* 标签/脚注（保底≥12护老花） */
   }
   html,body{background:#fdfcfa;color:var(--ink);font-family:var(--f-body);-webkit-font-smoothing:antialiased;overflow-x:hidden;line-height:1.7;}
-  html{scroll-snap-type:y mandatory;scroll-behavior:smooth;}
+  html{scroll-snap-type:y proximity;scroll-behavior:smooth;}
   .kai{font-family:var(--f-title);}
   .en{font-family:var(--f-en);}
 
   /* ===== 分屏骨架（ins 极简 · 全屏吸附 · 每屏独立背景） ===== */
-  .screen{min-height:100vh;min-height:100svh;scroll-snap-align:start;
+  .screen{min-height:100vh;min-height:100svh;min-height:calc(var(--vh,1vh)*100);scroll-snap-align:start;
     display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;
     padding:88px 32px;position:relative;z-index:1;overflow:hidden;
-    background:#fdfcfa url("img/bg2.jpg") center/cover no-repeat;}
-  /* 背景噪点轻降淡（保留交替底色的边界感） */
-  .screen::after{content:"";position:absolute;inset:0;z-index:0;background:rgba(253,252,250,.28);pointer-events:none;}
-  /* 交替底色，制造翻页边界 */
-  .screen.tint-pink{background-color:#fbeef0;background-blend-mode:multiply;}
-  .screen.tint-cream{background-color:#fbf3e4;background-blend-mode:multiply;}
-  .screen.tint-mint{background-color:#eef4ee;background-blend-mode:multiply;}
-  .screen::before{content:"";position:absolute;top:0;left:8%;right:8%;height:1px;background:linear-gradient(90deg,transparent,rgba(204,86,72,.28),transparent);}
+    background:#fbf5ea;}
+  /* 单色极淡纸纹颗粒（纯CSS·零请求·消大色块死板感） */
+  .screen::after{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
+    background-image:radial-gradient(rgba(140,90,60,.03) .6px,transparent .6px);background-size:3px 3px;}
+  /* 交替底色，制造翻页边界（降饱和，只做微差） */
+  .screen.tint-pink{background-color:#faf0ee;}
+  .screen.tint-cream{background-color:#faf4e8;}
+  .screen.tint-mint{background-color:#f0f4ef;}
+  .screen::before{content:"";position:absolute;top:0;left:10%;right:10%;height:1px;width:0;margin:0 auto;background:linear-gradient(90deg,transparent,rgba(204,86,72,.3),transparent);transition:width .6s ease-out .15s;}
+  .screen.on::before{width:80%;}
   .screen:first-child::before{display:none;}
   .screen .inner{width:100%;max-width:380px;position:relative;z-index:1;
     background:rgba(255,255,255,.72);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
-    border:1px solid rgba(255,255,255,.6);border-radius:22px;padding:34px 26px;
-    box-shadow:0 14px 40px rgba(120,70,40,.12);}
+    border:1px solid rgba(255,255,255,.6);border-radius:20px;padding:34px 26px;
+    box-shadow:0 8px 24px rgba(120,70,40,.08);}
+  /* 老安卓不支持毛玻璃时给不透明兜底，防文字压底不可读 */
+  @supports not ((backdrop-filter:blur(6px)) or (-webkit-backdrop-filter:blur(6px))){
+    .screen .inner{background:rgba(255,255,255,.95);}
+  }
   /* 封面屏的标题图不需要卡片包裹感太重，弱化 */
-  .screen.cover .inner{background:rgba(255,255,255,.55);box-shadow:0 10px 30px rgba(120,70,40,.10);}
+  .screen.cover .inner{background:rgba(255,255,255,.55);box-shadow:0 8px 22px rgba(120,70,40,.07);max-height:82svh;}
+  @supports not ((backdrop-filter:blur(6px)) or (-webkit-backdrop-filter:blur(6px))){ .screen.cover .inner{background:rgba(255,255,255,.9);} }
   /* 功能屏内容长，卡片内上对齐 */
+  .screen.tall{scroll-snap-align:none;}
   .screen.tall .inner{padding:30px 22px 40px;}
-  /* 每屏元素分层渐入（加快） */
-  .screen .reveal{opacity:0;transform:translateY(22px);transition:opacity .5s cubic-bezier(.2,.7,.2,1),transform .5s cubic-bezier(.2,.7,.2,1);}
+  /* 每屏元素分层错峰编舞：眉标先入→主角带微弹→正文注解后跟 */
+  .screen .reveal{opacity:0;transform:translateY(18px);transition:opacity .45s cubic-bezier(.2,.7,.2,1),transform .45s cubic-bezier(.2,.7,.2,1);}
   .screen.on .reveal{opacity:1;transform:none;}
-  .screen.on .reveal:nth-child(2){transition-delay:.07s;}
-  .screen.on .reveal:nth-child(3){transition-delay:.14s;}
-  .screen.on .reveal:nth-child(4){transition-delay:.21s;}
-  .screen.on .reveal:nth-child(5){transition-delay:.28s;}
+  .screen.on .reveal:nth-child(2){transition-delay:.08s;}
+  .screen.on .reveal:nth-child(3){transition-delay:.15s;}
+  .screen.on .reveal:nth-child(4){transition-delay:.22s;}
+  .screen.on .reveal:nth-child(5){transition-delay:.29s;}
+  .screen .reveal-eyebrow{opacity:0;transform:translateY(-10px);transition:opacity .4s ease,transform .4s ease;}
+  .screen.on .reveal-eyebrow{opacity:1;transform:none;}
+  .screen .reveal-hero{opacity:0;transform:translateY(28px) scale(.96);transition:opacity .5s cubic-bezier(.2,.9,.25,1.1) .09s,transform .5s cubic-bezier(.2,.9,.25,1.1) .09s;}
+  .screen.on .reveal-hero{opacity:1;transform:none;}
+  .screen .reveal-body{opacity:0;transform:translateY(16px);transition:opacity .45s ease .18s,transform .45s ease .18s;}
+  .screen.on .reveal-body{opacity:1;transform:none;}
+  @media (prefers-reduced-motion:reduce){
+    .screen .reveal,.screen .reveal-eyebrow,.screen .reveal-hero,.screen .reveal-body{transition:opacity .25s;transform:none;}
+  }
+  html.lite .screen .reveal,html.lite .reveal-eyebrow,html.lite .reveal-hero,html.lite .reveal-body{transition:opacity .2s;transform:none;}
   /* 每屏统一的小标题眉/分隔 */
-  .eyebrow{font-family:var(--f-en);font-size:15px;letter-spacing:3px;color:var(--berry);opacity:.85;margin-bottom:18px;}
+  .eyebrow{font-family:var(--f-en);font-size:15px;letter-spacing:3px;color:var(--ink-soft);opacity:.9;margin-bottom:18px;}
   .divider{width:40px;height:2px;background:var(--berry);opacity:.35;margin:22px auto;border-radius:2px;}
   .downcue{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);font-size:var(--fs-cap);letter-spacing:2px;color:var(--ink-soft);opacity:.55;animation:bob 1.9s ease-in-out infinite;}
   .downcue span{display:block;font-size:16px;margin-top:4px;}
@@ -71,8 +89,9 @@
   /* 功能屏放开高度、顶部对齐 */
   .screen.tall{min-height:100vh;height:auto;justify-content:flex-start;scroll-snap-align:start;padding-top:72px;padding-bottom:80px;}
   /* ins 排版层级 */
-  .s-lead{font-size:var(--fs-lead);line-height:2.1;color:var(--ink-soft);}
-  .s-big{font-family:var(--f-title);font-size:var(--fs-h1);line-height:1.7;color:var(--berry-deep);margin-top:6px;}
+  .s-lead{font-size:var(--fs-lead);line-height:1.85;color:var(--ink-soft);}
+  .s-big{font-family:var(--f-title);font-size:var(--fs-hero);line-height:1.3;color:var(--ink);margin-top:6px;}
+  .s-big .accent{color:var(--berry);}
   .s-big .accent{color:var(--berry);}
   body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;background:#fdfcfa;}
   body::after{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
@@ -90,6 +109,8 @@
   @keyframes spin{to{transform:rotate(360deg);}}
   #music .tag{white-space:nowrap;font-size:var(--fs-cap);color:var(--berry-deep);margin-left:8px;font-family:var(--f-title);letter-spacing:1px;opacity:0;transition:opacity .4s ease .1s;}
   #music.show-tag{max-width:230px;} #music.show-tag .tag{opacity:1;}
+  #music.hint{animation:mpulse 1.6s ease-in-out infinite;}
+  @keyframes mpulse{0%,100%{box-shadow:0 4px 12px rgba(165,55,44,.2);}50%{box-shadow:0 4px 12px rgba(165,55,44,.2),0 0 0 6px rgba(204,86,72,.14);}}
 
   .reveal{opacity:0;transform:translateY(24px);transition:opacity 1s cubic-bezier(.2,.7,.2,1),transform 1s cubic-bezier(.2,.7,.2,1);}
   .reveal.in{opacity:1;transform:none;}
@@ -101,8 +122,13 @@
   .jar-hero::before{content:"🎀";position:absolute;top:-20px;font-size:var(--fs-hero);}
   @keyframes jar-in{0%{opacity:0;transform:translateY(16px) scale(.85) rotate(-6deg);}100%{opacity:1;transform:none;}}
   .hero .names{font-family:var(--f-title);font-size:var(--fs-lead);letter-spacing:3px;color:var(--berry-deep);margin:26px 0 10px;font-weight:600;}
-  .title-img{display:block;width:90%;max-width:400px;margin:0 auto;filter:drop-shadow(0 10px 22px rgba(165,55,44,.30));}
-  .hero-sub{margin-top:26px;font-size:var(--fs-lead);line-height:2;color:var(--ink-soft);}
+  .title-img{display:block;width:56%;max-width:230px;margin:0 auto 4px;filter:drop-shadow(0 6px 14px rgba(165,55,44,.22));}
+  .cover-names{font-size:var(--fs-hero);line-height:1.25;letter-spacing:2px;color:var(--berry-deep);margin-top:8px;}
+  .cover-names .amp{font-size:.7em;filter:grayscale(.1);}
+  .cover-date{margin-top:14px;font-size:var(--fs-sm);letter-spacing:1px;color:var(--ink-soft);}
+  .cover-hook{margin-top:22px;font-size:var(--fs-lead);line-height:1.85;color:var(--ink);}
+  .cover-hook .accent{color:var(--berry);font-weight:600;}
+  .hero-sub{margin-top:26px;font-size:var(--fs-lead);line-height:1.85;color:var(--ink-soft);}
   .hero-sub b{color:var(--berry);font-weight:600;}
   /* 新人 */
   .couple{padding:8px 28px 56px;}
@@ -128,7 +154,7 @@
   .info{border:0;border-radius:0;padding:6px 4px 4px;background:transparent;box-shadow:none;position:relative;}
   .info::before{content:"";position:absolute;top:-2px;left:50%;transform:translateX(-50%);font-size:0;}
   .info .line{display:flex;gap:12px;padding:14px 2px;font-size:var(--fs-lead);line-height:1.7;}
-  .info .line .k{color:var(--berry-deep);white-space:nowrap;font-weight:600;} .info .line .v{color:var(--ink);}
+  .info .line .k{color:var(--ink-soft);white-space:nowrap;font-weight:600;letter-spacing:2px;} .info .line .v{color:var(--ink);}
   .info .line+.line{border-top:1px dashed rgba(204,86,72,.35);}
   .mapbtn{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:12px;text-decoration:none;border:0;border-radius:12px;padding:14px;color:#fff;font-size:var(--fs-body);letter-spacing:2px;font-weight:600;background:linear-gradient(180deg,#d96253,var(--berry-deep));box-shadow:0 8px 18px rgba(165,55,44,.3);}
   .mapbtn:active{transform:scale(.98);}
@@ -168,7 +194,7 @@
   .pjar:active{transform:scale(.95);}
   .pjar .jarsvg{width:100%;margin:0;filter:drop-shadow(0 8px 14px rgba(120,70,40,.22));}
   .pjar .pj-name{font-family:var(--f-title);font-weight:700;font-size:var(--fs-lead);color:#3a2417;letter-spacing:2px;margin-top:2px;}
-  .pjar .pj-tap{font-size:var(--fs-cap);color:var(--accent);letter-spacing:1px;}
+  .pjar .pj-sub{font-size:var(--fs-cap);color:var(--ink-soft);letter-spacing:.5px;margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.4;}
   .pick-hint{text-align:center;font-size:var(--fs-cap);color:var(--ink-soft);margin-top:16px;letter-spacing:1px;}
 
   /* 瓶子详情浮层 */
@@ -186,6 +212,12 @@
   .dsheet .dlong b{color:var(--seal);}
   .dsheet .dpick{margin-top:22px;width:100%;border:0;border-radius:14px;padding:16px;font-size:var(--fs-lead);letter-spacing:3px;font-weight:800;color:#fff;background:linear-gradient(180deg,var(--seal),var(--accent));cursor:pointer;font-family:var(--f-body);box-shadow:0 8px 18px rgba(165,55,44,.28);}
   .dsheet .dpick:active{transform:scale(.98);}
+  .dsheet .dsoft{margin-top:14px;text-align:center;font-size:var(--fs-cap);color:var(--ink-soft);}
+  .dsheet .dname-step{margin-top:20px;}
+  .dsheet .dname-q{text-align:center;font-size:var(--fs-lead);color:var(--berry-deep);margin-bottom:14px;}
+  .dsheet .dname-input{width:100%;text-align:center;font-size:var(--fs-lead);letter-spacing:2px;color:var(--ink);background:#fffaf0;border:2px solid var(--seal);border-radius:12px;padding:14px;outline:none;font-family:var(--f-title);}
+  .dsheet .dname-go{margin-top:12px;width:100%;border:0;border-radius:12px;padding:15px;font-size:var(--fs-lead);letter-spacing:2px;font-weight:800;color:#fff;background:linear-gradient(180deg,var(--seal),var(--accent));cursor:pointer;font-family:var(--f-body);}
+  .dsheet .dname-go:active{transform:scale(.98);}
 
   .builder{padding-top:24px;padding-bottom:14px;max-width:400px;margin:0 auto;}
   .step-name{text-align:center;}
@@ -287,8 +319,10 @@
   <!-- 屏1 · 封面 + 邀请（进门即知是什么事） -->
   <section class="screen cover tint-cream" data-dot>
     <div class="inner">
-      <img class="title-img reveal" src="img/title.png" alt="Welcome to our jam party">
-      <div class="hero-sub reveal">诚挚地邀请你，参加我们的<b>领证派对</b>——<br>也是一场只办一次的<b>果酱派对</b>🍓<br>一起把喜欢的人和好时光，<span class="accent">熬进同一个晚上。</span></div>
+      <img class="title-img reveal-eyebrow" src="img/title.png" alt="刘金帅 & 王紫蕴 的果酱派对 · 2026.8.8 领证派对邀请">
+      <div class="cover-names kai reveal-hero">刘金帅 <span class="amp">🫙</span> 王紫蕴</div>
+      <div class="cover-date reveal-body">2026.8.8 周六傍晚 · 上海申报馆顶楼</div>
+      <div class="cover-hook reveal-body">我们把这场婚礼，腌成了五罐果酱——<br>进来挑一罐，<span class="accent">那罐写的就是你</span>。</div>
     </div>
     <div class="downcue">向下滑<span>⌄</span></div>
   </section>
@@ -296,10 +330,10 @@
   <!-- 屏2 · 果酱瓶彩蛋（点明这是果酱派对） -->
   <section class="screen tint-pink" data-dot>
     <div class="inner">
-      <div class="eyebrow reveal">Our Jam</div>
-      <div class="s-lead reveal" style="margin-bottom:14px">为什么叫果酱派对？<br>因为好时光，是要一点点<span class="accent">熬</span>出来的。</div>
-      <img class="jarimg reveal" id="jam3d" loading="lazy" src="img/newjar.png" alt="果酱瓶 · Jam Party">
-      <div class="jartip reveal" id="jartip">👆 点开这罐果酱，看看配料</div>
+      <div class="eyebrow reveal-eyebrow">Our Jam</div>
+      <div class="s-lead reveal-body" style="margin-bottom:14px">为什么叫果酱派对？<br>因为好时光，是要一点点<span class="accent">熬</span>出来的。</div>
+      <img class="jarimg reveal-hero" id="jam3d" loading="lazy" src="img/newjar.png" alt="果酱瓶 · Jam Party">
+      <div class="jartip reveal-body" id="jartip">👆 点开这罐果酱，看看配料</div>
       <div class="nutri" id="nutri">
         <div class="nt-h"><span>Serving</span><span>Suggestions</span></div>
         <div class="nt-sub"><span>Ingredient</span><span>% Daily Value*</span></div>
@@ -321,17 +355,17 @@
   <!-- 屏3 · 新人 + 时间地点（核心硬信息一屏给全） -->
   <section class="screen tint-mint" data-dot>
     <div class="inner">
-      <div class="eyebrow reveal">The Couple</div>
-      <div class="cp-row reveal">
+      <div class="eyebrow reveal-eyebrow">The Couple</div>
+      <div class="cp-row reveal-hero">
         <div class="cp"><div class="cp-role">新郎</div><div class="cp-name kai">刘金帅</div></div>
-        <div class="cp-amp">&amp;</div>
+        <div class="cp-amp">🫙</div>
         <div class="cp"><div class="cp-role">新娘</div><div class="cp-name kai">王紫蕴</div></div>
       </div>
-      <div class="info reveal" style="margin-top:24px">
-        <div class="line"><span class="k">🕗 时间</span><span class="v">2026年8月8日（周六）18:00</span></div>
-        <div class="line"><span class="k">📍 地点</span><span class="v">上海汉口路309号 · 申报馆顶楼（城之央）</span></div>
-        <a class="mapbtn" id="mapbtn" href="https://uri.amap.com/search?keyword=%E7%94%B3%E6%8A%A5%E9%A6%86%EF%BC%88%E6%B1%89%E5%8F%A3%E8%B7%AF309%E5%8F%B7%EF%BC%89&city=%E4%B8%8A%E6%B5%B7&src=invite&callnative=1">📍 打开地图 · 导航过去</a>
-        <a class="mapbtn calbtn" id="calbtn" href="#">📅 加入日历 · 别忘了这天</a>
+      <div class="info reveal-body" style="margin-top:24px">
+        <div class="line"><span class="k">时间</span><span class="v">2026年8月8日（周六）18:00</span></div>
+        <div class="line"><span class="k">地点</span><span class="v">上海汉口路309号 · 申报馆顶楼（城之央）</span></div>
+        <a class="mapbtn" id="mapbtn" href="https://uri.amap.com/search?keyword=%E7%94%B3%E6%8A%A5%E9%A6%86%EF%BC%88%E6%B1%89%E5%8F%A3%E8%B7%AF309%E5%8F%B7%EF%BC%89&city=%E4%B8%8A%E6%B5%B7&src=invite&callnative=1">打开地图 · 导航过去</a>
+        <a class="mapbtn calbtn" id="calbtn" href="#">加入日历 · 别忘了这天</a>
       </div>
     </div>
     <div class="downcue">向下滑<span>⌄</span></div>
@@ -340,22 +374,17 @@
   <!-- 屏4 · 选身份（功能区，放开正常滚动） -->
   <section class="screen tall tint-cream" data-dot>
     <div class="inner">
-      <div class="eyebrow reveal">Who Are You</div>
-      <div class="s-big reveal" style="font-size:var(--fs-h1)">进来之前，先定一件事</div>
-      <div class="lead reveal">下面五罐果酱，形容的不是我们，是<b>你</b>。<br>没有高低、不分远近，挑一罐最贴的——<br>在你眼里，<b>你之于我俩，是哪一种？</b></div>
+      <div class="eyebrow reveal-eyebrow">Who Are You</div>
+      <div class="s-big reveal-hero">你之于我俩，<span class="accent">是哪一种？</span></div>
+      <div class="lead reveal-body">没有标准答案。选那个<b>你</b>一看就笑、或者鼻子一酸的——<br>挑哪一罐，都不改变你在我们心里的位置。</div>
 
       <div class="tray" id="tray"></div>
 
       <div class="builder">
-        <div class="step-name" id="stepName">
-          <div class="q kai" id="nameQ">先告诉我们，怎么称呼你？</div>
-          <input id="nameInput" type="text" inputmode="text" placeholder="写下你的名字" autocomplete="off" maxlength="12">
-          <button class="next" id="nameNext">下 一 步 · 挑 一 罐</button>
-        </div>
-        <div class="step-pick" id="stepPick">
-          <div class="q kai">「<b id="whoName">你</b>」，你之于我俩——</div>
-          <div class="q2">是哪一罐？挑一罐，认下它。</div>
+        <div class="step-pick show" id="stepPick">
+          <div class="q2" id="pickQ">慢慢看，哪罐念着你，就是它。</div>
           <div class="cards" id="cards"></div>
+          <div class="pick-hint" id="pickHint">都像？那就选最先想起我们的那一罐。</div>
         </div>
       </div>
 
@@ -385,6 +414,15 @@
   <div class="foot">JAM PARTY · 王紫蕴 &amp; 刘金帅 · 2026.08.08</div>
 
 <script>
+  // 视口高度兜底（微信X5老核不认svh/dvh）+ 低端机降级标记
+  (function(){
+    function setVH(){document.documentElement.style.setProperty('--vh',(window.innerHeight*0.01)+'px');}
+    setVH();var t;window.addEventListener('resize',function(){clearTimeout(t);t=setTimeout(setVH,150);});
+    window.addEventListener('orientationchange',setVH);
+    var lowMem=(navigator.deviceMemory&&navigator.deviceMemory<=2)||(navigator.hardwareConcurrency&&navigator.hardwareConcurrency<=2);
+    var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+    if(lowMem||reduce)document.documentElement.classList.add('lite');
+  })();
   // 果酱墙后端：与页面同源部署时用相对路径。
   // 在 GitHub Pages（无后端）上自动关闭，墙隐藏、不影响其它功能。
   var API_ON = (location.hostname !== 'naisi-alibaba.github.io' && location.protocol.indexOf('http') === 0);
@@ -455,18 +493,15 @@
   function miniPersonSVG(x,lk){return '<svg viewBox="0 0 160 200" xmlns="http://www.w3.org/2000/svg">'+personBody(x,lk)+'</svg>';}
 
   // ===== music: autoplay (WeChat) + first-interaction fallback =====
-  var bgm=document.getElementById('bgm'),musicBtn=document.getElementById('music'),wantOn=true,tagged=false;
-  function showTag(){if(tagged)return;tagged=true;musicBtn.classList.add('show-tag');setTimeout(function(){musicBtn.classList.remove('show-tag');},3400);}
-  function playBgm(){bgm.volume=0.6;var p=bgm.play();if(p&&p.then){p.then(function(){musicBtn.classList.add('playing');showTag();}).catch(function(){});}else{musicBtn.classList.add('playing');}}
+  var bgm=document.getElementById('bgm'),musicBtn=document.getElementById('music'),wantOn=false,tagged=false;
+  var musicTag=musicBtn.querySelector('.tag');
+  function playBgm(){bgm.volume=0.6;var p=bgm.play();if(p&&p.then){p.then(function(){musicBtn.classList.add('playing');if(musicTag)musicTag.textContent='♫ 献给永远的 · 大粉乐队';musicBtn.classList.add('show-tag');setTimeout(function(){musicBtn.classList.remove('show-tag');},3000);}).catch(function(){});}else{musicBtn.classList.add('playing');}}
   function pauseBgm(){bgm.pause();musicBtn.classList.remove('playing');}
-  function autoPlay(){if(wantOn)playBgm();}
-  // WeChat allows autoplay via JS bridge
-  if(typeof WeixinJSBridge!=="undefined"){WeixinJSBridge.invoke('getNetworkType',{},autoPlay);}
-  else{document.addEventListener('WeixinJSBridgeReady',autoPlay,false);}
-  window.addEventListener('load',autoPlay);
-  // fallback: first interaction
-  function firstTouch(){if(wantOn&&bgm.paused)playBgm();['touchstart','click','scroll'].forEach(function(ev){window.removeEventListener(ev,firstTouch);});}
-  ['touchstart','click','scroll'].forEach(function(ev){window.addEventListener(ev,firstTouch,{passive:true});});
+  // 不自动播放：进封面时把胶囊展开成"点这里放首歌"引导，停留几秒后收起
+  if(musicTag)musicTag.textContent='点这里，放首歌陪你逛';
+  musicBtn.classList.add('hint');
+  setTimeout(function(){musicBtn.classList.add('show-tag');},900);
+  setTimeout(function(){musicBtn.classList.remove('show-tag');musicBtn.classList.remove('hint');},5400);
   musicBtn.addEventListener('click',function(e){e.stopPropagation();if(bgm.paused){wantOn=true;playBgm();}else{wantOn=false;pauseBgm();}});
 
   // ===== nutrition egg =====
@@ -509,27 +544,38 @@
   var UID=0;
   var cardsEl=document.getElementById('cards');
   IDS.forEach(function(x){var d=document.createElement('div');d.className='pjar '+x.cls;
-    d.innerHTML=jarSVG(x,++UID)+'<div class="pj-name">'+x.id+'</div><div class="pj-tap">点开看看 ›</div>';
+    d.innerHTML=jarSVG(x,++UID)+'<div class="pj-name">'+x.id+'</div><div class="pj-sub">'+x.c+'</div>';
     d.addEventListener('click',function(){openDetail(x.id);});cardsEl.appendChild(d);});
-  var hint=document.createElement('div');hint.className='pick-hint';hint.textContent='点开每一罐，看看它说的是不是你';cardsEl.parentNode.appendChild(hint);
 
-  // 瓶子详情浮层
+  // 瓶子详情浮层：读完 → 认下 → 同卡内填名 → choose
   var detail=document.getElementById('detail'),dsheet=document.getElementById('dsheet');
   function openDetail(idName){var x=MAP[idName];
     dsheet.className='dsheet '+x.cls;
     dsheet.innerHTML='<span class="dclose">✕</span>'+
       '<div class="dtop"><div class="djar">'+jarSVG(x,++UID)+'</div><div><div class="dname">'+x.id+'</div><div class="dconcept">'+x.c+'</div></div></div>'+
       '<div class="dlong">'+x.long+'</div>'+
-      '<button class="dpick">认下这一罐 · 就是「'+x.id+'」</button>';
+      '<div class="dsoft">都像？就选最先想起我们的那一罐。</div>'+
+      '<button class="dpick">认下这一罐 · 就是「'+x.id+'」</button>'+
+      '<div class="dname-step" style="display:none">'+
+        '<div class="dname-q kai">认下了——那，该怎么称呼你？</div>'+
+        '<input class="dname-input" type="text" inputmode="text" placeholder="写下你的名字" autocomplete="off" maxlength="12">'+
+        '<button class="dname-go">写好了，抱它入场</button>'+
+      '</div>';
     dsheet.querySelector('.dclose').addEventListener('click',function(){detail.classList.remove('show');});
-    dsheet.querySelector('.dpick').addEventListener('click',function(){detail.classList.remove('show');choose(x.id);});
+    var pickBtn=dsheet.querySelector('.dpick'),nameStep=dsheet.querySelector('.dname-step'),
+        nameInput=dsheet.querySelector('.dname-input'),goBtn=dsheet.querySelector('.dname-go');
+    pickBtn.addEventListener('click',function(){
+      pickBtn.style.display='none';dsheet.querySelector('.dsoft').style.display='none';
+      nameStep.style.display='block';setTimeout(function(){nameInput.focus();nameStep.scrollIntoView({behavior:'smooth',block:'center'});},80);
+    });
+    function commit(){var nm=(nameInput.value||'').trim();if(!nm)return;curName=nm;detail.classList.remove('show');choose(x.id);}
+    goBtn.addEventListener('click',commit);
+    nameInput.addEventListener('keydown',function(e){if(e.key==='Enter')commit();});
     detail.classList.add('show');
   }
   detail.addEventListener('click',function(e){if(e.target===detail)detail.classList.remove('show');});
 
-  var stepName=document.getElementById('stepName'),stepPick=document.getElementById('stepPick');
-  var nameInput=document.getElementById('nameInput'),nameNext=document.getElementById('nameNext');
-  var nameQ=document.getElementById('nameQ'),whoName=document.getElementById('whoName');
+  var stepPick=document.getElementById('stepPick');
   var tray=document.getElementById('tray'),cta=document.getElementById('cta');
   var arrival=document.getElementById('arrival'),arrStage=document.getElementById('arrStage');
   var roster=document.getElementById('roster'),rlist=document.getElementById('rlist'),rtitle=document.getElementById('rtitle');
@@ -542,15 +588,8 @@
   function save(){try{localStorage.setItem(STORE,JSON.stringify({crew:crew,settled:settled}));}catch(e){}}
   function load(){try{var s=JSON.parse(localStorage.getItem(STORE)||'{}');if(s.crew)crew=s.crew;if(s.settled)settled=s.settled;}catch(e){}}
 
-  nameInput.addEventListener('input',function(){nameNext.classList.toggle('on',!!nameInput.value.trim());});
-  nameInput.addEventListener('keydown',function(e){if(e.key==='Enter'&&nameInput.value.trim())toPick();});
-  nameNext.addEventListener('click',function(){if(nameInput.value.trim())toPick();});
-  function toPick(){curName=nameInput.value.trim();whoName.textContent=curName;stepName.style.display='none';stepPick.classList.add('show');
-    setTimeout(function(){stepPick.scrollIntoView({behavior:'smooth',block:'start'});},60);}
-
   // 选一罐 → 加入待入场名单（不立刻放动画）
   function choose(idName){crew.push({id:idName,nm:curName,li:(Math.random()*LOOKS.length)|0});save();
-    stepPick.classList.remove('show');stepName.style.display='none';nameInput.value='';nameNext.classList.remove('on');
     renderRoster();setTimeout(function(){roster.scrollIntoView({behavior:'smooth',block:'center'});},80);}
 
   function renderRoster(){
@@ -565,9 +604,8 @@
   }
 
   addBtn.addEventListener('click',function(){
-    stepName.style.display='block';stepPick.classList.remove('show');nameInput.value='';nameNext.classList.remove('on');
-    nameQ.textContent='再加一位，怎么称呼？';
-    setTimeout(function(){nameInput.focus();stepName.scrollIntoView({behavior:'smooth',block:'center'});},60);});
+    stepPick.classList.add('show');
+    setTimeout(function(){stepPick.scrollIntoView({behavior:'smooth',block:'center'});},60);});
 
   // 一起入场：几个人几个小人一起跑来
   enterBtn.addEventListener('click',function(){
