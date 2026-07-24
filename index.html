@@ -136,8 +136,10 @@
   .cp-row{display:flex;align-items:center;justify-content:center;gap:14px;max-width:360px;margin:0 auto;}
   .cp{text-align:center;flex:1;min-width:0;}
   .cp-role{font-size:var(--fs-cap);letter-spacing:4px;color:var(--ink-soft);margin-bottom:6px;}
-  .cp-name{font-size:var(--fs-hero);letter-spacing:1px;color:var(--berry-deep);font-weight:700;white-space:nowrap;}
-  .cp-amp{font-family:var(--f-title);font-size:var(--fs-h2);color:var(--berry);opacity:.7;flex:none;}
+  .cp-name{font-size:var(--fs-h2);letter-spacing:1px;color:var(--berry-deep);font-weight:700;white-space:nowrap;}
+  .cp-amp{flex:none;display:flex;align-items:center;}
+  .cp-jar{display:block;height:56px;width:auto;filter:drop-shadow(0 3px 6px rgba(120,70,40,.2));}
+  .invite-line{margin-top:16px;font-size:var(--fs-sm);letter-spacing:1px;color:var(--berry-deep);font-weight:400;}
   .hero h1{font-size:var(--fs-hero);letter-spacing:8px;line-height:1.15;color:var(--berry);text-shadow:2px 2px 0 #fff,3px 3px 0 rgba(165,55,44,.28),4px 5px 8px rgba(165,55,44,.18);}
   .hero .en{font-size:var(--fs-cap);letter-spacing:6px;color:var(--leaf);margin-top:14px;}
   .hero .hook{margin-top:30px;font-size:var(--fs-lead);line-height:2;color:var(--ink-soft);}
@@ -330,10 +332,11 @@
     <div class="inner">
       <img class="couple-art reveal-hero" src="img/couple-v4.jpg" alt="刘金帅 & 王紫蕴" loading="lazy">
       <div class="cp-row reveal-body">
-        <div class="cp"><div class="cp-role">新郎</div><div class="cp-name kai">刘金帅</div></div>
-        <div class="cp-amp">🫙</div>
-        <div class="cp"><div class="cp-role">新娘</div><div class="cp-name kai">王紫蕴</div></div>
+        <div class="cp"><div class="cp-name kai">刘金帅</div></div>
+        <div class="cp-amp"><img class="cp-jar" src="img/newjar.png" alt="果酱瓶"></div>
+        <div class="cp"><div class="cp-name kai">王紫蕴</div></div>
       </div>
+      <div class="invite-line reveal-body">诚挚地邀请您参加我们的领证派对</div>
       <div class="info reveal-body" style="margin-top:24px">
         <div class="line"><span class="k">时间</span><span class="v">2026年8月8日（周六）18:00</span></div>
         <div class="line"><span class="k">地点</span><span class="v">上海汉口路309号 · 申报馆顶楼（城之央）</span></div>
