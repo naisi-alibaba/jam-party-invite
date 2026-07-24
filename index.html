@@ -157,11 +157,12 @@
 
   .infowrap{padding-top:16px;padding-bottom:60px;max-width:360px;margin:0 auto;}
   .infowrap .cap{font-size:var(--fs-cap);letter-spacing:6px;color:var(--berry-deep);margin-bottom:14px;text-align:center;}
-  .info{border:0;border-radius:0;padding:6px 4px 4px;background:transparent;box-shadow:none;position:relative;}
+  .info{border:0;border-radius:0;padding:6px 4px 4px;background:transparent;box-shadow:none;position:relative;text-align:center;}
   .info::before{content:"";position:absolute;top:-2px;left:50%;transform:translateX(-50%);font-size:0;}
-  .info .line{display:flex;gap:12px;padding:14px 2px;font-size:var(--fs-lead);line-height:1.7;}
-  .info .line .k{color:var(--ink-soft);white-space:nowrap;font-weight:600;letter-spacing:2px;} .info .line .v{color:var(--ink);}
-  .info .line+.line{border-top:1px dashed rgba(204,86,72,.35);}
+  .dl{text-align:center;}
+  .dl-k{font-size:var(--fs-lead);font-weight:700;letter-spacing:2px;color:var(--berry-deep);}
+  .dl-v{margin-top:5px;font-size:var(--fs-body);line-height:1.7;color:var(--ink);}
+  .bow-mini{display:block;width:26px;height:auto;margin:14px auto;opacity:.9;}
   .mapbtn{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:12px;text-decoration:none;border:0;border-radius:12px;padding:14px;color:#fff;font-size:var(--fs-body);letter-spacing:2px;font-weight:600;background:linear-gradient(180deg,#d96253,var(--berry-deep));box-shadow:0 8px 18px rgba(165,55,44,.3);}
   .mapbtn:active{transform:scale(.98);}
   .calbtn{margin-top:10px;background:#fff;color:var(--berry-deep);border:2px solid var(--berry);}
@@ -351,8 +352,23 @@
         </g>
       </svg>
       <div class="info reveal-body" style="margin-top:14px">
-        <div class="line"><span class="k">Date</span><span class="v">2026年8月8日（周六）18:00</span></div>
-        <div class="line"><span class="k">地点</span><span class="v">上海汉口路309号 · 申报馆顶楼（城之央）</span></div>
+        <div class="dl">
+          <div class="dl-k">Date / 日期</div>
+          <div class="dl-v">2026年8月8日（周六）18:58</div>
+        </div>
+        <svg class="bow-mini" viewBox="0 0 80 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <g fill="none" stroke="#cc5648" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M40 24 C 20 8, 6 12, 10 24 C 6 36, 24 40, 40 24 Z"/>
+            <path d="M40 24 C 60 8, 74 12, 70 24 C 74 36, 56 40, 40 24 Z"/>
+            <path d="M38 27 C 34 36, 30 42, 26 46"/>
+            <path d="M42 27 C 46 36, 50 42, 54 46"/>
+            <circle cx="40" cy="24" r="3.6" fill="#cc5648" stroke="none"/>
+          </g>
+        </svg>
+        <div class="dl">
+          <div class="dl-k">Address / 地址</div>
+          <div class="dl-v">上海汉口路309号 · 申报馆顶楼（城之央）</div>
+        </div>
         <a class="mapbtn" id="mapbtn" href="https://uri.amap.com/search?keyword=%E7%94%B3%E6%8A%A5%E9%A6%86%EF%BC%88%E6%B1%89%E5%8F%A3%E8%B7%AF309%E5%8F%B7%EF%BC%89&city=%E4%B8%8A%E6%B5%B7&src=invite&callnative=1">打开地图 · 导航过去</a>
         <a class="mapbtn calbtn" id="calbtn" href="#">加入日历 · 别忘了这天</a>
       </div>
@@ -709,7 +725,7 @@
   document.getElementById('calbtn').addEventListener('click',function(e){e.preventDefault();
     var ics=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//JamParty//CN','BEGIN:VEVENT',
       'UID:jamparty-20260808@naisi','DTSTAMP:20260723T000000Z',
-      'DTSTART;TZID=Asia/Shanghai:20260808T180000','DTEND;TZID=Asia/Shanghai:20260808T220000',
+      'DTSTART;TZID=Asia/Shanghai:20260808T185800','DTEND;TZID=Asia/Shanghai:20260808T220000',
       'SUMMARY:果酱派对 · 王紫蕴&刘金帅','LOCATION:上海汉口路309号 申报馆顶楼（城之央）',
       'DESCRIPTION:久等了朋友，那晚来陪我们玩一场。','BEGIN:VALARM','TRIGGER:-P1D','ACTION:DISPLAY','DESCRIPTION:明天就是果酱派对啦','END:VALARM',
       'END:VEVENT','END:VCALENDAR'].join('\r\n');
