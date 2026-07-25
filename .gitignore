@@ -2,3 +2,6 @@ guests.json
 _*.html
 _*.png
 node_modules/
+_*.jpg
+_*.raw
+_*.txt
