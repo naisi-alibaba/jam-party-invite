@@ -201,20 +201,26 @@
   .c5{--accent:#a5431a;--seal:#d16632;}
 
   /* ===== JAR picker: 一屏五瓶网格 ===== */
-  /* 木质货架：每行 grid=瓶(第1行)/木板(第2行跨列)/标签(第3行) */
-  .cards{max-width:400px;margin:0 auto;}
-  .shelf-row{display:grid;grid-template-columns:repeat(3,1fr);align-items:end;justify-items:center;column-gap:6px;margin-bottom:22px;}
-  .shelf-row.row2{grid-template-columns:repeat(2,1fr);max-width:67%;margin-left:auto;margin-right:auto;}
-  .shelf-jar{grid-row:1;width:100%;max-width:120px;cursor:pointer;transition:transform .2s;position:relative;z-index:2;}
+  /* 木质货架：两侧木框立柱 + 每行厚木板，瓶子立在板上 */
+  .cards{max-width:400px;margin:0 auto;position:relative;padding:10px 20px 0;}
+  .cards::before,.cards::after{content:"";position:absolute;top:2px;bottom:26px;width:15px;border-radius:5px;z-index:0;
+    background:linear-gradient(90deg,#9a6438 0%,#7c4e2c 55%,#5f3c20 100%);
+    box-shadow:0 6px 12px rgba(70,40,18,.35),inset 0 0 0 1px rgba(255,228,196,.25),inset -2px 0 4px rgba(60,34,15,.5);}
+  .cards::before{left:0;} .cards::after{right:0;}
+  .shelf-row{display:grid;grid-template-columns:repeat(3,1fr);align-items:end;justify-items:center;column-gap:6px;margin-bottom:26px;position:relative;}
+  .shelf-row.row2{grid-template-columns:repeat(2,1fr);width:70%;margin-left:auto;margin-right:auto;margin-bottom:26px;}
+  .shelf-jar{grid-row:1;width:100%;max-width:118px;cursor:pointer;transition:transform .2s;position:relative;z-index:2;}
   .shelf-jar:active{transform:scale(.95);}
-  .shelf-jar .jarsvg{width:100%;margin:0;filter:drop-shadow(0 5px 7px rgba(80,45,20,.32));}
-  .shelf-plank{grid-row:2;grid-column:1/-1;height:17px;margin-top:-7px;border-radius:3px;position:relative;z-index:1;
-    background:linear-gradient(180deg,#c08a56 0%,#a06d41 42%,#835431 100%);
-    box-shadow:0 8px 12px rgba(80,45,20,.32),inset 0 1.5px 0 rgba(255,232,200,.5),inset 0 -4px 5px rgba(70,40,18,.4);}
-  .shelf-plank::before{content:"";position:absolute;inset:0;border-radius:3px;opacity:.5;
-    background:repeating-linear-gradient(90deg,transparent 0,transparent 22px,rgba(90,52,24,.4) 22px,rgba(90,52,24,.4) 23px);}
-  .shelf-plank::after{content:"";position:absolute;left:8%;right:8%;bottom:-6px;height:6px;border-radius:0 0 4px 4px;background:linear-gradient(180deg,#6f4526,#5a381d);}
-  .shelf-label{grid-row:3;text-align:center;margin-top:12px;padding:0 2px;cursor:pointer;}
+  .shelf-jar .jarsvg{width:100%;margin:0;filter:drop-shadow(0 4px 5px rgba(80,45,20,.35));}
+  /* 厚木板：正面板 + 顶面高光 + 底部厚度侧面，横跨整行并探入两侧立柱 */
+  .shelf-plank{grid-row:2;grid-column:1/-1;height:26px;margin:-6px -14px 0;border-radius:3px;position:relative;z-index:1;
+    background:linear-gradient(180deg,#caa06c 0%,#b07f4c 30%,#94643a 65%,#7a4f2c 100%);
+    box-shadow:0 9px 14px rgba(70,40,18,.4),inset 0 2px 0 rgba(255,236,205,.6),inset 0 -6px 6px rgba(60,34,15,.45);}
+  .shelf-plank::before{content:"";position:absolute;inset:0;border-radius:3px;opacity:.45;
+    background:repeating-linear-gradient(90deg,transparent 0,transparent 26px,rgba(80,46,20,.5) 26px,rgba(80,46,20,.5) 27px);}
+  .shelf-plank::after{content:"";position:absolute;left:0;right:0;bottom:-9px;height:9px;border-radius:0 0 4px 4px;
+    background:linear-gradient(180deg,#6a4123,#4f331b);box-shadow:0 6px 9px rgba(60,34,15,.4);}
+  .shelf-label{grid-row:3;text-align:center;margin-top:16px;padding:0 2px;cursor:pointer;z-index:2;}
   .shelf-label .pj-name{font-family:var(--f-title);font-weight:700;font-size:var(--fs-lead);color:#3a2417;letter-spacing:2px;}
   .shelf-label .pj-sub{font-size:var(--fs-cap);color:var(--ink-soft);letter-spacing:.3px;line-height:1.5;margin-top:2px;}
   .pick-hint{text-align:center;font-size:var(--fs-cap);color:var(--ink-soft);margin-top:16px;letter-spacing:1px;}
