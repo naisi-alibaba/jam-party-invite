@@ -220,10 +220,10 @@
     background:repeating-linear-gradient(90deg,transparent 0,transparent 30px,rgba(60,34,15,.55) 30px,rgba(60,34,15,.55) 31px);}
   .shelf-plank::after{content:"";position:absolute;left:0;right:0;bottom:-8px;height:8px;border-radius:0 0 3px 3px;
     background:linear-gradient(180deg,#573719,#3a2410);box-shadow:0 6px 9px rgba(40,22,8,.5);}
-  .shelf-label{grid-row:3;justify-self:center;width:100%;max-width:120px;min-height:52px;margin-top:3px;padding:13px 8px 14px;box-sizing:border-box;cursor:pointer;z-index:3;position:relative;
+  .shelf-label{grid-row:3;justify-self:center;width:100%;max-width:122px;min-height:74px;margin-top:-4px;padding:29px 9px 17px;box-sizing:border-box;cursor:pointer;z-index:3;position:relative;
     background:url("img/shelf-tag.png") center/100% 100% no-repeat;display:flex;flex-direction:column;align-items:center;justify-content:center;}
-  .shelf-label .pj-name{font-family:var(--f-title);font-weight:700;font-size:12px;color:#4a2b12;letter-spacing:1px;line-height:1.1;}
-  .shelf-label .pj-sub{font-size:9px;color:#6b4320;letter-spacing:0;line-height:1.25;margin-top:2px;white-space:nowrap;}
+  .shelf-label .pj-name{font-family:var(--f-title);font-weight:700;font-size:11px;color:#4a2b12;letter-spacing:1px;line-height:1.05;}
+  .shelf-label .pj-sub{font-size:8.5px;color:#6b4320;letter-spacing:0;line-height:1.2;margin-top:2px;white-space:nowrap;}
   .pick-hint{text-align:center;font-size:var(--fs-cap);color:var(--ink-soft);margin-top:30px;letter-spacing:1px;}
 
   /* 瓶子详情浮层 */
@@ -825,20 +825,22 @@
     T('等 你 来',822,13,'#b09070','',4);
     var jar=new Image();jar.crossOrigin='anonymous';
     jar.onload=function(){var jw=230,jh=jw*jar.height/jar.width;var jx=W/2-jw/2,jy=205;
-      // 瓶子后面：红色蜡笔斜涂打底
+      // 瓶子后面：红色蜡笔斜涂打底（稀疏、断续、深浅不匀，蜡笔质感）
       (function(){ctx.save();var cx=W/2,cy=jy+jh/2;
-        ctx.translate(cx,cy);ctx.rotate(-16*Math.PI/180);ctx.lineCap='round';
-        var bw=jw*1.24,bh=jh*1.02;ctx.strokeStyle='#cf4b3d';
-        // 多遍斜向排线，层叠出蜡笔涂块质感（抖动+粗细变化+断续）
-        for(var pass=0;pass<3;pass++){var step=[5,6,7][pass];
-          for(var yy=-bh/2;yy<=bh/2;yy+=step){
-            var jit=(((yy*17+pass*11)%11)-5)*1.1;
-            var lw=[7,5,9][pass]+(((yy+pass)%3));
-            ctx.globalAlpha=[0.42,0.30,0.22][pass];ctx.lineWidth=lw;
-            ctx.beginPath();ctx.moveTo(-bw/2-6+jit,yy);ctx.lineTo(bw/2+6+jit,yy+4);ctx.stroke();}}
-        // 反向少量交叉，增加蜡笔涂抹的凌乱感
-        ctx.globalAlpha=0.16;ctx.lineWidth=6;
-        for(var xx=-bw/2;xx<=bw/2;xx+=14){ctx.beginPath();ctx.moveTo(xx,-bh/2-4);ctx.lineTo(xx+10,bh/2+4);ctx.stroke();}
+        ctx.translate(cx,cy);ctx.rotate(-15*Math.PI/180);ctx.lineCap='round';ctx.strokeStyle='#cf4b3d';
+        var bw=jw*1.22,bh=jh*1.0;
+        // 稀疏斜向长笔触，每条拆成断续小段+抖动，模拟蜡笔拖拽
+        for(var yy=-bh/2;yy<=bh/2;yy+=13){
+          var baseJit=(((yy*17)%13)-6);
+          for(var xx=-bw/2;xx<bw/2;xx+=22){
+            var gap=((xx+yy)%40>30)?1:0; // 偶尔留白，形成断续
+            if(gap)continue;
+            var seg=15+((xx*7+yy)%9);
+            ctx.globalAlpha=0.30+(((xx*3+yy*5)%10)/10)*0.28; // 0.30~0.58 深浅不匀
+            ctx.lineWidth=5+((yy+xx)%4);
+            ctx.beginPath();ctx.moveTo(xx+baseJit,yy);ctx.lineTo(xx+seg+baseJit,yy+3+((xx%3)-1));ctx.stroke();
+          }
+        }
         ctx.globalAlpha=1;ctx.restore();})();
       ctx.drawImage(jar,jx,jy,jw,jh);
       try{shareImg.src=cv.toDataURL('image/png');}catch(e){shareImg.src=x.img;}shareM.classList.add('show');};
