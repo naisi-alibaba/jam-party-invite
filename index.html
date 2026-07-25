@@ -220,9 +220,10 @@
     background:repeating-linear-gradient(90deg,transparent 0,transparent 30px,rgba(60,34,15,.55) 30px,rgba(60,34,15,.55) 31px);}
   .shelf-plank::after{content:"";position:absolute;left:0;right:0;bottom:-8px;height:8px;border-radius:0 0 3px 3px;
     background:linear-gradient(180deg,#573719,#3a2410);box-shadow:0 6px 9px rgba(40,22,8,.5);}
-  .shelf-label{grid-row:3;text-align:center;margin-top:14px;padding:0 2px;cursor:pointer;z-index:2;position:relative;}
-  .shelf-label .pj-name{font-family:var(--f-title);font-weight:700;font-size:var(--fs-sm);color:#4a2f18;letter-spacing:1px;text-shadow:0 1px 2px rgba(255,245,225,.7);}
-  .shelf-label .pj-sub{font-size:11px;color:#6b4526;letter-spacing:.2px;line-height:1.45;margin-top:1px;text-shadow:0 1px 2px rgba(255,245,225,.6);}
+  .shelf-label{grid-row:3;text-align:center;margin-top:14px;padding:4px 6px;cursor:pointer;z-index:2;position:relative;
+    background:rgba(255,249,238,.82);border-radius:7px;box-shadow:0 2px 5px rgba(60,34,15,.28);backdrop-filter:blur(1px);}
+  .shelf-label .pj-name{font-family:var(--f-title);font-weight:700;font-size:var(--fs-sm);color:#3a2412;letter-spacing:1px;}
+  .shelf-label .pj-sub{font-size:11px;color:#7a4d28;letter-spacing:.2px;line-height:1.4;margin-top:1px;}
   .pick-hint{text-align:center;font-size:var(--fs-cap);color:var(--ink-soft);margin-top:30px;letter-spacing:1px;}
 
   /* 瓶子详情浮层 */
@@ -527,13 +528,13 @@
     {id:"同谋",cls:"c2",img:"img/jars/jar-2.png",seal:"#9c5580",acc:"#8a4a70",c:"我们一起拥有一些秘密",
      d:"你是那个，见过我们另一面的人。",
      long:"那些不那么完美<br>却最鲜活、最快乐的时刻<br>那些只有彼此知道的荒唐和笑声<br><br><b>你是那个，见过我们另一面的人。</b>"},
-    {id:"远山",cls:"c3",img:"img/jars/jar-3.png",seal:"#568a7c",acc:"#356b5c",c:"离得再远，我也一直在",
+    {id:"远山",cls:"c3",img:"img/jars/jar-3.png",seal:"#568a7c",acc:"#356b5c",c:"离得再远，你也一直在",
      d:"你出现的那一刻，就是最重的一句话。",
      long:"隔着距离和时间<br>但每一次重新见面<br>都能瞬间回到当年<br>有些关系不需要频繁证明<br><br><b>你出现的那一刻，就是最重的一句话。</b>"},
     {id:"江湖",cls:"c4",img:"img/jars/jar-4.png",seal:"#c04545",acc:"#a5372c",c:"是我们自己选择留下的人",
      d:"因为是选择，所以更难得。",
      long:"没有同窗的缘分<br>没有血缘的牵绊<br>是在成年以后<br>各自奔赴不同方向<br>却依然认下彼此的人<br><br><b>因为是选择，所以更难得。</b>"},
-    {id:"炉火",cls:"c5",img:"img/jars/jar-5.png",seal:"#d16632",acc:"#a5431a",c:"有我在，就是主场",
+    {id:"炉火",cls:"c5",img:"img/jars/jar-5.png",seal:"#d16632",acc:"#a5431a",c:"有你在，就是主场",
      d:"你是那个，把温度带给大家的人。",
      long:"你总能让陌生变熟悉<br>让安静变热闹<br>你出现的地方<br>总会有人聚在一起<br>总会有故事发生<br><br><b>你是那个，把温度带给大家的人。</b>"}
   ];
