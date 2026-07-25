@@ -201,12 +201,22 @@
   .c5{--accent:#a5431a;--seal:#d16632;}
 
   /* ===== JAR picker: 一屏五瓶网格 ===== */
-  .cards{display:flex;flex-wrap:wrap;justify-content:center;gap:12px 6px;max-width:400px;margin:0 auto;}
-  .pjar{position:relative;width:30%;max-width:114px;cursor:pointer;transition:transform .2s;text-align:center;}
-  .pjar:active{transform:scale(.95);}
-  .pjar .jarsvg{width:100%;margin:0;filter:drop-shadow(0 8px 14px rgba(120,70,40,.22));}
-  .pjar .pj-name{font-family:var(--f-title);font-weight:700;font-size:var(--fs-lead);color:#3a2417;letter-spacing:2px;margin-top:2px;}
-  .pjar .pj-sub{font-size:var(--fs-cap);color:var(--ink-soft);letter-spacing:.5px;margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.4;}
+  /* 木质货架：每行 grid=瓶(第1行)/木板(第2行跨列)/标签(第3行) */
+  .cards{max-width:400px;margin:0 auto;}
+  .shelf-row{display:grid;grid-template-columns:repeat(3,1fr);align-items:end;justify-items:center;column-gap:6px;margin-bottom:22px;}
+  .shelf-row.row2{grid-template-columns:repeat(2,1fr);max-width:67%;margin-left:auto;margin-right:auto;}
+  .shelf-jar{grid-row:1;width:100%;max-width:120px;cursor:pointer;transition:transform .2s;position:relative;z-index:2;}
+  .shelf-jar:active{transform:scale(.95);}
+  .shelf-jar .jarsvg{width:100%;margin:0;filter:drop-shadow(0 5px 7px rgba(80,45,20,.32));}
+  .shelf-plank{grid-row:2;grid-column:1/-1;height:17px;margin-top:-7px;border-radius:3px;position:relative;z-index:1;
+    background:linear-gradient(180deg,#c08a56 0%,#a06d41 42%,#835431 100%);
+    box-shadow:0 8px 12px rgba(80,45,20,.32),inset 0 1.5px 0 rgba(255,232,200,.5),inset 0 -4px 5px rgba(70,40,18,.4);}
+  .shelf-plank::before{content:"";position:absolute;inset:0;border-radius:3px;opacity:.5;
+    background:repeating-linear-gradient(90deg,transparent 0,transparent 22px,rgba(90,52,24,.4) 22px,rgba(90,52,24,.4) 23px);}
+  .shelf-plank::after{content:"";position:absolute;left:8%;right:8%;bottom:-6px;height:6px;border-radius:0 0 4px 4px;background:linear-gradient(180deg,#6f4526,#5a381d);}
+  .shelf-label{grid-row:3;text-align:center;margin-top:12px;padding:0 2px;cursor:pointer;}
+  .shelf-label .pj-name{font-family:var(--f-title);font-weight:700;font-size:var(--fs-lead);color:#3a2417;letter-spacing:2px;}
+  .shelf-label .pj-sub{font-size:var(--fs-cap);color:var(--ink-soft);letter-spacing:.3px;line-height:1.5;margin-top:2px;}
   .pick-hint{text-align:center;font-size:var(--fs-cap);color:var(--ink-soft);margin-top:16px;letter-spacing:1px;}
 
   /* 瓶子详情浮层 */
@@ -424,7 +434,7 @@
   <section class="screen tall tint-cream" data-dot>
     <div class="inner">
       <div class="eyebrow reveal-eyebrow">Who Are You？</div>
-      <div class="s-big reveal-hero">选择一瓶属于我们之间的<span class="accent">果酱味道</span></div>
+      <div class="s-big reveal-hero" style="font-size:var(--fs-h1)">选择一瓶属于我们之间的<span class="accent">果酱味道</span></div>
       <div class="s-en reveal-body">Pick a jam flavor<br>that belongs to you and me.</div>
       <div class="lead reveal-body">没有标准答案<br>选那个你一眼看到会笑<br>或者读到某一句，会突然安静一下的<br>因为每一段关系<br>都有属于它自己的<span class="accent">味道</span></div>
 
@@ -639,9 +649,18 @@
   // ===== build picker jars =====
   var UID=0;
   var cardsEl=document.getElementById('cards');
-  IDS.forEach(function(x){var d=document.createElement('div');d.className='pjar '+x.cls;
-    d.innerHTML=jarSVG(x,++UID)+'<div class="pj-name">'+x.id+'</div><div class="pj-sub">'+x.c+'</div>';
-    d.addEventListener('click',function(){openDetail(x.id);});cardsEl.appendChild(d);});
+  function buildShelf(items,rowCls){
+    var row=document.createElement('div');row.className='shelf-row '+rowCls;
+    items.forEach(function(x){var j=document.createElement('div');j.className='shelf-jar '+x.cls;
+      j.innerHTML=jarSVG(x,++UID);j.addEventListener('click',function(){openDetail(x.id);});row.appendChild(j);});
+    var plank=document.createElement('div');plank.className='shelf-plank';row.appendChild(plank);
+    items.forEach(function(x){var l=document.createElement('div');l.className='shelf-label '+x.cls;
+      l.innerHTML='<div class="pj-name">'+x.id+'</div><div class="pj-sub">'+x.c+'</div>';
+      l.addEventListener('click',function(){openDetail(x.id);});row.appendChild(l);});
+    cardsEl.appendChild(row);
+  }
+  buildShelf(IDS.slice(0,3),'row1');
+  buildShelf(IDS.slice(3),'row2');
 
   // 瓶子详情浮层：读完 → 认下 → 同卡内填名 → choose
   var detail=document.getElementById('detail'),dsheet=document.getElementById('dsheet');
