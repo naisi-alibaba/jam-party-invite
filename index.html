@@ -357,7 +357,7 @@
   <div id="fall"></div>
   <div id="dots"></div>
 
-  <audio id="bgm" loop preload="none" src="music/bgm2.mp3"></audio>
+  <audio id="bgm" loop preload="metadata" src="music/bgm2.mp3"></audio>
   <div id="music" aria-label="背景音乐"><span class="ico">🎵</span><span class="tag">♫ 献给永远的 · 大粉乐队</span></div>
 
   <!-- arrival overlay -->
@@ -596,17 +596,22 @@
   // 名单里的小头像（迷你小人）
   function miniPersonSVG(x,lk){return '<svg viewBox="0 0 160 200" xmlns="http://www.w3.org/2000/svg">'+personBody(x,lk)+'</svg>';}
 
-  // ===== music: autoplay (WeChat) + first-interaction fallback =====
-  var bgm=document.getElementById('bgm'),musicBtn=document.getElementById('music'),wantOn=false,tagged=false;
+  // ===== music: 自动播放（微信JSBridge / 进页尝试 / 首次交互兜底） =====
+  var bgm=document.getElementById('bgm'),musicBtn=document.getElementById('music'),wantOn=true,tagged=false;
   var musicTag=musicBtn.querySelector('.tag');
-  function playBgm(){bgm.volume=0.6;var p=bgm.play();if(p&&p.then){p.then(function(){musicBtn.classList.add('playing');if(musicTag)musicTag.textContent='♫ You Make It Beautiful';musicBtn.classList.add('show-tag');setTimeout(function(){musicBtn.classList.remove('show-tag');},3000);}).catch(function(){});}else{musicBtn.classList.add('playing');}}
+  function showTag(txt,ms){if(musicTag)musicTag.textContent=txt;musicBtn.classList.add('show-tag');setTimeout(function(){musicBtn.classList.remove('show-tag');musicBtn.classList.remove('hint');},ms||3000);}
+  function playBgm(){bgm.volume=0.6;var p=bgm.play();if(p&&p.then){return p.then(function(){musicBtn.classList.add('playing');if(!tagged){tagged=true;showTag('♫ You Make It Beautiful',3500);}}).catch(function(){});}else{musicBtn.classList.add('playing');}}
   function pauseBgm(){bgm.pause();musicBtn.classList.remove('playing');}
-  // 不自动播放：进封面时把胶囊展开成"点这里放首歌"引导，停留几秒后收起
-  if(musicTag)musicTag.textContent='点这里，放首歌陪你逛';
-  musicBtn.classList.add('hint');
-  setTimeout(function(){musicBtn.classList.add('show-tag');},900);
-  setTimeout(function(){musicBtn.classList.remove('show-tag');musicBtn.classList.remove('hint');},5400);
+  // 手动开关
   musicBtn.addEventListener('click',function(e){e.stopPropagation();if(bgm.paused){wantOn=true;playBgm();}else{wantOn=false;pauseBgm();}});
+  // 1) 进页立即尝试自动播放
+  playBgm();
+  // 2) 微信内置浏览器：JSBridge 就绪后可免手势自动播
+  document.addEventListener('WeixinJSBridgeReady',function(){if(wantOn&&bgm.paused)playBgm();},false);
+  if(window.WeixinJSBridge){try{window.WeixinJSBridge.invoke('getNetworkType',{},function(){if(wantOn&&bgm.paused)playBgm();});}catch(e){}}
+  // 3) 兜底：首次任意交互（触摸/点击/滑动/按键）时开始，一次即解绑
+  function kick(){if(wantOn&&bgm.paused)playBgm();if(!bgm.paused){['touchstart','click','scroll','keydown','pointerdown'].forEach(function(ev){window.removeEventListener(ev,kick,true);});}}
+  ['touchstart','click','scroll','keydown','pointerdown'].forEach(function(ev){window.addEventListener(ev,kick,{capture:true,passive:true});});
 
   // ===== nutrition egg =====
   (function(){var jam=document.getElementById('jam3d'),nutri=document.getElementById('nutri'),jt=document.getElementById('jartip');
