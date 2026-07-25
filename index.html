@@ -270,6 +270,7 @@
   .closing{margin:30px auto 4px;max-width:340px;text-align:center;font-size:var(--fs-body);line-height:2;color:var(--ink-soft);}
   .closing .accent{color:var(--berry);font-weight:600;}
   .closing .cbow{display:block;width:34px;height:auto;margin:0 auto 18px;opacity:.9;}
+  .closing-flourish{display:block;width:180px;height:auto;margin:22px auto 4px;opacity:.85;}
   .foot{padding:30px 26px 24px;text-align:center;font-size:var(--fs-cap);letter-spacing:4px;color:#b09070;position:relative;z-index:1;}
   /* 果酱墙 */
   .wallsec{padding:44px 22px 10px;text-align:center;position:relative;z-index:1;}
@@ -423,7 +424,8 @@
   <section class="screen tall tint-cream" data-dot>
     <div class="inner">
       <div class="eyebrow reveal-eyebrow">Who Are You？</div>
-      <div class="s-en reveal-hero">Pick a jam flavor<br>that belongs to you and me.</div>
+      <div class="s-big reveal-hero">选择一瓶属于我们之间的<span class="accent">果酱味道</span></div>
+      <div class="s-en reveal-body">Pick a jam flavor<br>that belongs to you and me.</div>
       <div class="lead reveal-body">没有标准答案<br>选那个你一眼看到会笑<br>或者读到某一句，会突然安静一下的<br>因为每一段关系<br>都有属于它自己的<span class="accent">味道</span></div>
 
       <div class="tray" id="tray"></div>
@@ -446,10 +448,7 @@
         <div class="hint" id="rhint">一个人可直接入场；同行的人先「＋」加进来，再一起入场</div>
       </div>
 
-      <div class="cta" id="cta">
-        <div class="tip">把你们的果酱瓶<span class="hl">截图，发到我们的群里</span>——<br>就当，正式入场了。</div>
-        <div class="final kai">果酱会吃完，热闹会散场。<br>但<span class="strong">你们认下的这一罐，会一直留着</span>。</div>
-      </div>
+      <div class="cta" id="cta"></div>
 
       <div class="wallsec" id="wallsec" style="display:none">
         <div class="wall-title kai">已经在路上的朋友</div>
@@ -459,7 +458,18 @@
 
       <div class="closing reveal-body">
         <svg class="cbow" viewBox="0 0 80 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><g fill="none" stroke="#cc5648" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M40 24 C 20 8, 6 12, 10 24 C 6 36, 24 40, 40 24 Z"/><path d="M40 24 C 60 8, 74 12, 70 24 C 74 36, 56 40, 40 24 Z"/><path d="M38 27 C 34 36, 30 42, 26 46"/><path d="M42 27 C 46 36, 50 42, 54 46"/><circle cx="40" cy="24" r="3.8" fill="#cc5648" stroke="none"/></g></svg>
-        今晚，请挑选一瓶属于你和我的<span class="accent">果酱味道</span>，<br>带着这个身份，来到这场相聚。<br><br>愿你在这场游戏里，遇见老朋友，认识新朋友，<br>也收集一些只属于今晚的记忆。<br><br>上海的故事还在继续，<br>而我们的下一章，<span class="accent">很开心有你参与</span>。
+        今晚，请挑选一瓶属于你和我的<span class="accent">果酱味道</span>，<br>带着这个身份，来到这场相聚。<br><br>愿你在这场游戏里，遇见老朋友，认识新朋友，<br>也收集一些只属于今晚的记忆。<br><br>上海的故事还在继续，<br>而我们的下一章，<br><span class="accent">很开心有你参与</span>。
+        <svg class="closing-flourish" viewBox="0 0 220 36" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <g stroke="#cc5648" fill="none" stroke-width="1.6" stroke-linecap="round">
+            <path d="M14 18 C 45 18, 66 18, 86 18"/>
+            <path d="M134 18 C 154 18, 175 18, 206 18"/>
+            <path d="M14 18 C 8 13, 8 23, 15 22"/>
+            <path d="M206 18 C 212 13, 212 23, 205 22"/>
+            <path d="M110 18 L 100 9 L 90 18 L 100 27 Z" fill="#cc5648" stroke="none"/>
+            <circle cx="78" cy="18" r="2" fill="#cc5648" stroke="none"/>
+            <circle cx="142" cy="18" r="2" fill="#cc5648" stroke="none"/>
+          </g>
+        </svg>
       </div>
     </div>
   </section>
