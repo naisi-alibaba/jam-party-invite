@@ -131,6 +131,12 @@
   .title-img{display:block;width:82%;max-width:360px;margin:0 auto;filter:drop-shadow(0 8px 18px rgba(165,55,44,.24));}
   .couple-art{display:block;width:100%;max-width:360px;margin:4px auto 10px;border-radius:8px;filter:drop-shadow(0 8px 20px rgba(120,70,40,.16));}
   .tree-photo{display:block;width:100%;max-width:300px;margin:4px auto 18px;border-radius:4px;filter:drop-shadow(0 8px 20px rgba(120,70,40,.18));}
+  .zoomable{cursor:zoom-in;}
+  #lightbox{position:fixed;inset:0;z-index:60;display:none;align-items:center;justify-content:center;background:rgba(30,16,10,.9);padding:20px;cursor:zoom-out;-webkit-tap-highlight-color:transparent;}
+  #lightbox.show{display:flex;}
+  #lightbox img{max-width:96vw;max-height:92vh;border-radius:6px;box-shadow:0 20px 50px rgba(0,0,0,.6);transform:scale(.9);opacity:0;transition:transform .28s cubic-bezier(.2,.9,.25,1.05),opacity .25s;}
+  #lightbox.show img{transform:scale(1);opacity:1;}
+  #lightbox .lb-close{position:absolute;top:16px;right:18px;width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.16);color:#fff;font-size:20px;line-height:38px;text-align:center;}
   .cover-hook{margin-top:30px;font-family:var(--f-title);font-size:var(--fs-h1);line-height:1.7;color:var(--ink);letter-spacing:1px;}
   .cover-hook .accent{color:var(--berry);}
   .hero-sub{margin-top:26px;font-size:var(--fs-lead);line-height:1.85;color:var(--ink-soft);}
@@ -363,6 +369,7 @@
   <!-- arrival overlay -->
   <div class="arrival" id="arrival"><div class="arr-stage" id="arrStage"></div></div>
   <div class="shareM" id="shareM"><div class="share-frame"><img id="shareImg" alt="我的果酱瓶"><img class="share-stamp" src="img/stamp-welcome.png" alt="Welcome to our jam party" aria-hidden="true"></div><div class="st">长按图片，保存到相册，发给我们</div><div class="sc" id="shareClose">关闭</div></div>
+  <div id="lightbox"><span class="lb-close" aria-hidden="true">✕</span><img id="lightboxImg" alt=""></div>
   <div class="detail" id="detail"><div class="dsheet" id="dsheet"></div></div>
 
   <!-- 屏1 · 封面（只留主视觉+一句钩子，硬信息后面再给） -->
@@ -376,7 +383,7 @@
   <!-- 屏2 · 新人 + 时间地点（核心硬信息一屏给全） -->
   <section class="screen tint-mint" data-dot>
     <div class="inner">
-      <img class="couple-art reveal-hero" src="img/couple-v4.jpg" alt="刘金帅 & 王紫蕴" loading="lazy">
+      <img class="couple-art reveal-hero zoomable" src="img/couple-v4.jpg" alt="刘金帅 & 王紫蕴" loading="lazy">
       <div class="cp-row reveal-body">
         <div class="cp"><div class="cp-name kai">刘金帅</div></div>
         <div class="cp-amp"><img class="cp-jar" src="img/newjar.png" alt="果酱瓶"></div>
@@ -427,7 +434,7 @@
   <section class="screen tint-pink" data-dot>
     <div class="inner">
       <div class="eyebrow reveal-eyebrow">Our Jam</div>
-      <img class="tree-photo reveal-hero" src="img/tree-photo-v2.jpg" alt="树下婚纱照 · 刘金帅 & 王紫蕴" loading="lazy">
+      <img class="tree-photo reveal-hero zoomable" src="img/tree-photo-v2.jpg" alt="树下婚纱照 · 刘金帅 & 王紫蕴" loading="lazy">
       <div class="s-lead reveal-body">为什么叫「<span class="accent">果酱派对</span>」？<br>因为爱情不是一颗突然掉落的糖果<br>而是一场漫长的<span class="accent">熬煮</span><br>一点点相遇，一点点了解，一点点磨合<br>再一点点把彼此放进未来</div>
       <svg class="bow-line reveal-body" viewBox="0 0 80 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><g fill="none" stroke="#cc5648" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M40 24 C 20 8, 6 12, 10 24 C 6 36, 24 40, 40 24 Z"/><path d="M40 24 C 60 8, 74 12, 70 24 C 74 36, 56 40, 40 24 Z"/><path d="M38 27 C 34 36, 30 42, 26 46"/><path d="M42 27 C 46 36, 50 42, 54 46"/><circle cx="40" cy="24" r="3.8" fill="#cc5648" stroke="none"/></g></svg>
       <div class="s-lead reveal-body">有人带来了酸甜的青春<br>有人见证了忙碌的成长<br>有人分享过异乡生活的热闹<br>也有人在某个重要时刻递来一勺温暖</div>
@@ -501,8 +508,8 @@
         今晚，请挑选一瓶<br>属于你和我的<span class="accent">果酱味道</span>，<br>带着这个身份，来到这场相聚。<br><br>愿你在这场游戏里，<br>遇见老朋友，认识新朋友，<br>也收集一些只属于今晚的记忆。<br><br>上海的故事还在继续，<br>而我们的下一章，<br><span class="accent">很开心有你参与</span>。
         <svg class="end-bow" viewBox="0 0 80 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><g fill="none" stroke="#cc5648" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M40 24 C 20 8, 6 12, 10 24 C 6 36, 24 40, 40 24 Z"/><path d="M40 24 C 60 8, 74 12, 70 24 C 74 36, 56 40, 40 24 Z"/><path d="M38 27 C 34 36, 30 42, 26 46"/><path d="M42 27 C 46 36, 50 42, 54 46"/><circle cx="40" cy="24" r="3.8" fill="#cc5648" stroke="none"/></g></svg>
         <div class="end-photos">
-          <div class="end-pic"><img src="img/end-photo-1.jpg" alt="王紫蕴 & 刘金帅 婚纱照" loading="lazy"></div>
-          <div class="end-pic"><img src="img/end-photo-2.jpg" alt="王紫蕴 & 刘金帅 婚纱照" loading="lazy"></div>
+          <div class="end-pic"><img class="zoomable" src="img/end-photo-1.jpg" alt="王紫蕴 & 刘金帅 婚纱照" loading="lazy"></div>
+          <div class="end-pic"><img class="zoomable" src="img/end-photo-2.jpg" alt="王紫蕴 & 刘金帅 婚纱照" loading="lazy"></div>
         </div>
         <img class="end-icon" src="img/end-icon.png" alt="Love · Laugh" loading="lazy" aria-hidden="true">
       </div>
@@ -835,6 +842,20 @@
     document.addEventListener('visibilitychange',function(){if(document.visibilityState==='hidden')leave();else{sealed=false;}});
     window.addEventListener('pagehide',leave);
     window.addEventListener('beforeunload',leave);
+  })();
+
+  // ===== 婚纱照灯箱：点击放大，再点关闭 =====
+  (function(){
+    var lb=document.getElementById('lightbox'),lbImg=document.getElementById('lightboxImg');
+    document.addEventListener('click',function(e){
+      var img=e.target.closest&&e.target.closest('.zoomable');
+      if(!img)return;
+      lbImg.src=img.currentSrc||img.src; lbImg.alt=img.alt||'';
+      lb.classList.add('show'); document.body.style.overflow='hidden';
+    });
+    function close(){lb.classList.remove('show'); document.body.style.overflow='';}
+    lb.addEventListener('click',close);
+    document.addEventListener('keydown',function(e){if(e.key==='Escape'&&lb.classList.contains('show'))close();});
   })();
 
   // ===== 日历下载已移除（H5 无法直写系统日历，微信内 .ics 下载体验差）=====
