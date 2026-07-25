@@ -821,10 +821,26 @@
     T(x.c,652,17,x.acc,'italic 700 ',1);
     ctx.strokeStyle=x.seal;ctx.globalAlpha=.5;ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(150,690);ctx.lineTo(410,690);ctx.stroke();ctx.globalAlpha=1;
     T('我是王紫蕴 & 刘金帅的「'+x.id+'」',740,17,'#5c3b2c','',0);
-    T('2026.08.08 周六 18:00 · 上海申报馆顶楼',790,15,'#8a6a54','',0);
-    T('只 此 一 夜 · 等 你 来',822,12,'#b09070','',3);
+    T('2026.08.08 周六 18:58 · 上海申报馆顶楼',790,15,'#8a6a54','',0);
+    T('等 你 来',822,13,'#b09070','',4);
     var jar=new Image();jar.crossOrigin='anonymous';
-    jar.onload=function(){var jw=230,jh=jw*jar.height/jar.width;ctx.drawImage(jar,W/2-jw/2,205,jw,jh);
+    jar.onload=function(){var jw=230,jh=jw*jar.height/jar.width;var jx=W/2-jw/2,jy=205;
+      // 瓶子后面：红色蜡笔斜涂打底
+      (function(){ctx.save();var cx=W/2,cy=jy+jh/2;
+        ctx.translate(cx,cy);ctx.rotate(-16*Math.PI/180);ctx.lineCap='round';
+        var bw=jw*1.24,bh=jh*1.02;ctx.strokeStyle='#cf4b3d';
+        // 多遍斜向排线，层叠出蜡笔涂块质感（抖动+粗细变化+断续）
+        for(var pass=0;pass<3;pass++){var step=[5,6,7][pass];
+          for(var yy=-bh/2;yy<=bh/2;yy+=step){
+            var jit=(((yy*17+pass*11)%11)-5)*1.1;
+            var lw=[7,5,9][pass]+(((yy+pass)%3));
+            ctx.globalAlpha=[0.42,0.30,0.22][pass];ctx.lineWidth=lw;
+            ctx.beginPath();ctx.moveTo(-bw/2-6+jit,yy);ctx.lineTo(bw/2+6+jit,yy+4);ctx.stroke();}}
+        // 反向少量交叉，增加蜡笔涂抹的凌乱感
+        ctx.globalAlpha=0.16;ctx.lineWidth=6;
+        for(var xx=-bw/2;xx<=bw/2;xx+=14){ctx.beginPath();ctx.moveTo(xx,-bh/2-4);ctx.lineTo(xx+10,bh/2+4);ctx.stroke();}
+        ctx.globalAlpha=1;ctx.restore();})();
+      ctx.drawImage(jar,jx,jy,jw,jh);
       try{shareImg.src=cv.toDataURL('image/png');}catch(e){shareImg.src=x.img;}shareM.classList.add('show');};
     jar.onerror=function(){shareM.classList.add('show');};
     jar.src=x.img;
