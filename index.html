@@ -207,20 +207,20 @@
     box-shadow:0 12px 26px rgba(60,34,15,.32),inset 0 0 0 5px #7c4e2c,inset 0 0 0 7px rgba(255,225,190,.22);}
   .cutlery{position:absolute;left:-2px;bottom:14px;width:44px;height:auto;z-index:3;transform:rotate(-5deg);
     filter:drop-shadow(0 4px 6px rgba(60,34,15,.4));opacity:.96;pointer-events:none;}
-  .shelf-row{display:grid;grid-template-columns:repeat(3,1fr);align-items:end;justify-items:center;column-gap:6px;margin-bottom:20px;position:relative;}
+  .shelf-row{display:grid;grid-template-columns:repeat(3,1fr);align-items:end;justify-items:center;column-gap:6px;margin-bottom:22px;position:relative;}
   .shelf-row.row2{grid-template-columns:repeat(2,1fr);width:100%;margin-bottom:18px;}
-  .shelf-jar{grid-row:1;width:100%;max-width:112px;cursor:pointer;transition:transform .2s;position:relative;z-index:2;}
+  .shelf-jar{grid-row:1;width:86px;cursor:pointer;transition:transform .2s;position:relative;z-index:2;}
   .shelf-jar:active{transform:scale(.95);}
-  .shelf-jar .jarsvg{width:100%;margin:0;filter:drop-shadow(0 4px 5px rgba(40,22,8,.4));}
-  /* 厚木板：正面 + 顶面高光 + 底部厚度侧面，横跨整墙 */
-  .shelf-plank{grid-row:2;grid-column:1/-1;height:26px;margin:-6px -22px 0;border-radius:2px;position:relative;z-index:1;
-    background:linear-gradient(180deg,#e0b784 0%,#c1935c 30%,#a2743f 65%,#88602f 100%);
-    box-shadow:0 9px 14px rgba(40,22,8,.45),inset 0 2px 0 rgba(255,244,215,.65),inset 0 -6px 6px rgba(60,34,15,.45);}
-  .shelf-plank::before{content:"";position:absolute;inset:0;border-radius:2px;opacity:.4;
-    background:repeating-linear-gradient(90deg,transparent 0,transparent 28px,rgba(80,46,20,.5) 28px,rgba(80,46,20,.5) 29px);}
-  .shelf-plank::after{content:"";position:absolute;left:0;right:0;bottom:-9px;height:9px;border-radius:0 0 3px 3px;
-    background:linear-gradient(180deg,#6a4123,#4a2f19);box-shadow:0 6px 9px rgba(40,22,8,.4);}
-  .shelf-label{grid-row:3;text-align:center;margin-top:-14px;padding:0 2px;cursor:pointer;z-index:3;position:relative;}
+  .shelf-jar .jarsvg{width:100%;margin:0;filter:drop-shadow(0 5px 4px rgba(40,22,8,.5));}
+  /* 厚木板：深色搁板，与浅木墙高对比；正面+顶面高光+底部厚度侧面，横跨整墙 */
+  .shelf-plank{grid-row:2;grid-column:1/-1;height:24px;margin:-5px -22px 0;border-radius:2px;position:relative;z-index:1;
+    background:linear-gradient(180deg,#b58650 0%,#96682f 45%,#78521f 100%);
+    box-shadow:0 10px 14px rgba(40,22,8,.5),inset 0 2px 0 rgba(255,240,205,.6),inset 0 -6px 7px rgba(45,26,10,.55);}
+  .shelf-plank::before{content:"";position:absolute;inset:0;border-radius:2px;opacity:.45;
+    background:repeating-linear-gradient(90deg,transparent 0,transparent 30px,rgba(60,34,15,.55) 30px,rgba(60,34,15,.55) 31px);}
+  .shelf-plank::after{content:"";position:absolute;left:0;right:0;bottom:-10px;height:10px;border-radius:0 0 3px 3px;
+    background:linear-gradient(180deg,#573719,#3a2410);box-shadow:0 7px 10px rgba(40,22,8,.5);}
+  .shelf-label{grid-row:3;text-align:center;margin-top:14px;padding:0 2px;cursor:pointer;z-index:2;position:relative;}
   .shelf-label .pj-name{font-family:var(--f-title);font-weight:700;font-size:var(--fs-lead);color:#4a2f18;letter-spacing:2px;text-shadow:0 1px 2px rgba(255,245,225,.7);}
   .shelf-label .pj-sub{font-size:var(--fs-cap);color:#6b4526;letter-spacing:.3px;line-height:1.5;margin-top:2px;text-shadow:0 1px 2px rgba(255,245,225,.6);}
   .pick-hint{text-align:center;font-size:var(--fs-cap);color:var(--ink-soft);margin-top:30px;letter-spacing:1px;}
