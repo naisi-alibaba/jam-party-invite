@@ -92,6 +92,7 @@
   /* ins 排版层级 */
   .s-lead{font-size:var(--fs-lead);line-height:1.85;color:var(--ink-soft);}
   .s-lead .accent{color:var(--berry);}
+  .s-en{font-family:var(--f-en);font-size:var(--fs-lead);letter-spacing:1px;color:var(--leaf);margin:2px 0 14px;line-height:1.3;}
   .s-big{font-family:var(--f-title);font-size:var(--fs-hero);line-height:1.3;color:var(--ink);margin-top:6px;}
   .s-big .accent{color:var(--berry);}
   .s-big .accent{color:var(--berry);}
@@ -266,6 +267,9 @@
   .cta.show{max-height:420px;opacity:1;}
   .cta .tip{font-size:var(--fs-body);color:var(--ink);line-height:2;} .cta .tip .hl{color:var(--berry);font-weight:600;}
   .final{margin-top:28px;font-family:var(--f-title);font-size:var(--fs-lead);line-height:2.05;color:var(--ink-soft);} .final .strong{color:var(--berry);}
+  .closing{margin:30px auto 4px;max-width:340px;text-align:center;font-size:var(--fs-body);line-height:2;color:var(--ink-soft);}
+  .closing .accent{color:var(--berry);font-weight:600;}
+  .closing .cbow{display:block;width:34px;height:auto;margin:0 auto 18px;opacity:.9;}
   .foot{padding:30px 26px 24px;text-align:center;font-size:var(--fs-cap);letter-spacing:4px;color:#b09070;position:relative;z-index:1;}
   /* 果酱墙 */
   .wallsec{padding:44px 22px 10px;text-align:center;position:relative;z-index:1;}
@@ -418,9 +422,9 @@
   <!-- 屏4 · 选身份（功能区，放开正常滚动） -->
   <section class="screen tall tint-cream" data-dot>
     <div class="inner">
-      <div class="eyebrow reveal-eyebrow">Who Are You</div>
-      <div class="s-big reveal-hero">Pick 一瓶属于<br>你和我的<span class="accent">果酱味道</span></div>
-      <div class="lead reveal-body">没有标准答案<br>就选那个你一看就笑<br>或者鼻子一酸的</div>
+      <div class="eyebrow reveal-eyebrow">Who Are You？</div>
+      <div class="s-en reveal-hero">Pick a jam flavor<br>that belongs to you and me.</div>
+      <div class="lead reveal-body">没有标准答案<br>选那个你一眼看到会笑<br>或者读到某一句，会突然安静一下的<br>因为每一段关系<br>都有属于它自己的<span class="accent">味道</span></div>
 
       <div class="tray" id="tray"></div>
 
@@ -452,6 +456,11 @@
         <div class="wall-count"><b id="wallCount">0</b> 个人，已经认下了自己的那一罐</div>
         <div class="wall" id="wall"></div>
       </div>
+
+      <div class="closing reveal-body">
+        <svg class="cbow" viewBox="0 0 80 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><g fill="none" stroke="#cc5648" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M40 24 C 20 8, 6 12, 10 24 C 6 36, 24 40, 40 24 Z"/><path d="M40 24 C 60 8, 74 12, 70 24 C 74 36, 56 40, 40 24 Z"/><path d="M38 27 C 34 36, 30 42, 26 46"/><path d="M42 27 C 46 36, 50 42, 54 46"/><circle cx="40" cy="24" r="3.8" fill="#cc5648" stroke="none"/></g></svg>
+        今晚，请挑选一瓶属于你和我的<span class="accent">果酱味道</span>，<br>带着这个身份，来到这场相聚。<br><br>愿你在这场游戏里，遇见老朋友，认识新朋友，<br>也收集一些只属于今晚的记忆。<br><br>上海的故事还在继续，<br>而我们的下一章，<span class="accent">很开心有你参与</span>。
+      </div>
     </div>
   </section>
 
@@ -473,21 +482,21 @@
   var API_BASE = "";  // 同源，留空即可；跨源才填 "http://你的IP"
   var MAP_URL="https://uri.amap.com/search?keyword=%E7%94%B3%E6%8A%A5%E9%A6%86%EF%BC%88%E6%B1%89%E5%8F%A3%E8%B7%AF309%E5%8F%B7%EF%BC%89&city=%E4%B8%8A%E6%B5%B7&src=invite&callnative=1";
   var IDS=[
-    {id:"灯塔",cls:"c1",img:"img/jars/jar-1.png",seal:"#c8892a",acc:"#a9711d",c:"那段路，多亏有你。",
-     d:"在某段要紧的路上——入行、求学、某个坎——你实实在在帮过我们、点过我们一下。",
-     long:"有那么一段路，是你把我们带过来的。<br>可能是刚入行时你递来的一句点拨，可能是我们卡在某个坎上时你伸的那只手，也可能只是某个深夜你说的一句“别怕，会过去的”。<br><br>你未必天天在场，但每逢真正要紧的关头，我们心里第一个想到的是你。<br><b>如果你也记得那段路——这一罐，是你的。</b>"},
-    {id:"同谋",cls:"c2",img:"img/jars/jar-2.png",seal:"#9c5580",acc:"#8a4a70",c:"我们一起干过些没人知道的事。",
-     d:"那些荒唐、鲜活、笑到岔气的另一面，只有你见过。你是那个“共犯”。",
-     long:"有些事，是不足为外人道的。<br>一起翻过的墙、逃过的课、闯过的祸、熬过的通宵，还有那个到现在都没说出口的秘密。<br><br>别人看到的是我们体面的样子，只有你见过我们最荒唐、最鲜活、笑到岔气的另一面。<br><b>你是那个“共犯”——这一罐，敬我们的默契。</b>"},
-    {id:"远山",cls:"c3",img:"img/jars/jar-3.png",seal:"#568a7c",acc:"#356b5c",c:"离得再远，我也一直在。",
-     d:"隔着距离和时间，可一开口就回到当年。你来，本身就是最重的一句话。",
-     long:"我们隔着很远的距离、很长的时间。<br>不常联系，可那种“你一直在那儿”的笃定，从来没变过。见面像从没分开，一开口就回到当年。<br><br>你今天愿意来，本身就是最重的一句话：<b>再远，这样的日子，我也要在场。这一罐，是给远道而来的你。</b>"},
-    {id:"江湖",cls:"c4",img:"img/jars/jar-4.png",seal:"#c04545",acc:"#a5372c",c:"自己认下的彼此。",
-     d:"没有同窗血缘，是成年后各自挑中、留下的人。全靠选择，所以最难得。",
-     long:"我们之间没有同窗、没有血缘。<br>是各自在成年后的世界里，兜兜转转、看对了眼，自己认下的彼此。<br><br>成年人的交情最难得——它不靠命定，全靠选择。你是我们在这偌大世界里，主动挑中、并且留住的人。<br><b>这一罐，敬我们自己选的江湖。</b>"},
-    {id:"炉火",cls:"c5",img:"img/jars/jar-5.png",seal:"#d16632",acc:"#a5431a",c:"有我在，就是主场。",
-     d:"你一到，场子就热了。天生会把人聚拢、把气氛焐热的那个。",
-     long:"有你在，场子就冷不了。<br>你天生会把人聚拢、把气氛焐热，能让两个不认识的人三句话就熟络起来。<br><br>你未必是话最多的那个，但你是“在场感”最强的那个——你一到，热闹才真正开始。<br><b>这一罐，给让每场相聚都暖起来的你。</b>"}
+    {id:"灯塔",cls:"c1",img:"img/jars/jar-1.png",seal:"#c8892a",acc:"#a9711d",c:"那段路，多亏有你",
+     d:"你是那个，在远处亮着光的人。",
+     long:"在某一段重要的旅程里——<br>入行、求学、迷茫或某个关键时刻<br>你曾经给过我们方向，推过我们一把<br>让我们走得更坚定<br><br><b>你是那个，在远处亮着光的人。</b>"},
+    {id:"同谋",cls:"c2",img:"img/jars/jar-2.png",seal:"#9c5580",acc:"#8a4a70",c:"我们一起拥有一些秘密",
+     d:"你是那个，见过我们另一面的人。",
+     long:"那些不那么完美<br>却最鲜活、最快乐的时刻<br>那些只有彼此知道的荒唐和笑声<br><br><b>你是那个，见过我们另一面的人。</b>"},
+    {id:"远山",cls:"c3",img:"img/jars/jar-3.png",seal:"#568a7c",acc:"#356b5c",c:"离得再远，我也一直在",
+     d:"你出现的那一刻，就是最重的一句话。",
+     long:"隔着距离和时间<br>但每一次重新见面<br>都能瞬间回到当年<br>有些关系不需要频繁证明<br><br><b>你出现的那一刻，就是最重的一句话。</b>"},
+    {id:"江湖",cls:"c4",img:"img/jars/jar-4.png",seal:"#c04545",acc:"#a5372c",c:"是我们自己选择留下的人",
+     d:"因为是选择，所以更难得。",
+     long:"没有同窗的缘分<br>没有血缘的牵绊<br>是在成年以后<br>各自奔赴不同方向<br>却依然认下彼此的人<br><br><b>因为是选择，所以更难得。</b>"},
+    {id:"炉火",cls:"c5",img:"img/jars/jar-5.png",seal:"#d16632",acc:"#a5431a",c:"有我在，就是主场",
+     d:"你是那个，把温度带给大家的人。",
+     long:"你总能让陌生变熟悉<br>让安静变热闹<br>你出现的地方<br>总会有人聚在一起<br>总会有故事发生<br><br><b>你是那个，把温度带给大家的人。</b>"}
   ];
   var MAP={};IDS.forEach(function(x){MAP[x.id]=x;});
 
