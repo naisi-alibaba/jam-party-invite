@@ -829,23 +829,6 @@
     T('等 你 来',822,13,'#b09070','',4);
     var jar=new Image();jar.crossOrigin='anonymous';
     jar.onload=function(){var jw=230,jh=jw*jar.height/jar.width;var jx=W/2-jw/2,jy=205;
-      // 瓶子后面：红色蜡笔斜涂打底（稀疏、断续、深浅不匀，蜡笔质感）
-      (function(){ctx.save();var cx=W/2,cy=jy+jh/2;
-        ctx.translate(cx,cy);ctx.rotate(-15*Math.PI/180);ctx.lineCap='round';ctx.strokeStyle='#cf4b3d';
-        var bw=jw*1.22,bh=jh*1.0;
-        // 稀疏斜向长笔触，每条拆成断续小段+抖动，模拟蜡笔拖拽
-        for(var yy=-bh/2;yy<=bh/2;yy+=13){
-          var baseJit=(((yy*17)%13)-6);
-          for(var xx=-bw/2;xx<bw/2;xx+=22){
-            var gap=((xx+yy)%40>30)?1:0; // 偶尔留白，形成断续
-            if(gap)continue;
-            var seg=15+((xx*7+yy)%9);
-            ctx.globalAlpha=0.30+(((xx*3+yy*5)%10)/10)*0.28; // 0.30~0.58 深浅不匀
-            ctx.lineWidth=5+((yy+xx)%4);
-            ctx.beginPath();ctx.moveTo(xx+baseJit,yy);ctx.lineTo(xx+seg+baseJit,yy+3+((xx%3)-1));ctx.stroke();
-          }
-        }
-        ctx.globalAlpha=1;ctx.restore();})();
       ctx.drawImage(jar,jx,jy,jw,jh);
       try{shareImg.src=cv.toDataURL('image/png');}catch(e){shareImg.src=x.img;}shareM.classList.add('show');};
     jar.onerror=function(){shareM.classList.add('show');};
