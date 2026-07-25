@@ -201,29 +201,33 @@
   .c5{--accent:#a5431a;--seal:#d16632;}
 
   /* ===== JAR picker: 一屏五瓶网格 ===== */
-  /* 木质货架：两侧木框立柱 + 每行厚木板，瓶子立在板上 */
-  .cards{max-width:400px;margin:0 auto;position:relative;padding:10px 20px 0;}
-  .cards::before,.cards::after{content:"";position:absolute;top:2px;bottom:26px;width:15px;border-radius:5px;z-index:0;
-    background:linear-gradient(90deg,#9a6438 0%,#7c4e2c 55%,#5f3c20 100%);
-    box-shadow:0 6px 12px rgba(70,40,18,.35),inset 0 0 0 1px rgba(255,228,196,.25),inset -2px 0 4px rgba(60,34,15,.5);}
-  .cards::before{left:0;} .cards::after{right:0;}
-  .shelf-row{display:grid;grid-template-columns:repeat(3,1fr);align-items:end;justify-items:center;column-gap:6px;margin-bottom:26px;position:relative;}
-  .shelf-row.row2{grid-template-columns:repeat(2,1fr);width:70%;margin-left:auto;margin-right:auto;margin-bottom:26px;}
-  .shelf-jar{grid-row:1;width:100%;max-width:118px;cursor:pointer;transition:transform .2s;position:relative;z-index:2;}
+  /* 木质货架：暖色木墙背景 + 木框，每行厚木板，瓶子立在板上 */
+  .cards{max-width:400px;margin:0 auto;position:relative;padding:24px 22px 10px;border-radius:10px;overflow:visible;
+    background-color:#a9743f;
+    background-image:
+      linear-gradient(180deg,rgba(255,236,205,.16),rgba(50,28,12,.28)),
+      repeating-linear-gradient(90deg,rgba(255,228,192,0) 0px,rgba(255,228,192,0) 46px,rgba(60,34,15,.55) 46px,rgba(60,34,15,.55) 48px,rgba(255,225,190,.28) 48px,rgba(255,225,190,.28) 50px),
+      repeating-linear-gradient(0deg,rgba(90,55,25,.05) 0 3px,transparent 3px 8px);
+    box-shadow:0 12px 26px rgba(60,34,15,.32),inset 0 0 0 5px #7c4e2c,inset 0 0 0 7px rgba(255,225,190,.22);}
+  .cutlery{position:absolute;left:-2px;bottom:14px;width:44px;height:auto;z-index:3;transform:rotate(-5deg);
+    filter:drop-shadow(0 4px 6px rgba(60,34,15,.4));opacity:.96;pointer-events:none;}
+  .shelf-row{display:grid;grid-template-columns:repeat(3,1fr);align-items:end;justify-items:center;column-gap:6px;margin-bottom:28px;position:relative;}
+  .shelf-row.row2{grid-template-columns:repeat(2,1fr);width:100%;margin-bottom:26px;}
+  .shelf-jar{grid-row:1;width:100%;max-width:112px;cursor:pointer;transition:transform .2s;position:relative;z-index:2;}
   .shelf-jar:active{transform:scale(.95);}
-  .shelf-jar .jarsvg{width:100%;margin:0;filter:drop-shadow(0 4px 5px rgba(80,45,20,.35));}
-  /* 厚木板：正面板 + 顶面高光 + 底部厚度侧面，横跨整行并探入两侧立柱 */
-  .shelf-plank{grid-row:2;grid-column:1/-1;height:26px;margin:-6px -14px 0;border-radius:3px;position:relative;z-index:1;
-    background:linear-gradient(180deg,#caa06c 0%,#b07f4c 30%,#94643a 65%,#7a4f2c 100%);
-    box-shadow:0 9px 14px rgba(70,40,18,.4),inset 0 2px 0 rgba(255,236,205,.6),inset 0 -6px 6px rgba(60,34,15,.45);}
-  .shelf-plank::before{content:"";position:absolute;inset:0;border-radius:3px;opacity:.45;
-    background:repeating-linear-gradient(90deg,transparent 0,transparent 26px,rgba(80,46,20,.5) 26px,rgba(80,46,20,.5) 27px);}
-  .shelf-plank::after{content:"";position:absolute;left:0;right:0;bottom:-9px;height:9px;border-radius:0 0 4px 4px;
-    background:linear-gradient(180deg,#6a4123,#4f331b);box-shadow:0 6px 9px rgba(60,34,15,.4);}
-  .shelf-label{grid-row:3;text-align:center;margin-top:16px;padding:0 2px;cursor:pointer;z-index:2;}
-  .shelf-label .pj-name{font-family:var(--f-title);font-weight:700;font-size:var(--fs-lead);color:#3a2417;letter-spacing:2px;}
-  .shelf-label .pj-sub{font-size:var(--fs-cap);color:var(--ink-soft);letter-spacing:.3px;line-height:1.5;margin-top:2px;}
-  .pick-hint{text-align:center;font-size:var(--fs-cap);color:var(--ink-soft);margin-top:16px;letter-spacing:1px;}
+  .shelf-jar .jarsvg{width:100%;margin:0;filter:drop-shadow(0 4px 5px rgba(40,22,8,.4));}
+  /* 厚木板：正面 + 顶面高光 + 底部厚度侧面，横跨整墙 */
+  .shelf-plank{grid-row:2;grid-column:1/-1;height:26px;margin:-6px -22px 0;border-radius:2px;position:relative;z-index:1;
+    background:linear-gradient(180deg,#e0b784 0%,#c1935c 30%,#a2743f 65%,#88602f 100%);
+    box-shadow:0 9px 14px rgba(40,22,8,.45),inset 0 2px 0 rgba(255,244,215,.65),inset 0 -6px 6px rgba(60,34,15,.45);}
+  .shelf-plank::before{content:"";position:absolute;inset:0;border-radius:2px;opacity:.4;
+    background:repeating-linear-gradient(90deg,transparent 0,transparent 28px,rgba(80,46,20,.5) 28px,rgba(80,46,20,.5) 29px);}
+  .shelf-plank::after{content:"";position:absolute;left:0;right:0;bottom:-9px;height:9px;border-radius:0 0 3px 3px;
+    background:linear-gradient(180deg,#6a4123,#4a2f19);box-shadow:0 6px 9px rgba(40,22,8,.4);}
+  .shelf-label{grid-row:3;text-align:center;margin-top:16px;padding:0 2px;cursor:pointer;z-index:2;position:relative;}
+  .shelf-label .pj-name{font-family:var(--f-title);font-weight:700;font-size:var(--fs-lead);color:#fff3df;letter-spacing:2px;text-shadow:0 1px 3px rgba(40,22,8,.8);}
+  .shelf-label .pj-sub{font-size:var(--fs-cap);color:#f3e3cf;letter-spacing:.3px;line-height:1.5;margin-top:2px;text-shadow:0 1px 2px rgba(40,22,8,.7);}
+  .pick-hint{text-align:center;font-size:var(--fs-cap);color:var(--ink-soft);margin-top:30px;letter-spacing:1px;}
 
   /* 瓶子详情浮层 */
   .detail{position:fixed;inset:0;z-index:45;display:none;align-items:flex-end;justify-content:center;background:rgba(40,20,12,.55);backdrop-filter:blur(2px);}
@@ -448,8 +452,21 @@
 
       <div class="builder">
         <div class="step-pick show" id="stepPick">
-          <div class="q2" id="pickQ">慢慢看，哪罐念着你，就是它。</div>
-          <div class="cards" id="cards"></div>
+          <div class="cards" id="cards">
+            <svg class="cutlery" viewBox="0 0 90 128" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <g fill="#b07f4c" stroke="#5f3c20" stroke-width="2" stroke-linejoin="round" stroke-linecap="round">
+                <g transform="rotate(-11 45 64)">
+                  <ellipse cx="33" cy="28" rx="13" ry="17"/>
+                  <path d="M33 44 L31 118 a2 2 0 0 0 4 0 Z"/>
+                </g>
+                <g transform="rotate(11 45 64)">
+                  <path d="M57 44 L55 118 a2 2 0 0 0 4 0 Z"/>
+                  <path d="M49 14 v18 a8 8 0 0 0 16 0 V14" fill="#b07f4c"/>
+                  <path d="M53 14 v20 M57 14 v20 M61 14 v20" fill="none" stroke="#5f3c20" stroke-width="1.6"/>
+                </g>
+              </g>
+            </svg>
+          </div>
           <div class="pick-hint" id="pickHint">都像？那就选最先想起我们的那一罐。</div>
         </div>
       </div>
