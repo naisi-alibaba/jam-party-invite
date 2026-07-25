@@ -356,7 +356,7 @@
   <div id="fall"></div>
   <div id="dots"></div>
 
-  <audio id="bgm" loop preload="auto" src="music/bgm.mp3"></audio>
+  <audio id="bgm" loop preload="auto" src="music/bgm2.mp3"></audio>
   <div id="music" aria-label="背景音乐"><span class="ico">🎵</span><span class="tag">♫ 献给永远的 · 大粉乐队</span></div>
 
   <!-- arrival overlay -->
@@ -598,7 +598,7 @@
   // ===== music: autoplay (WeChat) + first-interaction fallback =====
   var bgm=document.getElementById('bgm'),musicBtn=document.getElementById('music'),wantOn=false,tagged=false;
   var musicTag=musicBtn.querySelector('.tag');
-  function playBgm(){bgm.volume=0.6;var p=bgm.play();if(p&&p.then){p.then(function(){musicBtn.classList.add('playing');if(musicTag)musicTag.textContent='♫ 献给永远的 · 大粉乐队';musicBtn.classList.add('show-tag');setTimeout(function(){musicBtn.classList.remove('show-tag');},3000);}).catch(function(){});}else{musicBtn.classList.add('playing');}}
+  function playBgm(){bgm.volume=0.6;var p=bgm.play();if(p&&p.then){p.then(function(){musicBtn.classList.add('playing');if(musicTag)musicTag.textContent='♫ You Make It Beautiful';musicBtn.classList.add('show-tag');setTimeout(function(){musicBtn.classList.remove('show-tag');},3000);}).catch(function(){});}else{musicBtn.classList.add('playing');}}
   function pauseBgm(){bgm.pause();musicBtn.classList.remove('playing');}
   // 不自动播放：进封面时把胶囊展开成"点这里放首歌"引导，停留几秒后收起
   if(musicTag)musicTag.textContent='点这里，放首歌陪你逛';
