@@ -835,7 +835,12 @@
     T('2026.08.08 周六 18:58 · 上海申报馆顶楼',790,15,'#8a6a54','',0);
     T('等 你 来',822,13,'#b09070','',4);
     var jar=new Image();jar.crossOrigin='anonymous';
-    jar.onload=function(){var jw=230,jh=jw*jar.height/jar.width;var jx=W/2-jw/2,jy=205;
+    jar.onload=function(){
+      // 瓶子固定坐落在名字上方：底部锁在 y=530，高度上限 330，超宽则限宽，水平居中
+      var maxH=330,maxW=250,bottomY=530;
+      var jh=maxH,jw=jh*jar.width/jar.height;
+      if(jw>maxW){jw=maxW;jh=jw*jar.height/jar.width;}
+      var jx=W/2-jw/2,jy=bottomY-jh;
       ctx.drawImage(jar,jx,jy,jw,jh);
       try{shareImg.src=cv.toDataURL('image/png');}catch(e){shareImg.src=x.img;}shareM.classList.add('show');};
     jar.onerror=function(){shareM.classList.add('show');};
