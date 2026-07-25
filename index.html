@@ -207,9 +207,9 @@
     box-shadow:0 12px 26px rgba(60,34,15,.32),inset 0 0 0 5px #7c4e2c,inset 0 0 0 7px rgba(255,225,190,.22);}
   .cutlery{position:absolute;left:-2px;bottom:14px;width:44px;height:auto;z-index:3;transform:rotate(-5deg);
     filter:drop-shadow(0 4px 6px rgba(60,34,15,.4));opacity:.96;pointer-events:none;}
-  .shelf-row{display:grid;grid-template-columns:repeat(3,1fr);align-items:end;justify-items:center;column-gap:8px;margin-bottom:8px;position:relative;}
+  .shelf-row{display:grid;grid-template-columns:repeat(3,1fr);align-items:end;justify-items:center;column-gap:4px;margin-bottom:8px;position:relative;}
   .shelf-row.row2{grid-template-columns:repeat(2,1fr);width:100%;margin:0 auto 8px;}
-  .shelf-jar{grid-row:1;width:auto;height:96px;cursor:pointer;transition:transform .2s;position:relative;z-index:2;}
+  .shelf-jar{grid-row:1;min-width:0;width:auto;height:96px;cursor:pointer;transition:transform .2s;position:relative;z-index:2;}
   .shelf-jar:active{transform:scale(.95);}
   .shelf-jar .jarsvg{width:auto;height:100%;margin:0 auto;display:block;filter:drop-shadow(0 4px 3px rgba(40,22,8,.45));}
   /* 厚木板：深色搁板，与浅木墙高对比；瓶底紧贴板面 */
@@ -220,10 +220,10 @@
     background:repeating-linear-gradient(90deg,transparent 0,transparent 30px,rgba(60,34,15,.55) 30px,rgba(60,34,15,.55) 31px);}
   .shelf-plank::after{content:"";position:absolute;left:0;right:0;bottom:-8px;height:8px;border-radius:0 0 3px 3px;
     background:linear-gradient(180deg,#573719,#3a2410);box-shadow:0 6px 9px rgba(40,22,8,.5);}
-  .shelf-label{grid-row:3;justify-self:center;width:100%;max-width:118px;min-height:66px;margin-top:0;padding:15px 13px;box-sizing:border-box;cursor:pointer;z-index:3;position:relative;
+  .shelf-label{grid-row:3;justify-self:center;width:100%;min-width:0;max-width:108px;min-height:64px;margin-top:0;padding:14px 10px;box-sizing:border-box;cursor:pointer;z-index:3;position:relative;
     background:url("img/shelf-tag.png") center/100% 100% no-repeat;filter:drop-shadow(0 3px 5px rgba(60,34,15,.3));display:flex;flex-direction:column;align-items:center;justify-content:center;}
   .shelf-label .pj-name{font-family:var(--f-title);font-weight:700;font-size:12px;color:#4a2b12;letter-spacing:1px;line-height:1.1;}
-  .shelf-label .pj-sub{font-size:9px;color:#6b4320;letter-spacing:0;line-height:1.25;margin-top:2px;white-space:nowrap;}
+  .shelf-label .pj-sub{font-size:9px;color:#6b4320;letter-spacing:0;line-height:1.25;margin-top:2px;}
   .pick-hint{text-align:center;font-size:var(--fs-cap);color:var(--ink-soft);margin-top:30px;letter-spacing:1px;}
 
   /* 瓶子详情浮层 */
