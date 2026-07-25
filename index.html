@@ -810,6 +810,33 @@
   if(settled.length){settled.forEach(function(m){keepCard(m);});cta.classList.add('show');}
   if(crew.length){renderRoster();}
 
+  // ===== 埋点：PV / UV / 停留时长（存自有后端） =====
+  (function(){
+    if(!API_ON)return;
+    var VKEY='jamparty_vid';
+    var vid; try{vid=localStorage.getItem(VKEY);}catch(e){}
+    var isNew=!vid;
+    if(!vid){vid=(Date.now().toString(36)+Math.random().toString(36).slice(2,8));try{localStorage.setItem(VKEY,vid);}catch(e){}}
+    var start=Date.now(), lastSent=0, sealed=false;
+    function send(type,extra){
+      var body=JSON.stringify(Object.assign({t:type,vid:vid,isNew:isNew,ref:document.referrer||'',path:location.pathname},extra||{}));
+      try{
+        if(type==='leave'&&navigator.sendBeacon){navigator.sendBeacon(API_BASE+'/api/track',new Blob([body],{type:'application/json'}));}
+        else{fetch(API_BASE+'/api/track',{method:'POST',headers:{'Content-Type':'application/json'},body:body,keepalive:true}).catch(function(){});}
+      }catch(e){}
+    }
+    send('pv');                          // 进页：PV（后端按 vid 去重算 UV）
+    function leave(){                     // 离页：上报停留时长（秒）
+      if(sealed)return;sealed=true;
+      send('leave',{dwell:Math.round((Date.now()-start)/1000)});
+    }
+    // 心跳：每 15s 报一次累计时长，防止用户直接杀进程导致 leave 丢失
+    setInterval(function(){if(document.visibilityState==='visible')send('ping',{dwell:Math.round((Date.now()-start)/1000)});},15000);
+    document.addEventListener('visibilitychange',function(){if(document.visibilityState==='hidden')leave();else{sealed=false;}});
+    window.addEventListener('pagehide',leave);
+    window.addEventListener('beforeunload',leave);
+  })();
+
   // ===== 日历下载已移除（H5 无法直写系统日历，微信内 .ics 下载体验差）=====
 
 

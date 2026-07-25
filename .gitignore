@@ -1,4 +1,5 @@
 guests.json
+stats.json
 _*.html
 _*.png
 node_modules/
