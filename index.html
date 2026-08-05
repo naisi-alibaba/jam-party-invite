@@ -317,6 +317,14 @@
     box-shadow:0 1px 3px rgba(90,70,30,.25);border-left:1px dashed rgba(150,120,60,.4);border-right:1px dashed rgba(150,120,60,.4);}
   .end-icon{display:block;width:200px;height:auto;margin:20px auto 0;opacity:.92;}
   .foot{padding:30px 26px 24px;text-align:center;font-size:var(--fs-cap);letter-spacing:4px;color:#b09070;position:relative;z-index:1;}
+  /* 备案信息：letter-spacing 归零，否则备案号被拉散不易辨认 */
+  .beian{padding:0 26px 26px;text-align:center;font-size:var(--fs-cap);line-height:1.9;letter-spacing:0;color:#b09070;position:relative;z-index:1;}
+  .beian a{color:#b09070;text-decoration:none;border-bottom:1px solid rgba(176,144,112,.45);}
+  .beian a:hover,.beian a:active{color:var(--berry-deep);border-bottom-color:var(--berry-deep);}
+  .beian .bl{display:inline-block;}
+  .beian .police{display:inline-flex;align-items:center;gap:5px;margin-top:5px;border-bottom:0;}
+  .beian .police span{border-bottom:1px solid rgba(176,144,112,.45);}
+  .beian .police img{width:14px;height:auto;}
   /* 果酱墙 */
   .wallsec{padding:44px 22px 10px;text-align:center;position:relative;z-index:1;}
   .wall-title{font-size:var(--fs-h1);color:var(--berry-deep);letter-spacing:2px;margin-top:6px;}
@@ -535,6 +543,27 @@
   </section>
 
   <div class="foot">JAM PARTY · 王紫蕴 &amp; 刘金帅 · 2026.08.08</div>
+
+  <!-- ===================== 备案信息 · 合规必须，勿删 =====================
+       ① 改备案号：只改下面那行 <a> 里的文字，别动结构和链接。
+       ② 必须写死在 HTML 里。管局与公安的核查爬虫不一定执行 JavaScript，
+          若备案号只由 JS 动态生成，源码里搜不到，有被判「未悬挂」的风险。
+       ③ 挂哪个号：备案地=广东省 → 挂「主体备案号」（无后缀）；
+          备案地≠广东省 → 挂「网站备案号」（带 -1/-2 后缀）。
+          备案地看主体所在地，不是服务器地域（服务器在广州≠备案地广东）。
+       ④ 主域名 和 www.主域名 都要能打开、且都要能看到这一段。
+       ⑤ 公安备案（30 天内要办）拿到号后，把下面注释块放开并填入。
+       模板与说明：E:\step工作坊\_shared-knowledge\templates\beian-footer.html
+  -->
+  <div class="beian">
+    <a class="bl" href="https://beian.miit.gov.cn/" target="_blank" rel="noopener">沪ICP备2026037536号-1</a>
+    <!-- 公安备案通过后启用：图标在 beian.mps.gov.cn 下载，存为 img/beian-police.png
+    <br>
+    <a class="police" href="https://beian.mps.gov.cn/#/query/webSearch?code=【你的公安备案编号】" target="_blank" rel="noopener">
+      <img src="img/beian-police.png" alt="公安备案"><span>沪ICP备2026037536号</span>
+    </a>
+    -->
+  </div>
 
 <script>
   // 视口高度兜底（微信X5老核不认svh/dvh）+ 低端机降级标记
